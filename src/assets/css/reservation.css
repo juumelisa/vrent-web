@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&display=swap');
+
+body{
+  font-family: 'Nunito', sans-serif;
+}
+a{
+  text-decoration: none;
+}
+
+section{
+  margin: 50px 20px;
+}
+.back-arrow{
+  margin-bottom: 50px;
+}
+.back-arrow a{
+  font-size: 24px;
+  line-height: 24px;
+  color: black;
+}
+.back-arrow a p{
+  align-items: center;
+}
+.back-arrow a .fa-chevron-left{
+  font-size: 24px;
+}
+.vehicle{
+  width: 100%;
+  margin-bottom: 30px;
+}
+.vehicle .vehicle-img{
+  width: 100%
+}
+.vehicle .vehicle-img img{
+  width: 100%;
+}
+
+.vehicle .description{
+  width: 100%;
+}
+.vehicle-details .details h2{
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  color: #1572A1;
+}
+.vehicle-details .details h3{
+  font-weight: 400;
+  color: #1572A1;
+}
+.details .qty{
+  margin-top: 20px;
+  border: 1px solid #80918E;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+.vehicle-details .details .qty p{
+  font-size: 18px;
+  padding: 0;
+  align-self: center;
+  margin: 0;
+}
+.vehicle-details .details .detail{
+  margin-top: 20px;
+  border: 1px solid #80918E;
+  border-radius: 10px;
+  padding: 25px 20px;
+}
+.vehicle-details .details .detail p{
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+}
+.link .btn{
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #80918E;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 900;
+}
+.link .btn-total{
+  background-color: white;
+  line-height: 60px;
+  padding: 0;
+}
+form .link button{
+  width: 100%;
+  background-color: #9AD0EC;
+  height: 50px;
+  font-size: 18px;
+  box-shadow: 0 0 0 4px rgba(154, 208, 236, 0.1);
+  border: none;
+  border-radius: 10px;
+  font-weight: 900;
+  margin-top: 20px;
+}
+form .reservation{
+  margin-top: 24px;
+}
+form .reservation label{
+  text-align: center;
+  line-height: 50px;
+  font-size: 16px;
+  font-weight: 700;
+}
+form .reservation input{
+  height: 50px;
+  border: 1px solid #80918E;
+  border-radius: 10px;
+  text-align: center;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+
+@media(min-width: 768px){
+
+  section{
+    margin: 50px;
+  }
+  .back-arrow{
+    margin-bottom: 80px;
+  }
+  .back-arrow a{
+    font-size: 30px;
+    line-height: 36px;
+  }
+  .back-arrow a .fa-chevron-left{
+    font-size: 36px;
+  }
+  .vehicle{
+    margin-bottom: 45px;
+  }
+  .vehicle-details .details h2{
+    font-size: 30px;
+  }
+  .vehicle-details .details h3{
+    font-size: 22px;
+    padding-top: 11px;
+  }
+  .vehicle-details .details p{
+    padding-top: 32px;
+  }
+  .vehicle-details .details .qty{
+    margin-top: 33px;
+    padding: 20px 47px;
+  }
+  .vehicle-details .details .qty p{
+    font-size: 22px;
+  }
+  .vehicle-details .details .detail{
+    margin-top: 30px;
+    padding: 54px 47px;
+  }
+  .vehicle-details .details .detail p{
+    font-size: 22px;
+  }
+  .link .btn{
+    height: 80px;
+    font-size: 30px;
+  }
+  .link .btn-total{
+    line-height: 80px;
+    margin-top: 30px;
+  }
+  form .link button{
+    height: 60px;
+    font-size: 22px;
+    margin-top: 24px;
+  }
+  form .reservation label{
+    width: 40%;
+    text-align: center;
+    line-height: 60px;
+    font-size: 20px;
+  }
+  form .reservation input{
+    width: 25%;
+    height: 60px;
+    font-size: 20px;
+  }
+  form .reservation{
+    margin-top: 36px;
+  }
+}
+
+@media(min-width: 992px){
+
+  section{
+    margin: 57px 123px 102px 123px;
+  }
+  .back-arrow{
+    margin-bottom: 121px;
+  }
+  .back-arrow a{
+    font-size:  36px;
+  }
+  .back-arrow a .fa-chevron-left{
+    font-size: 43px;
+  }
+  .vehicle{
+    margin-bottom: 60px;
+  }
+  .vehicle .vehicle-img{
+    width: 60%
+  }
+  .vehicle .vehicle-img img{
+    height: 100%
+  }
+  .vehicle .description{
+    width: 40%;
+  }
+  .link .btn{
+    height: 116px;
+    font-size: 36px;
+  }
+  .link .btn-total{
+    line-height: 116px;
+    margin-top: 36px;
+  }
+  form .link button{
+    height: 89px;
+    font-size: 24px;
+    margin-top: 48px;
+  }
+  form .reservation{
+    margin-top: 49px;
+  }
+  form .reservation label{
+    line-height: 89px;
+    font-size: 24px;
+  }
+  form .reservation input{
+    height: 89px;
+    font-size: 24px;
+  }
+}
+
+@media(min-width: 1200px){
+  .vehicle-details .details h2{
+    font-size: 48px;
+  }
+  .vehicle-details .details h3{
+    font-size: 36px;
+  }
+  .vehicle-details .details h4, .vehicle-details .details p{
+    font-size: 24px;
+  }
+  .vehicle-details .price{
+    font-size: 36px;
+  }
+  .other-images .arrow{
+    font-size: 36px;
+  }
+  .vehicle-details .details .qty p{
+    font-size: 24px;
+  }
+}

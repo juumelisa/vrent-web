@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+body{
+  font-family: 'Nunito', sans-serif;
+}
+.left-container{
+  display: none;
+}
+.right-container{
+  margin: 0 auto;
+  /* position: absolute;
+  top: 0; */
+  text-align: center;
+  background-color: white;
+}
+.right-container h1{
+  font-size: 48px;
+  font-family: 'Playfair Display', serif;
+  padding: 95px 0 60px 0;
+  color: #1572A1;
+  font-weight: 700;
+}
+.right-container form{
+  margin: 0 auto;
+  width: 250px;
+}
+
+.right-container form input{
+  padding: 15px 30px;
+  margin-bottom: 10px;
+  background-color: #EFDAD7;
+  font-weight: 400;
+}
+.right-container form input, .right-container form button, .login-choices .btn{
+  height: 50px;
+  width: 250px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+}
+.right-container form button{
+  background-color: #9AD0EC;
+  margin: 10px 0 30px 0;
+  font-weight: 700;
+}
+.right-container .forgot-password{
+  color: black;
+}
+.right-container .login-way{
+  display: flex;
+  margin: 0 auto;
+  padding: 25px 0;
+  width: 240px;
+}
+.right-container .login-way .way{
+  width: 64%;
+}
+.right-container .line{
+  width:23%;
+  border-bottom: 1px solid black;
+  transform: translateY(-50%);
+}
+.google-logo{
+  width: 30px;
+  padding-right: 13px;
+}
+.right-container .login-choices{
+  width: 250px;
+  margin: 0 auto;
+}
+.right-container .login-choices .google{
+  background-color: white;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(78, 78, 78, 0.4);
+  color: black;
+  font-size: 18px;
+  font-weight: 900;
+  font-style: normal;
+  margin-bottom: 25px;
+  line-height: 40px;
+}
+.right-container .login-choices .register{
+  justify-content: center;
+  background-color: #1572A1;
+  font-size: 18px;
+  line-height: 40px;
+  font-weight: 900;
+  margin-bottom: 153px;
+}
+
+@media(min-width: 768px){
+    .right-container{
+      width:100%;
+      text-align: left;
+    }
+    .right-container form{
+      width: 500px;
+    }
+    .right-container form input, .right-container form button, .login-choices .btn{
+      font-size: 24px;
+      height: 79px;
+      width: 500px;
+    }
+    .right-container form input{
+      margin-bottom: 34px;
+    }
+    .right-container form button{
+      margin: 24px 0;
+    }
+    .right-container .forgot-password{
+      margin-bottom: 40px;
+      align-items: left;
+    }
+    .right-container .login-way{
+      padding-bottom: 0;
+      width: 500px;
+    }
+    .right-container .login-way{
+      text-align: center;
+    }
+    .right-container .login-way .line{
+      width: 45%;
+    }
+    .right-container .login-choices{
+      width: 500px;
+    }
+    .right-container .login-choices .btn{
+      font-size: 24px;
+      line-height: 60px;
+    }
+    .right-container .login-choices .google{
+      margin-top: 53px;
+      margin-bottom: 34px;
+    }
+}
+
+/* @media(min-width: 992px){
+    body{
+      display: flex;
+    }
+    .left-container{
+      display:block;
+      position: fixed;
+      height: 100%;
+      width:50%;
+    }
+    .left-container .background{
+      height: 100%;
+    }
+    .left-container img{
+      width: 100%;
+    }
+    .right-container{
+      position: static;
+      width: 50%;
+      background-image: none;
+      background-color: white;
+    }
+    .right-container h1{
+      text-align: left;
+    }
+    .right-container form, .right-container .login-choices, .right-container .login-way{
+      width: 100%;
+      margin-left: 50%;
+      padding:0 100px;
+    }
+    .right-container form input, .right-container form button, .right-container .login-choices .btn{
+      height: 79px;
+      width:100%;
+    }
+} */

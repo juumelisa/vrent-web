@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&display=swap');
+
+li{
+    list-style: none;
+}
+body{
+  font-family: 'Nunito', sans-serif;
+}
+.navbar{
+  position: sticky;
+  top:0;
+  z-index: 999;
+  padding: 10px 20px;
+  width:100%;
+  font-size: 16px;
+  background-color: white;
+}
+nav .navbar-brand img{
+  width: 40px;
+}
+.navbar-toggler{
+  color: #1572A1;
+  border: 1px solid #1572a1
+}
+.nav-item{
+  text-align: center;
+}
+.nav-item a{
+  color: #1572A1;
+}
+.nav-item a:hover{
+  color: black;
+}
+.active a{
+  color:black;
+}
+nav .collapse ul li{
+  margin: 5px 0;
+}
+nav .collapse ul li .btn{
+  color: black;
+  background-color: #9AD0EC;
+  border: 1px solid #9AD0EC;
+  width: 132px;
+}
+nav .collapse ul li .login{
+  background-color: white;
+  outline: none;
+}
+nav .collapse ul li .btn:hover{
+  background-color: #1572A1;
+  border: 1px solid #1572A1;
+}
+nav .collapse ul li .login:hover{
+  background-color: white;
+}
+nav .collapse ul li .login:active{
+  outline: none;
+}
+
+@media (min-width: 992px){
+    .header-space{
+      height: 60px;
+    }
+    .navbar{
+      padding: 10px 98px 10px 123px;
+    }
+    .navbar{
+      background-color: white;
+    }
+    .collapse ul li{
+      padding: 0 10px;
+    }
+    ul li .login{
+      margin-left: 30px;
+    }
+    nav .btn{
+      margin-right: 18px;
+    }
+    .header-space-two{
+      height: 30px
+    }
+}
