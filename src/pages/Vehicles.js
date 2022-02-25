@@ -72,6 +72,17 @@ export const Vehicles = () => {
                 <button type='submit' className='btn btn-primary'>Search</button>
             </form>
             <main className='container'>
+                
+                {errorMsg!==null&&
+                    <div className='row my-5'>
+                        <div className='col'>
+                            <div className='alert alert-warning alert-dismissible fade show' role='alert'>
+                                <span>{errorMsg}</span>
+                                <button onClick={()=>setErrorMsg(null)} type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
+                }
                 <div className='row my-5'>
                     {vehicles.map((data, idx)=>{
                         return(

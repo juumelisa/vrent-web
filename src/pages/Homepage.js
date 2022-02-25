@@ -28,12 +28,12 @@ export const Homepage = () => {
                             <input type="text" name="name" placeholder="Type the vehicle (ex. motorbike)" />
                             <div className="selection">
                                 <select className="form-select" name="location">
-                                    <option value>Location</option>
-                                    <option value="Bali">Bali</option>
-                                    <option value="Yogyakarta">Yogyakarta</option>
+                                    <option value="">Location</option>
+                                    <option value="bali">Bali</option>
+                                    <option value="yogyakarta">Yogyakarta</option>
                                     <option value="jakarta">Jakarta</option>
                                     <option value="kalimantan">Kalimantan</option>
-                                    <option value="3">Malang</option>
+                                    <option value="malang">Malang</option>
                                 </select>
                                 <div className="form-space"></div>
                                 <input className="input-date" type="date"/>
