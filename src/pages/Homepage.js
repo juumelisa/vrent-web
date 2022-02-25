@@ -22,17 +22,17 @@ export const Homepage = () => {
                 <div className="top-wrapper">
                     <div className="search-section">
                         <h1>Explore and Travel</h1>
-                        <form>
+                        <form action="/vehicles">
                             <h3>Vehicle Finder</h3>
                             <div className="line"></div>
-                            <input type="text" name="type" placeholder="Type the vehicle (ex. motorbike)" />
+                            <input type="text" name="name" placeholder="Type the vehicle (ex. motorbike)" />
                             <div className="selection">
                                 <select className="form-select" name="location">
                                     <option value>Location</option>
-                                    <option value="1">Bali</option>
-                                    <option value="2">Yogyakarta</option>
-                                    <option value="3">Jakarta</option>
-                                    <option value="3">Kalimantan</option>
+                                    <option value="Bali">Bali</option>
+                                    <option value="Yogyakarta">Yogyakarta</option>
+                                    <option value="jakarta">Jakarta</option>
+                                    <option value="kalimantan">Kalimantan</option>
                                     <option value="3">Malang</option>
                                 </select>
                                 <div className="form-space"></div>

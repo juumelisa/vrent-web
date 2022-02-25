@@ -8,6 +8,7 @@ export const Vehicles = () => {
     const [page, setPage] = useState({})
     const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams()
+    const [errorMsg, setErrorMsg] = useState(null)
 
     useEffect(()=>{
         const name = searchParams.get('name')
@@ -28,22 +29,54 @@ export const Vehicles = () => {
         setPage(data.pageInfo)
     }
 
-    const getNextData = async (url, replace=false) => {
-        const {data} = await axios.get(url)
-        setVehicles([
-            ...vehicles,
-            ...data.result
-        ])
-        setPage(data.pageInfo)
+    const getNextData = async (url, replace = false) => {
+        try{
+            setErrorMsg(null)
+            const {data} = await axios.get(url)
+            if(replace){
+                setVehicles(data.result)
+            }else{
+                setVehicles([
+                    ...vehicles,
+                    ...data.result
+                ])
+            }
+            setPage(data.pageInfo)
+        }catch(e){
+            if(e.message.includes('404')){
+                setErrorMsg('Data not found!')
+                setVehicles([])
+                setPage({
+                    next: null
+                })
+            }
+        }
+    }
+    
+    const onSearch = async(event)=>{
+        event.preventDefault();
+        const url = (name,location)=> `http://localhost:8000/vehicles?name=${name}&location=${location}&limit=16`
+        const name = event.target.elements["search"].value
+        const location = event.target.elements["location"].value
+        setSearchParams({name,location})
+        await getNextData(url(name, location), true)
+    }
+    const goToDetail = (id)=> {
+        navigate(`/vehicles/${id}`)
     }
     return (
         <Layout>
+            <form id='search' onSubmit={onSearch}>
+                <input name="search" type="text" placeholder="vehicle name" />
+                <input name="location" type="text" placeholder="location" />
+                <button type='submit' className='btn btn-primary'>Search</button>
+            </form>
             <main className='container'>
                 <div className='row my-5'>
                     {vehicles.map((data, idx)=>{
                         return(
                             <div className='col-md-3'>
-                                <div className='position-relative mb-2'>
+                                <div onClick={()=>goToDetail(data.id) } className='position-relative mb-2'>
                                     <img className='img-fluid' src={data.image} alt={data.name} />
                                     <div className='position-absolute bottom-0 start-0 bg-white px-3 py-2'>{data.name}</div>
                                 </div>
