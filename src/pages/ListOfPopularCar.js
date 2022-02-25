@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
+import Layout from '../components/Layout'
 import {default as axios} from 'axios'
 import { Link } from 'react-router-dom'
 
-export const PopularMotorbike = () => {
+export const ListOfPopularCar = () => {
     const [vehicles, setVehicles] = useState([])
     const [page, setPage] = useState({})
 
@@ -11,7 +12,7 @@ export const PopularMotorbike = () => {
     },[])
 
     const getVehicles = async ()=> {
-        const {data} = await axios.get('http://localhost:8000/popular/2?limit=4')
+        const {data} = await axios.get('http://localhost:8000/popular/1?limit=16')
         setVehicles(data.result)
         setPage(data.pageInfo)
     }
@@ -20,11 +21,21 @@ export const PopularMotorbike = () => {
         const {data} = await axios.get(url)
         setVehicles([
             ...vehicles,
-            data.result
+            ...data.result
         ])
     }
-    return(
+    return (
+        <Layout>
+
         <section>
+          <div className="popular-section">
+            <div className="popular-vehicles">
+              <div className="title">
+                <h1>Popular in town</h1>
+              </div>
+              <div className="notes">
+                <p className="text-center">Click item to see details and reservation</p>
+              </div>
               <div className="vehicles d-flex flex-wrap justify-content-center">
                   {vehicles.map((data, idx)=>{
                       let url = `/vehicles/${data.vehicle_id}`
@@ -41,9 +52,18 @@ export const PopularMotorbike = () => {
                       )
                   })}
               </div>
+            </div>
+          </div>
+                {page.next!==null&&
+                    <div className='row my-5'>
+                        <div className='col-md-12 text-center'>
+                            <button onClick={()=>getNextData(page.next)} className='btn btn-primary'>Load More</button>
+                        </div>
+                    </div>
+                }
         </section>
-        
+        </Layout>
     )
 }
 
-export default PopularMotorbike
+export default ListOfPopularCar

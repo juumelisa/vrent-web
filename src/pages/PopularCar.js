@@ -16,20 +16,14 @@ export const PopularCar = () => {
         setPage(data.pageInfo)
     }
 
-    const getNextData = async (url) => {
-        const {data} = await axios.get(url)
-        setVehicles([
-            ...vehicles,
-            data.result
-        ])
-    }
     return (
         <section>
               <div className="vehicles d-flex flex-wrap justify-content-center">
                   {vehicles.map((data, idx)=>{
+                      let url = `/vehicles/${data.vehicle_id}`
                       return(
                         <div className='popular-vehicle p-2 position-relative'>
-                            <Link to="/">
+                            <Link to={url}>
                                 <img src={data.image} alt="data.vehicle_name" />
                                 <div className="location position-absolute">
                                     <h6>{data.vehicle_name}</h6>

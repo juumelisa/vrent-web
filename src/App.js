@@ -1,5 +1,7 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React, { Component } from 'react'
+import { unstable_HistoryRouter as HistoryRouter,BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css';
+import { createBrowserHistory } from 'history'
 import Login from './pages/Login';
 import Register from './pages/Register'
 import Homepage from './pages/Homepage';
@@ -11,10 +13,17 @@ import Profile from './pages/Profile';
 import ForgotPassword from './pages/ForgotPassword';
 import Vehicles from './pages/Vehicles';
 import PopularInTown from './pages/PopularInTown';
+import ListOfPopularCar from './pages/ListOfPopularCar';
+import NotFound from './pages/NotFound';
 
-function App() {
-  return (
-    <BrowserRouter>
+export default class App extends Component {
+  componentDidMount(){
+    console.log(this.props)
+  }
+  history = createBrowserHistory()
+  render(){
+    return (
+      <HistoryRouter history={this.history}>
       <Routes>
         <Route path="/" element={<Homepage/>} />
         <Route path="login" element={<Login/>} />
@@ -22,15 +31,17 @@ function App() {
         <Route path="forgot-password" element={<ForgotPassword/>} />
         <Route path="vehicle-list" element={<VehicleType/>} />
         <Route path="popular-in-town" element={<PopularInTown/>} />
-        <Route path="vehicle-detail/:id" element={<VehicleDetail/>} />
+        <Route path="popular-car" element={<ListOfPopularCar />} />
+        <Route path="vehicles" element={<Vehicles/>}/>
+        <Route path="vehicles/:id" element={<VehicleDetail history={this.history} /> } />
         <Route path="reservation" element={<Reservation/>} />
         <Route path="history" element={<History/>} />
         <Route path="profile" element={<Profile/>} />
-        <Route path="vehicles" element={<Vehicles/>} />
-
-      </Routes>
-    </BrowserRouter>
-  );
+        <Route path="404" element={<NotFound/>} />
+  
+      </Routes></HistoryRouter>
+      // <BrowserRouter>
+      // </BrowserRouter>
+    );
+  }
 }
-
-export default App;

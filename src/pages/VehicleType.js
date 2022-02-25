@@ -40,7 +40,7 @@ export const VehicleType = ()=>{
                   </div>
                   <div className="vehicles d-flex flex-wrap justify-content-center">
                     {vehicles.map((data, idx)=>{
-                      let url='/detail-vehicle/:'+data.vehicle_id
+                      let url = `/vehicles/${data.vehicle_id}`
                       return(
                         <div className="popular-vehicle p-2 position-relative">
                           <Link to={url}>

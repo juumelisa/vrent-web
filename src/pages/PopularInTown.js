@@ -21,7 +21,7 @@ export const PopularInTown = () => {
         const {data} = await axios.get(url)
         setVehicles([
             ...vehicles,
-            data.result
+            ...data.result
         ])
     }
     return (
@@ -38,10 +38,10 @@ export const PopularInTown = () => {
               </div>
               <div className="vehicles d-flex flex-wrap justify-content-center">
                   {vehicles.map((data, idx)=>{
-                      let urlDetail = "/vehicle-detail/:"+data.vehicle_id
+                      let url = `/vehicles/${data.vehicle_id}`
                       return(
                         <div className='popular-vehicle p-2 position-relative'>
-                            <Link to={urlDetail}>
+                            <Link to={url}>
                                 <img src={data.image} alt="data.vehicle_name" />
                                 <div className="location position-absolute">
                                     <h6>{data.vehicle_name}</h6>
@@ -54,6 +54,13 @@ export const PopularInTown = () => {
               </div>
             </div>
           </div>
+                {page.next!==null&&
+                    <div className='row my-5'>
+                        <div className='col-md-12 text-center'>
+                            <button onClick={()=>getNextData(page.next)} className='btn btn-primary'>Load More</button>
+                        </div>
+                    </div>
+                }
         </section>
         </Layout>
     )
