@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import './index.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './assets/css/home.css'
 import './assets/css/header.css'
 import './assets/css/footer.css'
@@ -11,8 +12,6 @@ import './assets/css/vehicle-detail.css'
 import './assets/css/history.css'
 import './assets/css/reservation.css'
 import './assets/css/profile.css'
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import '../node_modules/bootstrap/dist/js/bootstrap.bundle.js'
 import 'bootstrap/dist/js/bootstrap.bundle'
 import App from './App';
 import reportWebVitals from './reportWebVitals';

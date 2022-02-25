@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { unstable_HistoryRouter as HistoryRouter,BrowserRouter, Route, Routes } from 'react-router-dom'
+import { unstable_HistoryRouter as HistoryRouter, Route, Routes } from 'react-router-dom'
 import './App.css';
 import { createBrowserHistory } from 'history'
 import Login from './pages/Login';
@@ -15,6 +15,8 @@ import Vehicles from './pages/Vehicles';
 import PopularInTown from './pages/PopularInTown';
 import ListOfPopularCar from './pages/ListOfPopularCar';
 import NotFound from './pages/NotFound';
+import ListOfPopularBike from './pages/ListOfPopularBike';
+import ListOfPopularMotorbike from './pages/ListOfPopularMotorbike';
 
 export default class App extends Component {
   componentDidMount(){
@@ -32,16 +34,17 @@ export default class App extends Component {
         <Route path="vehicle-list" element={<VehicleType/>} />
         <Route path="popular-in-town" element={<PopularInTown/>} />
         <Route path="popular-car" element={<ListOfPopularCar />} />
+        <Route path="popular-motorbike" element={<ListOfPopularMotorbike />} />
+        <Route path="popular-bike" element={<ListOfPopularBike />} />
         <Route path="vehicles" element={<Vehicles/>}/>
         <Route path="vehicles/:id" element={<VehicleDetail history={this.history} /> } />
+        <Route path="vehicles/car" element={<ListOfPopularCar />} />
         <Route path="reservation" element={<Reservation/>} />
         <Route path="history" element={<History/>} />
         <Route path="profile" element={<Profile/>} />
         <Route path="404" element={<NotFound/>} />
   
       </Routes></HistoryRouter>
-      // <BrowserRouter>
-      // </BrowserRouter>
     );
   }
 }
