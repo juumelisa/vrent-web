@@ -53,7 +53,7 @@ export const VehicleDetail = (props)=>{
                   <div className="description">
                     <div className="details p-3 position-relative">
                       <div className="city">
-                        <h2>{vehicles?.name}</h2>
+                        <h2>{vehicles?.name} {vehicles?.year}</h2>
                         <h3>{vehicles?.location}</h3>
                       </div>
                       <h4>Available</h4>

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
+import { Link } from "react-router-dom";
 import logo from '../assets/images/logo.png'
-
+import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 export default class Footer extends Component{
     render(){
         return(
@@ -46,11 +47,11 @@ export default class Footer extends Component{
                 </div>
                 <div className="copyright">©2022 Seran Center. All rights reserved</div>
                 <div className="socmeds">
-                <a href="#"><i className="fa-brands fa-twitter"></i></a>
-                <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
-                <a href="#"><i className="fa-brands fa-instagram"></i></a>
-                <a href="#"><i className="fa-brands fa-linkedin-in"></i></a>
-                <a href="#"><i className="fa-brands fa-youtube"></i></a>
+                <Link to="/"><FaTwitter /></Link>
+                <Link to="/"><FaFacebookF /></Link>
+                <Link to="/"><FaInstagram /></Link>
+                <Link to="/"><FaLinkedinIn /></Link>
+                <Link to="/"><FaYoutube /></Link>
                 </div>
             </footer>
         )

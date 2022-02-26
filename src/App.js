@@ -17,6 +17,7 @@ import ListOfPopularCar from './pages/ListOfPopularCar';
 import NotFound from './pages/NotFound';
 import ListOfPopularBike from './pages/ListOfPopularBike';
 import ListOfPopularMotorbike from './pages/ListOfPopularMotorbike';
+import Home from './pages/Home';
 
 export default class App extends Component {
   componentDidMount(){
@@ -43,6 +44,7 @@ export default class App extends Component {
         <Route path="history" element={<History/>} />
         <Route path="profile" element={<Profile/>} />
         <Route path="404" element={<NotFound/>} />
+        <Route path="home" element={<Home/>} />
   
       </Routes></HistoryRouter>
     );
