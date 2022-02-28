@@ -5,7 +5,7 @@ import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from "re
 export default class Footer extends Component{
     render(){
         return(
-            <footer>
+            <footer className="mt-5">
                 <div className="row">
                 <div className="col-12 col-lg-5">
                     <a href="index.html"><img alt="logo" width="40" height="40" src={logo}/></a>

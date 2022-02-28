@@ -6,7 +6,7 @@
   text-align: center;
 }
 .nav-item a{
-  color: #1572A1;
+  color: #B8BECD;
 }
 .nav-item a:hover{
   color: black;
@@ -37,13 +37,44 @@ nav .collapse ul li .login:hover{
 nav .collapse ul li .login:active{
   outline: none;
 }
+.avatar{
+  border-radius: 50%;
+}
+.iconSum{
+  background-color: #9AD0EC;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  line-height: 20px;
+}
+.header-form{
+  width: 100%;
+  align-items: center;
+}
+.searching-form{
+  max-width: 210px;
+  margin: 0 auto;
+}
+.searching-form input{
+  background-color: transparent;
+  border-radius: 0;
+  border: 1px solid #AFB0B9;
+}
+.searching-form button, .searching-form button:hover{
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  right: 0;
+  color: #B8BECD;
+}
 
 @media(min-width: 992px){
     .header-space{
         height: 60px
     }
     .header-space-two{
-      height: 30px;
+      margin-bottom: 30px;
     }
     nav .collapse ul li{
       margin-left: 30px;

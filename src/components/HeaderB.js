@@ -1,8 +1,11 @@
 import React, {Component} from "react";
 import { Link } from "react-router-dom";
 import logo from '../assets/images/logo.png'
+import user from '../assets/images/user.png'
+import messageIcon from '../assets/images/email.png'
+import { FaSearch } from "react-icons/fa";
 
-export default class HeaderA extends Component{
+export default class HeaderB extends Component{
     render(){
         return(
             <>
@@ -27,8 +30,25 @@ export default class HeaderA extends Component{
                             <li className="nav-item">
                                 <Link className="nav-link" to="/">About</Link>
                             </li>
-                            <li className="text-center"><Link className="btn btn-primary login" to="/login" role="button">Login</Link></li>
-                            <li className="text-center"><Link className="btn btn-primary register" to="/register" role="button">Register</Link></li>
+                            <li>
+                                <form action="/vehicles" className="header-form">
+                                    <div class="searching-form position-relative">
+                                        <input type="text" name="name" placeholder="Search vehicle"></input>
+                                        <button className="search-icon position-absolute">
+                                            <FaSearch/>
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                            <li className="profile-message text-center d-flex justify-content-center">
+                                <Link to="/">
+                                    <div className="message-notif position-relative">
+                                        <img src={messageIcon} alt="message icon" width="40"/>
+                                        <div className="iconSum position-absolute top-0 start-100 translate-middle">1</div>
+                                    </div>
+                                </Link>
+                                <Link to="/profile" role="button"><img className="avatar ms-5" src={user} alt="user" width="40" height="40"/></Link>
+                            </li>
                         </ul>
                     </div>
                 </div>

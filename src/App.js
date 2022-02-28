@@ -13,11 +13,11 @@ import Profile from './pages/Profile';
 import ForgotPassword from './pages/ForgotPassword';
 import Vehicles from './pages/Vehicles';
 import PopularInTown from './pages/PopularInTown';
-import ListOfPopularCar from './pages/ListOfPopularCar';
 import NotFound from './pages/NotFound';
+import PopularCar from './pages/PopularCar';
 import ListOfPopularBike from './pages/ListOfPopularBike';
+import ListOfPopularCar from './pages/ListOfPopularCar';
 import ListOfPopularMotorbike from './pages/ListOfPopularMotorbike';
-import Home from './pages/Home';
 
 export default class App extends Component {
   componentDidMount(){
@@ -39,12 +39,11 @@ export default class App extends Component {
         <Route path="popular-bike" element={<ListOfPopularBike />} />
         <Route path="vehicles" element={<Vehicles/>}/>
         <Route path="vehicles/:id" element={<VehicleDetail history={this.history} /> } />
-        <Route path="vehicles/car" element={<ListOfPopularCar />} />
-        <Route path="reservation" element={<Reservation/>} />
+        <Route path="vehicles/car" element={<PopularCar />} />
+        <Route path="reservation/:id" element={<Reservation/>} />
         <Route path="history" element={<History/>} />
         <Route path="profile" element={<Profile/>} />
         <Route path="404" element={<NotFound/>} />
-        <Route path="home" element={<Home/>} />
   
       </Routes></HistoryRouter>
     );

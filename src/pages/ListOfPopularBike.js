@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from 'react'
-import Layout from '../components/Layout'
 import {default as axios} from 'axios'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import LayoutB from '../components/LayoutB'
 
 export const ListOfPopularBike = () => {
     const [vehicles, setVehicles] = useState([])
     const [page, setPage] = useState({})
-
+    const navigate = useNavigate()
     useEffect(()=>{
         getVehicles()
     },[])
 
     const getVehicles = async ()=> {
-        const {data} = await axios.get('http://localhost:8000/popular/3?limit=16')
+        const {data} = await axios.get('http://localhost:8000/popular?category=3&sortBy=totalRent+DESC&limit=16')
         setVehicles(data.result)
         setPage(data.pageInfo)
     }
@@ -23,46 +23,40 @@ export const ListOfPopularBike = () => {
             ...vehicles,
             ...data.result
         ])
+        setPage(data.pageInfo)
+    }
+    const goToDetail = (id)=> {
+        navigate(`/vehicles/${id}`)
     }
     return (
-        <Layout>
-
-        <section>
-          <div className="popular-section">
-            <div className="popular-vehicles">
-              <div className="title">
-                <h1>Popular bike</h1>
-              </div>
-              <div className="notes">
-                <p className="text-center">Click item to see details and reservation</p>
-              </div>
-              <div className="vehicles d-flex flex-wrap justify-content-center">
-                  {vehicles.map((data, idx)=>{
-                      let url = `/vehicles/${data.vehicle_id}`
-                      return(
-                        <div className='popular-vehicle p-2 position-relative'>
-                            <Link to={url}>
-                                <img src={data.image} alt="data.vehicle_name" />
-                                <div className="location position-absolute">
-                                    <h6>{data.vehicle_name}</h6>
-                                    <p>{data.location}</p>
+        <LayoutB >
+            <div className="container">
+                <div className="title-section">
+                    <h1 className="mt-5">Popular bike</h1>
+                    <p className="text-center fs-4 fw-bold my-4" style={{color: "rgba(0,0,0,0.5)"}}>Click item to see details and reservation</p>
+                </div>
+                <div className="row vehicles">
+                    {vehicles.map((data, idx)=>{
+                        return(
+                            <div onClick={()=>goToDetail(data.id)} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{cursor: "pointer"}}>
+                                <img className="img-fluid" src={data.image} alt={data.name} />
+                                <div className="location position-absolute bottom-0 bg-white p-2">
+                                    <h6 className="m-0">{data.name}</h6>
+                                    <p className="m-0">{data.location}</p>
                                 </div>
-                            </Link>
-                        </div>
-                      )
-                  })}
-              </div>
-            </div>
-          </div>
+                            </div>
+                        )
+                    })}
+                </div>
                 {page.next!==null&&
                     <div className='row my-5'>
                         <div className='col-md-12 text-center'>
-                            <button onClick={()=>getNextData(page.next)} className='btn btn-primary'>Load More</button>
+                            <button onClick={()=>getNextData(page.next)} className='btn btn-primary' style={{backgroundColor: "#9AD0EC", border: "none", color:"black"}}>Load More</button>
                         </div>
                     </div>
                 }
-        </section>
-        </Layout>
+            </div>
+        </LayoutB>
     )
 }
 

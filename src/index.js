@@ -6,13 +6,15 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './assets/css/header.css'
 import './assets/css/style.css'
 import './assets/css/footer.css'
+import './assets/css/vehicles.css'
+
 // import './assets/css/login.css'
 // import './assets/css/forgot-password.css'
 // import './assets/css/vehicle-type.css'
-// import './assets/css/vehicle-detail.css'
+import './assets/css/vehicle-detail.css'
 // import './assets/css/history.css'
-// import './assets/css/reservation.css'
-// import './assets/css/profile.css'
+import './assets/css/reservation.css'
+import './assets/css/profile.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
 
 import App from './App';

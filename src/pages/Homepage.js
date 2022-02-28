@@ -8,16 +8,14 @@ import testimony from '../assets/images/edward-testimony.png'
 
 export const Homepage = () => {
     const [vehicles, setVehicles] = useState([])
-    const [page, setPage] = useState({})
     const navigate = useNavigate()
     useEffect(()=>{
         getVehicles()
     },[])
 
     const getVehicles = async ()=> {
-        const {data} = await axios.get('http://localhost:8000/popular')
+        const {data} = await axios.get('http://localhost:8000/popular?sortBy=totalRent+DESC')
         setVehicles(data.result)
-        setPage(data.pageInfo)
     }
     const goToDetail = (id)=> {
         navigate(`/vehicles/${id}`)
@@ -37,7 +35,7 @@ export const Homepage = () => {
                                 <div className="form-space"></div>
                                 <input type="date" />
                             </div>
-                            <button className="search mb-5">Search</button>
+                            <button className="mb-5">Search</button>
                         </form>
                     </div>
                 </div>
@@ -53,10 +51,10 @@ export const Homepage = () => {
                     <div className="row vehicles">
                         {vehicles.map((data, idx)=>{
                             return(
-                                <div onClick={()=>goToDetail(data.vehicle_id)} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{cursor: "pointer"}}>
-                                    <img className="img-fluid" src={data.image} alt={data.vehicle_name} />
+                                <div onClick={()=>goToDetail(data.id)} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{cursor: "pointer"}}>
+                                    <img className="img-fluid" src={data.image} alt={data.name} />
                                     <div className="location position-absolute bottom-0 bg-white p-2">
-                                        <h6 className="m-0">{data.vehicle_name}</h6>
+                                        <h6 className="m-0">{data.name}</h6>
                                         <p className="m-0">{data.location}</p>
                                     </div>
                                 </div>
@@ -82,7 +80,7 @@ export const Homepage = () => {
                             </div>
                         </div>
                         <div className="user">
-                            <img className="img-fluid mx-auto d-block" src={testimony} alt="user"/>
+                            <img className="img-fluid mx-auto d-block" src={testimony} alt="user" width="100%" height="100%"/>
                         </div>
                     </div>
                 </div>

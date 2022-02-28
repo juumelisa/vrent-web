@@ -1,206 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
-
-li{
-  list-style: none;
+.identity-section p{
+  color: rgba(0,0,0,0.6)
 }
-body{
-font-family: 'Nunito', sans-serif;
-}
-main{
+.profile-form input{
   width: 100%;
-  padding: 20px;
-}
-main h1{
-  margin-top: 30px;
-  font-size: 30px;
-  font-weight: 700;
-}
-main .user-profile{
-  width: 200px;
-  margin: 0 auto;
-}
-.user-profile a{
-  color: black;
-  background-color: #9AD0EC;
-  border-radius: 50%;
-}
-.user-profile a:hover{
-  color: white;
-  background-color: #1572A1;
-}
-.user-profile .edit-icon{
-  width: 50px;
-  height: 50px;
-  text-align: center;
-}
-.user-profile .edit-icon .fa-pencil{
-  font-size: 16px;
-}
-.identity-section{
-  text-align: center;
-}
-main .identity-section h1{
-  font-size: 36px;
-  font-family: 'Playfair Display', serif;
-}
-.contact-section p{
-  font-size: 20px;
-  font-weight: 700;
-  color: #838894;
-}
-.selection .select p{
-  margin: 0 20px;
-}
-
-.checkmark {
-  position: absolute;
-  height: 25px;
-  width: 25px;
-  border: 1px solid #B8BECD;
-  border-radius: 10px;
-}
-
-.form-section{
-  max-width: 500px;
-  margin: 0 auto;
-}
-.form-section h2{
-  font-size: 18px;
-  font-weight: 900;
-  padding-top: 40px;
-}
-.form-section label{
-  font-size: 18px;
-  color:#838894;
-  padding: 18px 0 10px 0;
-}
-.form-section input{
-  font-size: 18px;
-  padding: 10px 0;
-  width: 100%;
-  border: none;
+  background-color: transparent;
+  border-radius: 0;
   border-bottom: 1px solid black;
-}
-.identity-section h2{
-  text-align: left;
-}
-.identity-section .input-identity{
-  width: 100%;
-}
-.input-identity{
-  text-align: left;
-}
-.form-button{
-  margin-top: 30px;
-}
-.form-button .button{
-  width: 100%;
-}
-.form-button .btn{
-  width: 100%;
-  line-height: 50px;
-  border: none;
-  border-radius: 10px;
-  color: black;
-  font-weight: 700;
   padding: 0;
 }
-.form-button .btn:hover{
-  color: white
+.user-button button{
+  line-height: 50px;
+  padding: 0;
 }
-.form-button .btn-primary{
-  background-color: #9AD0EC;
+.user-button .btn{
+  width: 100%;
+  color: white;
+  border-radius: 10px;
+  line-height: 50px;
+  padding: 0;
 }
-.form-button .btn-primary:hover{
+.user-button .change-password{
   background-color: #1572A1;
 }
-.form-button .btn-secondary{
-  background-color: #EFDAD7;
-}
-.form-button .btn-secondary:hover{
-  background-color: #E3BEC6;
-}
-.form-button .btn-light{
-  background-color: #cbcdd3;
-}
-.form-button .btn-light:hover{
-  background-color: #7b7d85;
+.user-button .cancel{
+  background-color: rgba(0,0,0,0.2);
 }
 
 @media(min-width: 768px){
-  main{
-    padding: 0 40px;
-  }
-  main h1{
-    margin: 46px 0;
-    font-size: 33px;
-  }
-  main .identity-section h1{
-    margin-top: 40px;
-    font-size: 40px;
-  }
-  .contact-section p{
-    font-size: 22px;
-  }
-  .form-section{
-    max-width: 700px;
-  }
-  .form-section h2{
-    font-size: 20px;
-  }
-  .form-section label{
-    font-size: 20px;
-  }
-  .form-section input{
-    font-size: 20px;
-    padding: 15px 0;
-  }
-  .identity-section .input-identity{
-    width: 50%;
-  }
-  .identity-section .part-1{
-    padding-right: 10px;
-  }
-  .identity-section .part-2{
-    padding-left: 10px;
-  }
-  .form-button .button{
-    width: 50%;
-  }
-  .form-button .btn{
-    font-size: 22px;
+  .profile-form button, .profile-form .btn{
     line-height: 60px;
+    width: 32%;
+  }
+  .profile-form .btn{
+    margin-left: 2%;
   }
 }
 
 @media(min-width: 992px){
-  main{
-    padding: 0 123px;
-  }
-  main h1{
-    margin: 80px 0 46px 0;
-    font-size: 36px;
-  }
-  main .identity-section h1{
-    margin-top: 50px;
-    font-size: 48px;
-  }
-  .contact-section p{
-    font-size: 24px;
-  }
-  .form-section{
-    max-width: 1200px;
-  }
-  .form-button{
-    margin: 100px 0;
-  }
-  .form-button .button{
-    width: 33.33%;
-  }
-  .form-button .btn{
-    font-size: 24px;
+  .profile-form button, .profile-form .btn{
     line-height: 70px;
-    max-width: 325px;
   }
 }
