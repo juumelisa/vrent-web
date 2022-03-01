@@ -70,12 +70,6 @@ nav .collapse ul li .login:active{
 }
 
 @media(min-width: 992px){
-    .header-space{
-        height: 60px
-    }
-    .header-space-two{
-      margin-bottom: 30px;
-    }
     nav .collapse ul li{
       margin-left: 30px;
     }
