@@ -1,12 +1,17 @@
-import React, {Component} from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from '../assets/images/logo.png'
 import user from '../assets/images/user.png'
 import messageIcon from '../assets/images/email.png'
 import { FaSearch } from "react-icons/fa";
 
-export default class HeaderB extends Component{
-    render(){
+export const HeaderB = ()=>{
+    const navigate = useNavigate()
+    const handleSearch = async(event)=>{
+        event.preventDefault()
+        const searchVehicle = event.target.elements["name"].value;
+        navigate(`/vehicles?name=${searchVehicle}`, {replace: true})
+    }
         return(
             <>
             <nav className="navbar navbar-expand-lg navbar-light bg-white sticky-top my-2">
@@ -30,7 +35,7 @@ export default class HeaderB extends Component{
                                 <Link className="nav-link" to="/">About</Link>
                             </li>
                             <li>
-                                <form action="/vehicles" className="header-form">
+                                <form onSubmit={handleSearch} className="header-form" id="search">
                                     <div class="searching-form position-relative">
                                         <input type="text" name="name" placeholder="Search vehicle"></input>
                                         <button className="search-icon position-absolute">
@@ -54,5 +59,6 @@ export default class HeaderB extends Component{
             </nav>
             </>
         )
-    }
 }
+
+export default HeaderB

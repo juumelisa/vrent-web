@@ -18,6 +18,8 @@ export const Vehicles = () => {
         const vehicleData = {}
         const dataName = ['name', 'location', 'cost_min', 'cost_max', 'category', 'type', 'sortBy']
         let url = 'http://localhost:8000/popular?limit=16'
+        console.log(process.env)
+        console.log(url)
         let nullData = 0
         dataName.forEach(x=>{
             vehicleData[x] = searchParams.get(x)
