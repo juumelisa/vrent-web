@@ -11,7 +11,7 @@ export const Login = () =>{
                 <img src={background} alt="background" className="position-fixed" />
             </div>
             <div className="right-container pt-5">
-                <div class="top-wrapper">
+                <div className="top-wrapper">
                     <h1 className="my-5">Login</h1>
                     <form className="login-form">
                         <input type="email" name="email" placeholder="Email" className="fs-4" />

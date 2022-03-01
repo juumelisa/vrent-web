@@ -11,7 +11,7 @@ export const PopularMotorbike = ()=>{
   },[])
 
   const getVehicles = async ()=> {
-      const {data} = await axios.get('http://localhost:8000/popular?category=2&sortBy=totalRent+DESC&limit=4')
+      const {data} = await axios.get(`${process.env.REACT_APP_URL}/popular?category=2&sortBy=totalRent+DESC&limit=4`)
       setVehicles(data.result)
   }
   const goToDetail = (id)=> {

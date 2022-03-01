@@ -11,7 +11,7 @@ export const Register = () =>{
                 <img src={background} alt="background" className="position-fixed" />
             </div>
             <div className="right-container pt-5">
-                <div class="top-wrapper">
+                <div className="top-wrapper">
                     <h1 className="my-5">Signup</h1>
                     <form className="login-form">
                         <input type="text" name="name" placeholder="Name" className="fs-4" />

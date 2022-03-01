@@ -12,7 +12,7 @@ export const PopularInTown = () => {
     },[])
 
     const getVehicles = async ()=> {
-        const {data} = await axios.get('http://localhost:8000/popular?sortBy=totalRent+DESC&limit=16')
+        const {data} = await axios.get(`${process.env.REACT_APP_URL}/popular?sortBy=totalRent+DESC&limit=4`)
         setVehicles(data.result)
         setPage(data.pageInfo)
     }

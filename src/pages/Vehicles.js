@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import Layout from '../components/Layout'
 import {default as axios} from 'axios'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import LayoutB from '../components/LayoutB'
@@ -17,9 +16,9 @@ export const Vehicles = () => {
         // const cost_min = searchParams.get('cost_min')
         const vehicleData = {}
         const dataName = ['name', 'location', 'cost_min', 'cost_max', 'category', 'type', 'sortBy']
-        let url = 'http://localhost:8000/popular?limit=16'
+        let url = `${process.env.REACT_APP_URL}/popular?limit=16`
         console.log(process.env)
-        console.log(url)
+        console.log(process.env.REACT_APP_URL)
         let nullData = 0
         dataName.forEach(x=>{
             vehicleData[x] = searchParams.get(x)
@@ -38,7 +37,7 @@ export const Vehicles = () => {
     },[])
 
     const getVehicles = async ()=> {
-        const {data} = await axios.get('http://localhost:8000/popular?limit=16')
+        const {data} = await axios.get(`${process.env.REACT_APP_URL}/popular?limit=16`)
         setVehicles(data.result)
         setPage(data.pageInfo)
     }
@@ -67,7 +66,7 @@ export const Vehicles = () => {
     
     const onSearch = async(event)=>{
         event.preventDefault();
-        let url = 'http://localhost:8000/popular?limit=16'
+        let url = `${process.env.REACT_APP_URL}/popular?limit=16`
         const name = event.target.elements["name"].value
         const location = event.target.elements["location"].value
         const cost_min = event.target.elements["cost_min"].value

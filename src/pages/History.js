@@ -29,13 +29,13 @@ export const History = () => {
                     <div className="search-history">
                       <form className="history-form position-relative">
                         <input type="text" name="history" placeholder="Search history"></input>
-                        <div class="dropdown">
-                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Filter</button>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <div className="dropdown">
+                          <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Filter</button>
+                          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><button name="filter" type="submit" value="type">Type</button></li>
                             <li><button name="filter" type="submit" value="data-added">Data Added</button></li>
                             <li><button name="filter" type="submit" value="name">Name</button></li>
-                            <li class="favorite"><button name="filter" type="submit" value="favorite">Favorite Product</button></li>
+                            <li className="favorite"><button name="filter" type="submit" value="favorite">Favorite Product</button></li>
                           </ul>
                         </div>
                         <button type="submmit" className="position-absolute" style={{right: "0", width: "30px"}}>
@@ -43,84 +43,84 @@ export const History = () => {
                         </button>
                       </form>
                       
-                      <div class="selection position-relative">
-                        <div class="select-all position-absolute">
-                          <label class="container">Delete
+                      <div className="selection position-relative">
+                        <div className="select-all position-absolute">
+                          <label className="container">Delete
                             <input type="checkbox" />
-                            <span class="checkmark"></span>
+                            <span className="checkmark"></span>
                           </label>
                         </div>
                       </div>
-                      <div class="notification">
-                        <div class="today-section">
+                      <div className="notification">
+                        <div className="today-section">
                           <h5>Today</h5>
-                          <div class="select position-relative">
-                            <div class="notif position-relative">
+                          <div className="select position-relative">
+                            <div className="notif position-relative">
                               <p>Please finish your payment for vespa for Vespa Rental Jogja</p>
-                              <div class="notif-arrow position-absolute">
-                                <i class="fa-solid fa-chevron-right"></i>
+                              <div className="notif-arrow position-absolute">
+                                <i className="fa-solid fa-chevron-right"></i>
                               </div>
                             </div>
-                            <div class="history position-absolute">
-                              <label class="container">
+                            <div className="history position-absolute">
+                              <label className="container">
                                 <input type="checkbox" name="history-1" />
-                                <span class="checkmark"></span>
+                                <span className="checkmark"></span>
                               </label>
                             </div>
                           </div>
-                          <div class="select position-relative">
-                            <div class="notif position-relative">
+                          <div className="select position-relative">
+                            <div className="notif position-relative">
                               <p>Your payment has been confirmed!</p>
-                              <div class="notif-arrow position-absolute">
-                                <i class="fa-solid fa-chevron-right"></i>
+                              <div className="notif-arrow position-absolute">
+                                <i className="fa-solid fa-chevron-right"></i>
                               </div>
                             </div>
-                            <div class="history position-absolute">
-                              <label class="container">
+                            <div className="history position-absolute">
+                              <label className="container">
                                 <input type="checkbox" name="history-2" />
-                                <span class="checkmark"></span>
+                                <span className="checkmark"></span>
                               </label>
                             </div>
                           </div>
                         </div>
-                        <div class="week-section">
+                        <div className="week-section">
                           <h5>A week ago</h5>
-                          <div class="select position-relative">
-                            <div class="history position-absolute">
-                              <label class="container">
+                          <div className="select position-relative">
+                            <div className="history position-absolute">
+                              <label className="container">
                                 <input type="checkbox" name="history-3" />
-                                <span class="checkmark"></span>
+                                <span className="checkmark"></span>
                               </label>
                             </div>
-                            <div class="vehicles d-flex flex-wrap">
+                            <div className="vehicles d-flex flex-wrap">
                               <img src={history1} alt="history 1" />
-                              <div class="rent-details">
-                                <div class="date-detai">
+                              <div className="rent-details">
+                                <div className="date-detai">
                                   <h6>Vespa Matic</h6>
                                   <p>Jan 18 to 21 2021</p>
                                 </div>
-                                <div class="payment-status">
+                                <div className="payment-status">
                                   <h6>Prepayment: Rp.245.000</h6>
                                   <p>Has been returned</p>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div class="select position-relative">
-                            <div class="history position-absolute">
-                              <label class="container">
+                          <div className="select position-relative">
+                            <div className="history position-absolute">
+                              <label className="container">
                                 <input type="checkbox" name="history-4" />
-                                <span class="checkmark"></span>
+                                <span className="checkmark"></span>
                               </label>
                             </div>
-                            <div class="vehicles d-flex flex-wrap">
+                            <div className="vehicles d-flex flex-wrap">
                               <img src={history2} alt="history 2" />
-                              <div class="rent-details">
-                                <div class="date-detai">
+                              <div className="rent-details">
+                                <div className="date-detai">
                                   <h6>Vespa Matic</h6>
                                   <p>Jan 18 to 21 2021</p>
                                 </div>
-                                <div class="payment-status">
+                                <div className="payment-status">
                                   <h6>Prepayment: Rp.245.000</h6>
                                   <p>Has been returned</p>
                                 </div>
@@ -129,7 +129,7 @@ export const History = () => {
                           </div>
                         </div>
                       </div>
-                      <div class="delete-button">
+                      <div className="delete-button">
                         <button>Delete selected item</button>
                       </div>
                     </div>
@@ -147,8 +147,8 @@ export const History = () => {
                       )
                     })}
                     
-                    <div class="another-vehicle">
-                      <Link to="/vehicles">View more<i class="fa-solid fa-chevron-down"></i></Link>
+                    <div className="another-vehicle">
+                      <Link to="/vehicles">View more<i className="fa-solid fa-chevron-down"></i></Link>
                     </div>
                   </div>
                 </div>

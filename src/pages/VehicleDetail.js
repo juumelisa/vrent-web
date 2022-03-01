@@ -17,7 +17,7 @@ export const VehicleDetail = (props)=>{
 
   const getVehicles = async (id)=> {
     try{
-      const {data} = await getData(`http://localhost:8000/vehicles/${id}`, props.history)
+      const {data} = await getData(`${process.env.REACT_APP_URL}/vehicles/${id}`, props.history)
       setVehicles(data.result)
     }catch(err){
       console.log(err.message)
