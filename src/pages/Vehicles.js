@@ -55,16 +55,11 @@ export const Vehicles = () => {
             }
             setPage(data.pageInfo)
         }catch(e){
-            if(e.message.includes('404')){
-                setErrorMsg('Data not found!')
-                setVehicles([])
-                setPage({
-                    next: null
-                })
-            }else if(e.message.includes('400')){
-                setErrorMsg('Minimum cost should be less than maximum cost')
-                setVehicles([])
-            }
+            setErrorMsg(e.response.data.message)
+            setVehicles([])
+            setPage({
+                next: null
+            })
         }
     }
     
