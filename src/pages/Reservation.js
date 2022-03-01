@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getData } from "../helpers/http";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
+import { FaChevronLeft } from "react-icons/fa"
 import LayoutB from "../components/LayoutB";
 
 export const Reservation = (props)=>{
   const [vehicles, setVehicles] = useState([])
   const {id} = useParams()
+  const navigate = useNavigate()
   useEffect(()=>{
       getVehicles(id)
       
@@ -20,14 +21,17 @@ export const Reservation = (props)=>{
       console.log(err.message)
     }
   }
+  const goBack = ()=>{
+    window.history.back()
+  }
         return(
             <LayoutB>
               <main className="container my-5">
-                <div className="back-arrow">
-                  <Link to="/" className="d-flex my-5" style={{color: "black"}}>
+                <div className="back-arrow" onClick={goBack}>
+                  <div to="/" className="d-flex my-5" style={{color: "black"}}>
                     <FaChevronLeft className="fs-3 me-5" style={{height: "80px"}}/>
                     <p className="fs-3 m-0" style={{lineHeight: "80px"}}>Reservation</p>
-                  </Link>
+                  </div>
                 </div>
                 <div className="detail-section row">
                     <img src={vehicles?.image} alt={vehicles?.name} className="col-12 col-md-7"/>

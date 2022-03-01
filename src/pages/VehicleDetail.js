@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getData } from "../helpers/http";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
 import LayoutB from "../components/LayoutB";
@@ -7,6 +7,7 @@ import LayoutB from "../components/LayoutB";
 export const VehicleDetail = (props)=>{
   const [vehicles, setVehicles] = useState([])
   const {id} = useParams()
+  const navigate = useNavigate()
   const qty = 2
   const [formQty, setFormQty] = useState(qty)
   useEffect(()=>{
@@ -30,14 +31,20 @@ export const VehicleDetail = (props)=>{
       setFormQty(formQty-1)
     }
   }
+  const goBack = ()=>{
+    window.history.back()
+  }
+  const goToReservation = (id)=>{
+    navigate (`/reservation/${id}`)
+  }
         return(
             <LayoutB>
               <main className="container my-5">
-                <div className="back-arrow">
-                  <Link to="/" className="d-flex my-5" style={{color: "black"}}>
+                <div className="back-arrow" onClick={goBack}>
+                  <div to="/vehicles" className="d-flex my-5" style={{color: "black"}}>
                     <FaChevronLeft className="fs-3 me-5" style={{height: "80px"}}/>
                     <p className="fs-3 m-0" style={{lineHeight: "80px"}}>Detail</p>
-                  </Link>
+                  </div>
                 </div>
                 <div className="detail-vehicle d-flex flex-column flex-md-row">
                   <div className="vehicle-pictures">

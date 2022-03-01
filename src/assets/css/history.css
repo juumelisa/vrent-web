@@ -8,90 +8,22 @@ body{
 a{
   text-decoration: none;
 }
-
-.wrapper{
-  margin: 20px;
-}
-.history-section{
-  margin: 20px;
-}
-.history-section form{
-  margin-bottom: 50px;
-}
-form input{
-  font-size: 18px;
-  padding: 10px;
-  margin-bottom: 10px;
-  background-color: rgba(239, 218, 215, 0.3);
-  border: 0.5px solid #EFDAD7;
-  border-radius: 10px;
-  height: 40px;
-  width: 100%;
-}
-::-webkit-input-placeholder{
-  color: #81858f;
-}
-form .btn{
-  background-color: rgba(239, 218, 215, 0.3);
-  border: 0.5px solid #EFDAD7;
-  outline: none;
-  width: 120px;
-  height: 40px;
-  color: #81858f;
-}
-form .btn:hover{
-  background-color: rgba(239, 218, 215, 0.3);
-  border: 0.5px solid #EFDAD7;
-  outline: none;
-  color: #81858f;
-}
-form .dropdown button{
-  font-size: 18px;
-}
-form .dropdown ul{
-  background-color: white;
-  text-align: center;
-  width: 200px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-  border: none;
-  border-radius: 10px;
-}
-form .dropdown ul li{
-  border-bottom: 1px solid #DADADA;
-  width: 150px;
-  margin: 0 auto;
-  line-height: 36px;
-  font-size: 12px;
-  font-weight: bold;
-}
-form .dropdown ul .favorite{
-  border: none;
-}
-form .dropdown ul button{
-  background-color: rgba(255, 255, 255, 0);
-  border: none;
-  outline: none;
-}
-form button{
-  font-size: 22px;
-  background-color: rgba(255, 255, 255, 0);
-  border: none;
-  top: 0;
-  right: 10px;
-  line-height: 40px;
-}
-.selection .select-all{
-  top: 0;
-  left: 0;
-  font-size: 18px;
-  text-align: left;
-  width: 50px;
-}
-.selection .select-all label{
-  margin: 0;
+main{
   padding: 0;
 }
-.container input {
+
+.select .notif, .week-section .vehicles{
+  width: 80%;
+}
+.history{
+  right: 0;
+  top: 0;
+  transform: translateY(-50%);
+}
+.selection .select-all{
+  right: 0;
+}
+.selection .select-all input, .history .container input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -105,10 +37,10 @@ form button{
   border: 1px solid #B8BECD;
   border-radius: 10px;
 }
-.container:hover input, .checkmark:hover {
+.select-all .selection .container:hover input, .checkmark:hover {
   background-color: #EFDAD7;
 }
-.container input:checked ~ .checkmark {
+.select-all .selection .container input:checked ~ .checkmark {
   background-color: #E3BEC6;
 }
 .checkmark:after {
@@ -116,10 +48,10 @@ form button{
   position: absolute;
   display: none;
 }
-.container input:checked ~ .checkmark:after {
+.select-all .selection .container input:checked ~ .checkmark:after {
   display: block;
 }
-.container .checkmark:after {
+.select-all .selection .container .checkmark:after {
   left: 9px;
   top: 5px;
   width: 5px;
@@ -130,246 +62,22 @@ form button{
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-.notification .history{
-  top: 0;
-  left: -10px;
-  transform: translateY(-50%);
-}
-.notification .notif, .vehicles .rent-details, .vehicles img{
-  margin-left: 40px;
-}
-.vehicles h6{
-  font-weight: 700;
-}
-.payment-status p{
-  color: #9AD0EC;
-}
-.vehicles img{
-  width: 70%;
-}
-.vehicles .rent-details{
-  margin-top: 20px;
-  width: 100%;
-}
-.notification h5{
-  font-weight: 600;
-  color: #C4C4C4;
-  margin: 30px 0 20px 0;
-}
-.notification .today-section{
-  margin-top: 120px;
-}
-.today-section .notif-arrow{
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-}
-.today-section .select p{
-  width: 60%;
-}
-.history-section .delete-button button{
-  width: 100%;
-  border: none;
-  border-radius: 10px;
-  background-color: #9AD0EC;
-  height: 50px;
-  font-size: 18px;
-  font-weight: 700;
-}
-.history-section .delete-button button:hover{
-  background-color: #1572A1;
-  color: white;
-}
 
-.new-arrival-section{
-  border: 1px solid #DADADA;
-  border-radius: 10px;
-  padding: 50px 0;
+.history-form input{
   width: 100%;
 }
-.new-arrival-section h1{
-  text-align: center;
-  font-weight: 900;
-  margin-bottom: 20px;
-}
-.new-arrival-section .new-vehicles{
-  width:100%;
-}
-.new-vehicles .vehicle-images{
-  margin-bottom: 40px;
-  width: 80%;
-}
-.new-arrival-section .new-vehicles .vehicle-images img{
-  width:100%;
-}
-.vehicle-images .location{
-  padding-top: 11px;
-  bottom: -15px;
-  background-color: white;
-  width: 120px;
-  line-height: 25px;
-  font-size: 17px;
-  color: black;
-  border-radius: 0 6px;
-}
-.new-arrival-section .another-vehicle{
-  margin: 0 auto;
-  text-align: center;
-  width: 80px;
-}
-.another-vehicle a{
-  font-size: 16px;
-  color: #81858f;
-}
-.another-vehicle a .fa-chevron-down{
-  font-size: 30px;
-  color: black;
+.history-form button{
+  background-color: transparent;
+  width: 30px;
+  top: 0;
+  right: 0;
 }
 
 @media(min-width: 768px){
-
-    .wrapper{
-      margin: 40px;
-    }
-    form input{
-      font-size: 22px;
-      padding: 20px;
-      height: 50px;
-      margin-bottom: 20px;
-    }
-    form .btn{
-      height: 50px;
-      width: 157px;
-    }
-    form .dropdown ul{
-      width: 257px;
-    }
-    form .dropdown ul li{
-      line-height: 40px;
-      font-size: 14px;
-    }
-    form .dropdown button{
-      font-size: 22px;
-    }
-    form button{
-      font-size: 30px;
-      line-height: 50px;
-    }
-    .selection .select-all{
-      top: -100px;
-      left: 90%;
-      font-size: 22px;
-      width: 40px;
-      text-align: right;
-    }
-    .notification h5{
-      margin: 50px 0 20px 0;
-      font-size: 22px;
-    }
-    .notification .today-section{
-      margin-top: 45px;
-    }
-    .notification .history{
-      left: 95%;
-    }
-    .notification .week-section .history{
-      top: 50%;
-    }
-    .notification .notif, .vehicles .rent-details, .vehicles img{
-      margin-left: 0;
-    }
-    .today-section .notif-arrow{
-      right: 30%;
-    }
-    .vehicles .rent-details{
-      padding-left: 30px;
-    }
-    .today-section .select p{
-      width: 100%;
-    }
-    .vehicles img{
-      width: 50%;
-    }
-    .vehicles .rent-details{
-      width: 50%;
-    }
-    .week-section .select{
-      margin-bottom: 30px;
-    }
-    .history-section .delete-button button{
-      height: 70px;
-      font-size: 22px;
-    }
-    .new-arrival-section{
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .new-arrival-section h1{
-      text-align: center;
-    }
-    .new-vehicles .vehicle-images{
-      width:50%;
-      padding: 10px;
-      margin: 0 auto;
-    }
-    .new-vehicles .vehicle-images img{
-      width: 100%;
-    }
-    .new-arrival-section .another-vehicle{
-      width: 90px;
-      margin-top: 30px;
-    }
-    .another-vehicle a{
-      font-size: 18px;
-    }
-    .another-vehicle a .fa-chevron-down{
-      font-size: 40px;
-    }
-}
-
-@media(min-width: 992px){
-
-    .wrapper{
-      margin: 0 90px;
-    }
-    form{
-      width: 100%;
-    }
-    form input{
-      font-size: 24px;
-      height: 75px;
-      margin-bottom: 25px;
-    }
-    form .dropdown ul li{
-      line-height: 54px;
-    }
-    form .dropdown button{
-      font-size: 24px;
-    }
-    form button{
-      line-height: 75px;
-    }
-    form .btn{
-      height: 75px;
-    }
-    .history-section{
-      width: 60%;
-    }
-    .today-section .notif-arrow{
-      right: 10%;
-    }
-    .history-section .delete-button button{
-      height: 90px;
-      font-size: 24px;
-      margin-top: 50px
-    }
-    .new-arrival-section{
-      top: 0;
-      left: 85%;
-      width: 30%;
-    }
-    .new-vehicles .vehicle-images{
-      width: 100%;
-      padding: 30px;
-    }
+  .week-section .vehicles img{
+    width: 50%;
+  }
+  .week-section .vehicles .rent-details{
+    padding-left: 15px;
+  }
 }

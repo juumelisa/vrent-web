@@ -22,7 +22,7 @@ export default class HeaderA extends Component{
                                 <Link className="nav-link" to="/vehicle-list">Vehicle Type</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">History</Link>
+                                <Link className="nav-link" to="/history">History</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/">About</Link>

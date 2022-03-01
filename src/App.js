@@ -18,6 +18,7 @@ import PopularCar from './pages/PopularCar';
 import ListOfPopularBike from './pages/ListOfPopularBike';
 import ListOfPopularCar from './pages/ListOfPopularCar';
 import ListOfPopularMotorbike from './pages/ListOfPopularMotorbike';
+import Payment from './pages/Payment';
 
 export default class App extends Component {
   componentDidMount(){
@@ -41,6 +42,7 @@ export default class App extends Component {
         <Route path="vehicles/:id" element={<VehicleDetail history={this.history} /> } />
         <Route path="vehicles/car" element={<PopularCar />} />
         <Route path="reservation/:id" element={<Reservation/>} />
+        <Route path="payment/:id" element={<Payment />} />
         <Route path="history" element={<History/>} />
         <Route path="profile" element={<Profile/>} />
         <Route path="404" element={<NotFound/>} />
