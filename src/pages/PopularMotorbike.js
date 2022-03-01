@@ -20,9 +20,9 @@ export const PopularMotorbike = ()=>{
         return(
             <main className="container">
                 <div className="popular-section py-5">
-                    <div className="heading-section row">
-                        <h1 className="col-12 col-md-6 my-2">Popular motorbike</h1>
-                        <div className="other-vehicles col-12 col-md-6 text-end my-2">
+                    <div className="heading-section d-flex align-items-center" style={{width: "100%"}}>
+                        <h1 style={{width: "50%"}}>Popular motorbike</h1>
+                        <div className="other-vehicles text-end" style={{width: "50%"}}>
                             <Link to="/popular-motorbike" style={{color: "#1572A1"}}>View all <FaChevronRight className="ms-3"/></Link>
                         </div>
                     </div>

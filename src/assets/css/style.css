@@ -10,8 +10,6 @@ input[type=number], input[type=date] {
 
 h1{
     font-family: 'Playfair Display', serif;
-    line-height: 50px;
-    font-size: 6vh;
 }
 
 .search-section{
@@ -77,16 +75,12 @@ form button:hover{
     .search-section h1{
         width: 500px;
         font-size: 6vw;
-        line-height: 6.5vw;
     }
     form .location-date input{
         width: 50%;
     }
     .location-date .form-space{
         width: 10px;
-    }
-    .popular-section .other-vehicles{
-        line-height: 6.5vw;
     }
     .search-section form button{
         margin-top: 30px;
