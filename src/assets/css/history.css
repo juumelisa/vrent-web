@@ -37,9 +37,6 @@ main{
   border: 1px solid #B8BECD;
   border-radius: 10px;
 }
-.select-all .selection .container:hover input, .checkmark:hover {
-  background-color: #EFDAD7;
-}
 .select-all .selection .container input:checked ~ .checkmark {
   background-color: #E3BEC6;
 }
