@@ -5,6 +5,7 @@ import { FaChevronRight } from "react-icons/fa";
 import {AiFillStar} from "react-icons/ai"
 import Layout from "../components/Layout"
 import testimony from '../assets/images/edward-testimony.png'
+import SubmitButton from '../components/SubmitButton';
 
 export const Homepage = () => {
     const [vehicles, setVehicles] = useState([])
@@ -20,13 +21,18 @@ export const Homepage = () => {
     const goToDetail = (id)=> {
         navigate(`/vehicles/${id}`)
     }
+    const handleSearch = async(event)=>{
+        event.preventDefault()
+        const searchVehicle = event.target.elements["name"].value;
+        navigate(`/vehicles?name=${searchVehicle}`, {replace: true})
+    }
     return(
         <Layout>
             <div className="search-section">
                 <div className="search-background py-5">
                     <div className="container">
                         <h1 className="py-5">Explore and Travel</h1>
-                        <form action="/vehicles" className="fs-5" style={{width: "100%"}}>
+                        <form onSubmit={handleSearch} className="fs-5" style={{width: "100%"}}>
                             <h2 className="fs-4 p-0 mb-5">Vehicle Finder</h2>
                             <div className="line mb-5"></div>
                             <input type="text" name="name" placeholder="Type the vehicle (ex. motorbike)" className="col-12"/>
@@ -35,7 +41,7 @@ export const Homepage = () => {
                                 <div className="form-space"></div>
                                 <input type="date" />
                             </div>
-                            <button className="mb-5">Search</button>
+                            <SubmitButton >Search</SubmitButton>
                         </form>
                     </div>
                 </div>

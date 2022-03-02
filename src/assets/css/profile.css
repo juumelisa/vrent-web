@@ -26,6 +26,15 @@
   background-color: rgba(0,0,0,0.2);
 }
 
+form .gender-section{
+  width: 180px;
+  padding: 0;
+  margin: 0 auto;
+}
+.gender-section .gender-selection{
+  width: 50%;
+}
+
 @media(min-width: 768px){
   .profile-form button, .profile-form .btn{
     line-height: 60px;

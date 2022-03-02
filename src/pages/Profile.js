@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import LayoutB from "../components/LayoutB";
 import avatar from "../assets/images/user.png"
 import { Link } from "react-router-dom";
+import SubmitButton from "../components/SubmitButton";
 
 export default class Profile extends Component{
     render(){
@@ -10,7 +11,7 @@ export default class Profile extends Component{
 
                 <main className="container mb-5">
                     <h1>Profile</h1>
-                    <div class="user-profile position-relative text-center">
+                    <div className="user-profile position-relative text-center">
                         <div className="user-avatar">
                         <img className="rounded-circle" alt="avatar" width="200" height="200" src={avatar} />
                         </div>
@@ -29,6 +30,14 @@ export default class Profile extends Component{
                         </div>
                     </div>
                     <form className="profile-form">
+                        <div class="form-check gender-section d-flex">
+                            <label for="male" className="gender-selection position-relative fs-5 ps-3 me-3">
+                                <input className="position-absolute top-50 start-0 translate-middle" type="radio" name="gender" id="male" />Male
+                            </label>
+                            <label for="female" className="gender-selection position-relative ps-3 fs-5">
+                                <input className="position-absolute top-50 start-0 translate-middle" type="radio" name="gender" id="female" />Female
+                            </label>
+                        </div>
                         <div className="contact-section">
                             <h2 className="fs-5 fw-bolder mb-4">Contacts</h2>
                             <label for="email" className="fs-5 mb-4">Email address :</label>
@@ -52,7 +61,7 @@ export default class Profile extends Component{
                             </div>
                         </div>
                         <div className="user-button d-flex flex-wrap flex-md-row my-4">
-                            <button type="submit" className="fs-5 fw-bold mb-2">Save Change</button>
+                            <SubmitButton >Save Change</SubmitButton>
                             <div className="change-password btn fs-5 fw-bold mb-2">Change password</div>
                             <div className="cancel btn fs-5 fw-bold mb-2">Cancel</div>
                         </div>

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {default as axios} from 'axios'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import LayoutB from '../components/LayoutB'
+import SubmitButton from '../components/SubmitButton'
 
 export const Vehicles = () => {
     const [vehicles, setVehicles] = useState([])
@@ -118,7 +119,7 @@ export const Vehicles = () => {
                                 <option value="cost ASC">Lowest Price</option>
                                 <option value="cost DESC">Highest Price</option>
                             </select>
-                            <button type='submit' className="my-4">Search</button>
+                            <SubmitButton>Search</SubmitButton>
                         </form>
                     </div>
                     <div class="list-vehicles col-12 col-md-9">
