@@ -10,6 +10,7 @@ export const Vehicles = () => {
     const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams()
     const [errorMsg, setErrorMsg] = useState(null)
+    const {REACT_APP_BACKEND_URL} = process.env
 
     useEffect(()=>{
         // const name = searchParams.get('name')
@@ -17,9 +18,8 @@ export const Vehicles = () => {
         // const cost_min = searchParams.get('cost_min')
         const vehicleData = {}
         const dataName = ['name', 'location', 'cost_min', 'cost_max', 'category', 'type', 'sortBy']
-        let url = `${process.env.REACT_APP_URL}/popular?limit=16`
-        console.log(process.env)
-        console.log(process.env.REACT_APP_URL)
+        let url = `${REACT_APP_BACKEND_URL}popular?limit=16`
+        console.log(REACT_APP_BACKEND_URL)
         let nullData = 0
         dataName.forEach(x=>{
             vehicleData[x] = searchParams.get(x)
@@ -38,7 +38,7 @@ export const Vehicles = () => {
     },[])
 
     const getVehicles = async ()=> {
-        const {data} = await axios.get(`${process.env.REACT_APP_URL}/popular?limit=16`)
+        const {data} = await axios.get(`${REACT_APP_BACKEND_URL}/popular?limit=16`)
         setVehicles(data.result)
         setPage(data.pageInfo)
     }
@@ -67,7 +67,7 @@ export const Vehicles = () => {
     
     const onSearch = async(event)=>{
         event.preventDefault();
-        let url = `${process.env.REACT_APP_URL}/popular?limit=16`
+        let url = `${REACT_APP_BACKEND_URL}/popular?limit=16`
         const name = event.target.elements["name"].value
         const location = event.target.elements["location"].value
         const cost_min = event.target.elements["cost_min"].value
@@ -99,22 +99,22 @@ export const Vehicles = () => {
                             <input className="py-2 my-2" name="location" type="text" placeholder="Location" />
                             <input className="py-2 my-2" name="cost_min" type="number" placeholder="Minimum cost" />
                             <input className="py-2 my-2" name="cost_max" type="number" placeholder="Maximum cost" />
-                            <label className="mt-4 fs-6 fw-bold" for="category">Category :</label>
+                            <label className="mt-4 fs-6 fw-bold" htmlFor="category">Category :</label>
                             <select id="category" className="mt-2">
-                                <option selected value="">All</option>
+                                <option defaultValue="">All</option>
                                 <option value="1">Car</option>
                                 <option value="2">Motorbike</option>
                                 <option value="3">Bike</option>
                             </select>
-                            <label className="mt-4 fs-6 fw-bold" for="type">Type :</label>
+                            <label className="mt-4 fs-6 fw-bold" htmlFor="type">Type :</label>
                             <select id="type" className="mt-2">
-                                <option selected value="">All</option>
+                                <option defaultValue="">All</option>
                                 <option value="manual">Manual</option>
                                 <option value="matic">Matic</option>
                             </select>
-                            <label className="mt-4 fs-6 fw-bold" for="sortBy">Sort by : </label>
+                            <label className="mt-4 fs-6 fw-bold" htmlFor="sortBy">Sort by : </label>
                             <select id="sortBy" className="mt-2">
-                                <option selected value="id DESC">New Arrival</option>
+                                <option defaultValue="id DESC">New Arrival</option>
                                 <option value="totalRent DESC">Popular</option>
                                 <option value="cost ASC">Lowest Price</option>
                                 <option value="cost DESC">Highest Price</option>
@@ -122,7 +122,7 @@ export const Vehicles = () => {
                             <SubmitButton>Search</SubmitButton>
                         </form>
                     </div>
-                    <div class="list-vehicles col-12 col-md-9">
+                    <div className="list-vehicles col-12 col-md-9">
                         {errorMsg!==null&&
                             <div className='row my-5'>
                                 <div className='col'>
@@ -136,7 +136,7 @@ export const Vehicles = () => {
                         <div className="row vehicles">
                             {vehicles.map((data, idx)=>{
                                 return(
-                                    <div onClick={()=>goToDetail(data.id)} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{cursor: "pointer"}}>
+                                    <div key={data.id} onClick={()=>goToDetail(data.id)} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{cursor: "pointer"}}>
                                         <img className="img-fluid" src={data.image} alt={data.name} />
                                         <div className="location position-absolute bottom-0 bg-white p-2">
                                             <h6 className="m-0">{data.name}</h6>

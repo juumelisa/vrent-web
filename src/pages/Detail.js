@@ -3,13 +3,17 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { getData } from '../helpers/http';
 import Layout from '../components/Layout';
+import { change } from '../redux/actions/counter';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
-export function VehicleDetail(props) {
+export const Detail = (props) => {
+    const {counter} = useSelector(state=>state)
+    const dp = useDispatch()
   const [vehicles, setVehicles] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
   const qty = 2;
-  const [formQty, setFormQty] = useState(qty);
+  const [formQty, setFormQty] = useState(counter.num);
   const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
     getVehicles(id);
@@ -23,14 +27,23 @@ export function VehicleDetail(props) {
       console.log(err.message);
     }
   };
-  const addQty = () => {
-    setFormQty(formQty + 1);
-  };
-  const minusQty = () => {
-    if (formQty > 1) {
-      setFormQty(formQty - 1);
+  const changeForm = (e)=>{
+      setFormQty(e.target.elements['qty'].value)
+  }
+  const onIncrement = ()=>{
+    dp({type: 'INCREMENT'})
+  }
+  const onDecrement = ()=>{
+      if(counter.num>0){
+        dp({type: 'DECREMENT'})
     }
-  };
+  }
+  const changeQty =(e)=>{
+      e.preventDefault()
+      const sum = e.target.elements['qty'].value
+      console.log(sum)
+      change(sum)
+  }
   const goBack = () => {
     window.history.back();
   };
@@ -95,9 +108,9 @@ export function VehicleDetail(props) {
         </div>
         <form className="position-relative pt-5" id="reservation">
           <div className="qty-btn d-flex justify-content-center">
-            <div className="plus btn fw-bold" onClick={() => addQty()}>+</div>
-            <input className="qty-form text-center fw-bold" type="number" name="qty" value={formQty} style={{ backgroundColor: 'white', margin: '0' }} />
-            <div className="minus btn fw-bold" onClick={() => minusQty()}>-</div>
+            <div className="plus btn fw-bold" onClick={() => onIncrement()}>+</div>
+            <input className="qty-form text-center fw-bold" type="number" name="qty" value={counter.num} onChange={changeForm} style={{ backgroundColor: 'white', margin: '0' }} />
+            <div className="minus btn fw-bold" onClick={() => onDecrement()}>-</div>
           </div>
           <div className="button row my-4">
             <div className="button-group col-12 col-md-9 d-flex flex-column-reverse flex-md-row">
@@ -113,5 +126,5 @@ export function VehicleDetail(props) {
     </Layout>
   );
 }
-
-export default VehicleDetail;
+const mapDispatchToProps = {change}
+export default connect(mapDispatchToProps)(Detail);
