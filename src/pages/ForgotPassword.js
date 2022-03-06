@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa';
 import Footer from '../components/Footer';
+import { useDispatch, useSelector } from 'react-redux';
+import { forgotPassword } from '../redux/actions/auth';
 
-export default class ForgotPassword extends Component {
-  render() {
+export const ForgotPassword = ()=> {
+  const dispatch = useDispatch()
+  const auth = useSelector(state => state.auth)
+  const navigate = useNavigate()
+  console.log(auth.token)
+
+  const onForgot = (e)=>{
+    e.preventDefault()
+    const username = e.target.elements['username'].value
+    dispatch(forgotPassword(username))
+    navigate('/change-password')
+  }
     return (
       <>
         <section>
@@ -16,8 +28,10 @@ export default class ForgotPassword extends Component {
               </Link>
             </div>
             <h1 className="text-center">Don’t worry, we got your back!</h1>
-            <form className="forgot">
-              <input className="mb-4" type="email" name="email" placeholder="Enter your email address" />
+            {auth.isError && auth.errorMsg && <div className='alert alert-danger mb-5'>{auth.errorMsg}</div>}
+            {!auth.isError && auth.errorMsg && <div className='alert alert-danger mb-5'>{auth.errorMsg}</div>}
+            <form onSubmit={onForgot} className="forgot">
+              <input className="mb-4" type="email" name="username" placeholder="Enter your email address" />
               <button>Send Link</button>
             </form>
             <div className="message">
@@ -32,5 +46,6 @@ export default class ForgotPassword extends Component {
         <Footer />
       </>
     );
-  }
 }
+
+export default ForgotPassword

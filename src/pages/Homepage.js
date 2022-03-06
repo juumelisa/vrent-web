@@ -6,12 +6,18 @@ import { AiFillStar } from 'react-icons/ai';
 import Layout from '../components/Layout';
 import testimony from '../assets/images/edward-testimony.png';
 import SubmitButton from '../components/SubmitButton';
+import { getDataUser } from '../redux/actions/auth';
+import { connect, useSelector } from 'react-redux';
 
-export const Homepage=()=> {
+export const Homepage=({getDataUser})=> {
+  const auth = useSelector(state=>state.auth)
   const {REACT_APP_BACKEND_URL} = process.env
   const [vehicles, setVehicles] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
+    if(auth.token!==null && auth.token!==undefined){
+      getDataUser(auth.token)
+    }
     getVehicles();
   }, []);
 
@@ -96,5 +102,6 @@ export const Homepage=()=> {
     </Layout>
   );
 }
-
-export default Homepage;
+const mapStateToProps = state => ({auth: state.auth})
+const mapDispatchToProps = {getDataUser}
+export default connect(mapStateToProps, mapDispatchToProps)(Homepage);

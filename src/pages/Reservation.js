@@ -3,18 +3,21 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa';
 import { getData } from '../helpers/http';
 import Layout from '../components/Layout';
+import { connect, useSelector } from 'react-redux';
 
-export function Reservation(props) {
+export const Reservation = (props)=> {
+  const {counter} = useSelector(state=>state)
   const [vehicles, setVehicles] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
+  const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
     getVehicles(id);
   }, []);
 
   const getVehicles = async (id) => {
     try {
-      const { data } = await getData(`http://localhost:8000/vehicles/${id}`, props.history);
+      const { data } = await getData(`${REACT_APP_BACKEND_URL}vehicles/${id}`, props.history);
       setVehicles(data.result);
     } catch (err) {
       console.log(err.message);
@@ -42,7 +45,7 @@ export function Reservation(props) {
             </h2>
             <h3 className="fs-3 fw-bold mb-4">{vehicles?.location}</h3>
             <div className="res-quantity p-2 my-3">
-              <p>Qt: 2 bikes</p>
+              <p>Qt: {counter.num} bikes</p>
               <p>No prepayment</p>
             </div>
             <div className="detail-checkout p-2">
@@ -67,7 +70,7 @@ export function Reservation(props) {
           </div>
           <div className="btn text-center my-3 fs-5">
             Total: Rp.
-            {vehicles?.cost * 2}
+            {vehicles?.cost * counter.num}
           </div>
           <button type="submit" className="fs-5 fw-bold py-0">Go to payment</button>
         </form>
@@ -76,4 +79,6 @@ export function Reservation(props) {
   );
 }
 
-export default Reservation;
+const mapStateToProps = state=>({counter: state.counter})
+
+export default connect(mapStateToProps)(Reservation);

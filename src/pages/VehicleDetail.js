@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { getData } from '../helpers/http';
 import Layout from '../components/Layout';
+import { change } from '../redux/actions/counter';
 
 export function VehicleDetail(props) {
   const [vehicles, setVehicles] = useState([]);
@@ -113,5 +114,4 @@ export function VehicleDetail(props) {
     </Layout>
   );
 }
-
 export default VehicleDetail;

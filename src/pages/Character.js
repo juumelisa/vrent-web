@@ -1,9 +1,10 @@
 import { useEffect } from "react"
-import { connect } from "react-redux"
+import { connect, useSelector } from "react-redux"
 import Layout from "../components/Layout"
 import { getCharacter } from "../redux/actions/character"
 
-export const Character = ({getCharacter, character:char})=>{
+export const Character = ({getCharacter})=>{
+    const {character: char} = useSelector(state => state)
 
     useEffect(()=>{
         console.log(char)

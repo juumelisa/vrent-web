@@ -1,14 +1,17 @@
 import {default as axios} from "axios"
 import { useEffect, useState } from "react"
-import { connect, useDispatch } from "react-redux"
+import { connect, useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import Layout from "../components/Layout"
 import SubmitButton from "../components/SubmitButton"
 import { getVehicles, getNextData } from "../redux/actions/vehicles"
 
-export const Vehicle = ({getVehicles, vehicles: vhc, getNextData}) =>{
+export const Vehicle = ({getVehicles, getNextData}) =>{
+    const {vehicles: vhc} = useSelector(state => state)
     const [vehicles, setVehicles] = useState([])
     const [page, setPage] = useState({})
     const [errorMsg, setErrorMsg] = useState(null)
+    const navigate = useNavigate()
     const dp = useDispatch()
     // const {REACT_APP_BACKEND_URL} = process.env
     useEffect(()=>{
@@ -17,6 +20,10 @@ export const Vehicle = ({getVehicles, vehicles: vhc, getNextData}) =>{
     },[])
     const nextData = (url) =>{
         getNextData(url)
+        console.log(vhc.vehicles.result)
+    }
+    const goToDetail = (id)=> {
+        navigate(`/vehicle/${id}`)
     }
     return(
         <Layout>
@@ -66,7 +73,7 @@ export const Vehicle = ({getVehicles, vehicles: vhc, getNextData}) =>{
                     <div className="row vehicles">
                         {vhc.vehicles.map((data, idx)=>{
                             return(
-                                <div key={data.id} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{cursor: "pointer"}}>
+                                <div key={data.id} onClick={()=>goToDetail(data.id)} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{cursor: "pointer"}}>
                                     <img className="img-fluid" src={data.image} alt={data.name} />
                                     <div className="location position-absolute bottom-0 bg-white p-2">
                                         <h6 className="m-0">{data.name}</h6>

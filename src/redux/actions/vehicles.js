@@ -5,7 +5,7 @@ const {REACT_APP_BACKEND_URL} = process.env
 export const getVehicles = ()=>{
     return{
         type: 'GET_VEHICLES',
-        payload: axios.get(`${REACT_APP_BACKEND_URL}/popular?limit=16`)
+        payload: axios.get(`${REACT_APP_BACKEND_URL}popular?limit=16`)
     }
 }
 
@@ -20,6 +20,6 @@ export const getNextData = (url)=>{
 export const getVehicleDetail = (id)=>{
     return{
         type: 'GET_VEHICLES_DETAIL',
-        payload: axios.get(`${REACT_APP_BACKEND_URL}/vehicles/${id}`)
+        payload: axios.get(`${REACT_APP_BACKEND_URL}vehicles/${id}`)
     }
 }

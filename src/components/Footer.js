@@ -11,7 +11,7 @@ export default class Footer extends Component {
       <footer className="mt-5">
         <div className="row container">
           <div className="col-12 col-lg-5">
-            <a href="index.html"><img alt="logo" width="40" height="40" src={logo} /></a>
+            <Link to="/"><img alt="logo" width="40" height="40" src={logo} /></Link>
             <div className="about">
               Plan and book your perfect trip with
               expert advice, travel tips for vehicle
@@ -21,31 +21,31 @@ export default class Footer extends Component {
           <div className="col-12 col-md-4 col-lg-2">
             <div className="destinations">
               <h5>Destinations</h5>
-              <a href="#">Bali</a>
-              <a href="#">Yogyakarta</a>
-              <a href="#">Jakarta</a>
-              <a href="#">Kalimantan</a>
-              <a href="#">Malang</a>
+              <Link to="/">Bali</Link>
+              <Link to="/">Yogyakarta</Link>
+              <Link to="/">Jakarta</Link>
+              <Link to="/">Kalimantan</Link>
+              <Link to="/">Malang</Link>
             </div>
           </div>
           <div className="col-12 col-md-4 col-lg-2">
             <div className="vehicles">
               <h5>Vehicles</h5>
-              <a href="#">Bike</a>
-              <a href="#">Cars</a>
-              <a href="#">Motorbike</a>
-              <a href="#">Return Times</a>
-              <a href="#">FAQs</a>
+              <Link to="/">Bike</Link>
+              <Link to="/">Cars</Link>
+              <Link to="/">Motorbike</Link>
+              <Link to="/">Return Times</Link>
+              <Link to="/">FAQs</Link>
             </div>
           </div>
           <div className="col-12 col-md-4 col-lg-3">
             <div className="interests">
               <h5>Interests</h5>
-              <a href="#">Adventure Travel</a>
-              <a href="#">Art and Culture</a>
-              <a href="#">Wildlife and Nature</a>
-              <a href="#">Family Holidays</a>
-              <a href="#">Culinary Trip</a>
+              <Link to="/">Adventure Travel</Link>
+              <Link to="/">Art and Culture</Link>
+              <Link to="/">Wildlife and Nature</Link>
+              <Link to="/">Family Holidays</Link>
+              <Link to="/">Culinary Trip</Link>
             </div>
           </div>
         </div>

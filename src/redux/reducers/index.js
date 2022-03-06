@@ -3,7 +3,7 @@ import auth from "./auth";
 
 
 const counterState = {
-    num: 0
+    num: 1
 }
 const vehicleState = {
     vehicles: [],
@@ -28,6 +28,7 @@ const rootReducer = combineReducers({
                 state.num = state.num-1
                 return state
             case 'CHANGE_SUM': {
+                console.log(action.payload.sum)
                 state.num = action.payload
                 return state
             }
@@ -58,7 +59,7 @@ const rootReducer = combineReducers({
             case 'GET_NEXTDATA_FULFILLED':{
                 const {data} = action.payload
                 console.log(data)
-                state.vehicles = [...data.result]
+                state.vehicles = state.vehicles.concat(data.result)
                 state.page = data.pageInfo
                 state.isLoading = false
                 return state

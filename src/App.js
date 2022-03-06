@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { unstable_HistoryRouter as HistoryRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { createBrowserHistory } from 'history';
@@ -25,22 +25,40 @@ import Character from './pages/Character';
 import Header from './components/Header';
 import Vehicle from './pages/Vehicle';
 import {Detail} from './pages/Detail';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDataUser } from './redux/actions/auth';
+import ChangePassword from './pages/ChangePassword';
+import AccountConfirmation from './pages/AccountConfirmation';
 
-export default class App extends Component {
-  componentDidMount() {
-    console.log(this.props);
-  }
+const App = ()=> {
+  const auth = useSelector(state=>state.auth)
+  const history = createBrowserHistory({window})
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    const token = window.localStorage.getItem('token')
+    console.log(token)
+    // if(token){
+    //   dispatch({
+    //     type: 'AUTH_LOGIN_FULFILLED',
+    //     payload: {
+    //       result: {
+    //         token
+    //       }
+    //     }
+    //   })
+    //   dispatch(getDataUser(token))
+    // }
+  }, [dispatch, auth.token])
 
-  history = createBrowserHistory();
-
-  render() {
     return (
-      <HistoryRouter history={this.history}>
+      <HistoryRouter history={history}>
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="account-confirmation" element={<AccountConfirmation />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="change-password" element={<ChangePassword />} />
           <Route path="vehicle-list" element={<VehicleType />} />
           <Route path="character-list" element={<CharacterList />} />
           <Route path="character" element={<Character />} />
@@ -49,8 +67,8 @@ export default class App extends Component {
           <Route path="popular-motorbike" element={<ListOfPopularMotorbike />} />
           <Route path="popular-bike" element={<ListOfPopularBike />} />
           <Route path="vehicles" element={<Vehicles />} />
-          <Route path="vehicles/:id" element={<VehicleDetail history={this.history} />} />
-          <Route path="vehicle/:id" element={<Detail history={this.history} />} />
+          <Route path="vehicles/:id" element={<VehicleDetail history={history} />} />
+          <Route path="vehicle/:id" element={<Detail history={history} />} />
           <Route path="vehicles/car" element={<PopularCar />} />
           <Route path="reservation/:id" element={<Reservation />} />
           <Route path="payment/:id" element={<Payment />} />
@@ -63,5 +81,6 @@ export default class App extends Component {
         </Routes>
       </HistoryRouter>
     );
-  }
 }
+
+export default App

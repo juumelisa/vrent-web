@@ -1,12 +1,14 @@
 import React from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import logo from '../assets/images/logo.png';
 import user from '../assets/images/user.png';
 import messageIcon from '../assets/images/email.png';
 
-export const Header = (auth)=> {
+export const Header = ()=> {
+  const auth = useSelector(state=>state.auth)
+  const token = window.localStorage.getItem('token')
     const navigate = useNavigate();
     const dp = useDispatch()
     const handleSearch = async (event) => {
@@ -16,7 +18,7 @@ export const Header = (auth)=> {
     };
     console.log(auth.token)
     const onLogout = ()=>{
-      dp({type: 'LOGOUT'})
+      dp({type: 'AUTH_LOGOUT'})
       navigate('/')
     }
       return (
@@ -40,7 +42,7 @@ export const Header = (auth)=> {
                 <li className="nav-item">
                   <Link className="nav-link" to="/">About</Link>
                 </li>
-                {auth.token!==null && <div className="d-flex flex-column flex-lg-row">
+                {token!==null && token!==undefined && <div className="d-flex flex-column flex-lg-row">
                   <li>
                     <form onSubmit={handleSearch} className="header-form" id="search">
                       <div className="searching-form position-relative">
@@ -63,7 +65,7 @@ export const Header = (auth)=> {
                   <li className="text-center"><div onClick={onLogout} className="btn btn-primary login" role="button">Logout</div></li>
                 </div>
                 }
-                {auth.token===null && <div className="listA">
+                {(token===null || token===undefined) && <div className="d-flex flex-column flex-lg-row">
                   <li className="text-center"><Link className="btn btn-primary login" to="/login" role="button">Login</Link></li>
                   <li className="text-center"><Link className="btn btn-primary register" to="/register" role="button">Register</Link></li>
                 </div>

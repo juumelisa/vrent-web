@@ -4,19 +4,23 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import googleLogo from '../assets/images/google-logo.png';
 import background from '../assets/images/login-background.png';
 import FooterB from '../components/FooterB';
-import { getDataUser, login } from '../redux/actions/auth';
+import { changePassword } from '../redux/actions/auth';
 
-const Login = ()=> {
+const ChangePassword = ()=> {
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth)
   const navigate = useNavigate()
   console.log(auth.token)
 
-  const onLogin = (e)=>{
+  const onChangePassword = (e)=>{
     e.preventDefault()
     const username = e.target.elements['username'].value
+    const confirmCode = e.target.elements['confirmCode'].value
     const password = e.target.elements['password'].value
-    dispatch(login(username, password))
+    const confirmPassword = e.target.elements['password'].value
+    const data = {username, confirmCode, password, confirmPassword}
+    dispatch(changePassword(data))
+    navigate('/login')
   }
   return (
     <>
@@ -28,27 +32,18 @@ const Login = ()=> {
       </div>
       <div className="right-container pt-5">
         <div className="top-wrapper">
-          <h1 className="my-5">Login</h1>
-          <form onSubmit={onLogin} className="login-form">
+          <h1 className="my-5">Change Password</h1>
+          {auth.isError && auth.errorMsg && <div className='alert alert-danger mb-5'>{auth.errorMsg}</div>}
+          {!auth.isError && auth.errorMsg && <div className='alert alert-success mb-5'>{auth.errorMsg}</div>}
+          <form onSubmit={onChangePassword} className="login-form">
             {auth.isError && auth.errorMsg && <div className='alert alert-danger mb-5'>{auth.errorMsg}</div>}
             <input type="text" name="username" placeholder="Email or username" className="fs-4" />
+            <input type="text" name="confirmCode" placeholder="Confirmation code" className="fs-4" />
             <input type="password" name="password" placeholder="Password" className="fs-4" />
-            <button type="submit" className="fs-4 mb-3">Login</button>
-            <Link to="/forgot-password" className="forgot-password" style={{ textDecoration: 'underline', color: '#1572A1' }}>Forgot password?</Link>
+            <input type="password" name="confirmPassword" placeholder="Confirmation password" className="fs-4" />
+            <button type="submit" className="fs-4 mb-3">Change password</button>
           </form>
-          <div className="login-way d-flex">
-            <div className="line" />
-            <div className="way fs-5 text-center">or try another way</div>
-            <div className="line" />
-          </div>
-          <div className="login-choices text-center">
-            <Link className="btn loginGoogle fs-4 mt-3" to="/">
-              <img src={googleLogo} alt="logo google" />
-              {' '}
-              Login with Google
-            </Link>
-            <Link className="btn register fs-4 mt-3" to="/register">Sign up</Link>
-          </div>
+            <Link to="/forgot-password" className="forgot-password" style={{ textDecoration: 'underline', color: '#1572A1' }}>Forgot password?</Link>
         </div>
         <FooterB />
       </div>
@@ -57,4 +52,4 @@ const Login = ()=> {
   );
 }
 
-export default Login
+export default ChangePassword

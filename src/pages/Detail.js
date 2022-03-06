@@ -12,7 +12,6 @@ export const Detail = (props) => {
   const [vehicles, setVehicles] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
-  const qty = 2;
   const [formQty, setFormQty] = useState(counter.num);
   const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
@@ -28,14 +27,17 @@ export const Detail = (props) => {
     }
   };
   const changeForm = (e)=>{
-      setFormQty(e.target.elements['qty'].value)
+    change(e.target.value)
+      setFormQty(e.target.value)
   }
   const onIncrement = ()=>{
     dp({type: 'INCREMENT'})
+    setFormQty(counter.num)
   }
   const onDecrement = ()=>{
-      if(counter.num>0){
+      if(counter.num>1){
         dp({type: 'DECREMENT'})
+        setFormQty(counter.num)
     }
   }
   const changeQty =(e)=>{
@@ -47,8 +49,9 @@ export const Detail = (props) => {
   const goBack = () => {
     window.history.back();
   };
-  const goToReservation = (id) => {
-    navigate(`/reservation/${id}`);
+  const goToReservation = (e) => {
+    change(e.target.elements['qty'].value);
+    navigate(`/reservation/${id}`)
   };
   return (
     <Layout>
@@ -106,10 +109,10 @@ export const Detail = (props) => {
             </p>
           </div>
         </div>
-        <form className="position-relative pt-5" id="reservation">
+        <form onSubmit={goToReservation} className="position-relative pt-5" id="reservation">
           <div className="qty-btn d-flex justify-content-center">
             <div className="plus btn fw-bold" onClick={() => onIncrement()}>+</div>
-            <input className="qty-form text-center fw-bold" type="number" name="qty" value={counter.num} onChange={changeForm} style={{ backgroundColor: 'white', margin: '0' }} />
+            <input className="qty-form text-center fw-bold" type="number" name="qty" value={formQty} onChange={changeForm} style={{ backgroundColor: 'white', margin: '0' }} />
             <div className="minus btn fw-bold" onClick={() => onDecrement()}>-</div>
           </div>
           <div className="button row my-4">
