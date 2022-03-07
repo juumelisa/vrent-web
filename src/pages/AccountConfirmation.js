@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import googleLogo from '../assets/images/google-logo.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
 import background from '../assets/images/login-background.png';
 import FooterB from '../components/FooterB';
 import { confirmAccount } from '../redux/actions/auth';

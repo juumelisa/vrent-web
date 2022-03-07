@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import googleLogo from '../assets/images/google-logo.png';
 import background from '../assets/images/login-background.png';
 import FooterB from '../components/FooterB';

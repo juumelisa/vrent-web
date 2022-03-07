@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { unstable_HistoryRouter as HistoryRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { createBrowserHistory } from 'history';
@@ -26,7 +26,7 @@ import Header from './components/Header';
 import Vehicle from './pages/Vehicle';
 import {Detail} from './pages/Detail';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDataUser } from './redux/actions/auth';
+// import { getDataUser } from './redux/actions/auth';
 import ChangePassword from './pages/ChangePassword';
 import AccountConfirmation from './pages/AccountConfirmation';
 

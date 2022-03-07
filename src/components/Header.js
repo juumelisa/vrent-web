@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import logo from '../assets/images/logo.png';
@@ -7,7 +7,7 @@ import user from '../assets/images/user.png';
 import messageIcon from '../assets/images/email.png';
 
 export const Header = ()=> {
-  const auth = useSelector(state=>state.auth)
+  // const auth = useSelector(state=>state.auth)
   const token = window.localStorage.getItem('token')
     const navigate = useNavigate();
     const dp = useDispatch()

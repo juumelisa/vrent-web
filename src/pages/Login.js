@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import googleLogo from '../assets/images/google-logo.png';
 import background from '../assets/images/login-background.png';
 import FooterB from '../components/FooterB';
-import { getDataUser, login } from '../redux/actions/auth';
+import { login } from '../redux/actions/auth';
 
 const Login = ()=> {
   const dispatch = useDispatch()
@@ -17,6 +17,7 @@ const Login = ()=> {
     const username = e.target.elements['username'].value
     const password = e.target.elements['password'].value
     dispatch(login(username, password))
+    navigate('/')
   }
   return (
     <>
