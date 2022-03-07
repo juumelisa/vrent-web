@@ -3,13 +3,15 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa';
 import { getData } from '../helpers/http';
 import Layout from '../components/Layout';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { reservationData } from '../redux/actions/reservation';
 
 export const Reservation = (props)=> {
   const {counter} = useSelector(state=>state)
   const [vehicles, setVehicles] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
     getVehicles(id);
@@ -26,6 +28,18 @@ export const Reservation = (props)=> {
   const goBack = () => {
     window.history.back();
   };
+  const onReservation = (e)=>{
+    e.preventDefault()
+    const vehicleId = id
+    const totalOrder = counter.num
+    const rentDate = e.target.elements['rent_date'].value
+    const returnDate = e.target.elements['return_date'].value
+    const data = {vehicleId, totalOrder, rentDate, returnDate}
+    console.log(data)
+    dispatch(reservationData(data))
+    navigate(`/payment/${id}`)
+
+  }
   return (
     <Layout>
       <main className="container my-5">
@@ -62,7 +76,7 @@ export const Reservation = (props)=> {
             </div>
           </div>
         </div>
-        <form className="reservation-form my-4">
+        <form onSubmit={onReservation} className="reservation-form my-4">
           <div className="d-flex flex-column flex-md-row">
             <h3>Reservation date :</h3>
             <input className="text-center ms-auto fs-5" type="date" name="rent_date" />
@@ -80,5 +94,5 @@ export const Reservation = (props)=> {
 }
 
 const mapStateToProps = state=>({counter: state.counter})
-
-export default connect(mapStateToProps)(Reservation);
+const mapDispatchToProps = {reservationData}
+export default connect(mapStateToProps, mapDispatchToProps)(Reservation);

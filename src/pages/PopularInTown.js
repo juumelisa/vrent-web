@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { default as axios } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
-
-import { getVehicles} from '../redux/actions/vehicles'
 import Skeleton from 'react-loading-skeleton'
 import { useSelector } from 'react-redux';
 
@@ -12,16 +10,16 @@ export const PopularInTown =()=> {
   const [vehicles, setVehicles] = useState([]);
   const [page, setPage] = useState({});
   const navigate = useNavigate();
-  console.log(getVehicles())
+  const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
     getVehicles();
   }, []);
 
-  // const getVehicles = async () => {
-  //   const { data } = await axios.get(`${process.env.REACT_APP_URL}/popular?sortBy=totalRent+DESC&limit=16`);
-  //   setVehicles(data.result);
-  //   setPage(data.pageInfo);
-  // };
+  const getVehicles = async () => {
+    const { data } = await axios.get(`${REACT_APP_BACKEND_URL}popular?sortBy=totalRent+DESC&limit=16`);
+    setVehicles(data.result);
+    setPage(data.pageInfo);
+  };
 
   const getNextData = async (url) => {
     const { data } = await axios.get(url);
@@ -45,8 +43,7 @@ export const PopularInTown =()=> {
               <Skeleton height={150} containerClassName='row' count={8} wrapper={({children})=>(<div className='col-md-3'>{children}</div>)} />
           }
           {!char.isLoading && <div className='row my-5'>
-              {char.vehicles.map((data, idx)=>{
-                console.log(char.vehicles)
+              {vehicles.map((data, idx)=>{
                   return(
                       <div onClick={()=>goToDetail(data.id)} style={{cursor: 'pointer'}} key={String(data.id)} className='col-md-3'>
                           <div className='position-relative mb-2'>

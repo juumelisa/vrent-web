@@ -16,7 +16,6 @@ export const Header = ()=> {
       const searchVehicle = event.target.elements.name.value;
       navigate(`/vehicles?name=${searchVehicle}`, { replace: true });
     };
-    console.log(auth.token)
     const onLogout = ()=>{
       dp({type: 'AUTH_LOGOUT'})
       navigate('/')

@@ -17,6 +17,12 @@ const detailState = {
     isError: false
 
 }
+const reservationState = {
+    vehicleId: 0,
+    total: 0,
+    rentDate: '',
+    returnDate: ''
+}
 const rootReducer = combineReducers({
     auth,
     counter: (state=counterState, action) =>{
@@ -94,6 +100,21 @@ const rootReducer = combineReducers({
             default: {
                 return state
             }
+        }
+    },
+    reservation : (state=reservationState, action)=>{
+        switch (action.type){
+            case 'RESERVATION_DATA': {
+                const data = action.payload
+                console.log(action.payload)
+                state.vehicleId = data.vehicleId
+                state.total = data.totalOrder
+                state.rentDate = data.rentDate
+                state.returnDate = data.returnDate
+                return {...state}
+            }
+        default:
+            return {...state}
         }
     }
 })
