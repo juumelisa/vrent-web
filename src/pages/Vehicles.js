@@ -67,7 +67,7 @@ export const Vehicles = () => {
     
     const onSearch = async(event)=>{
         event.preventDefault();
-        let url = `${REACT_APP_BACKEND_URL}/popular?limit=16`
+        let url = `${REACT_APP_BACKEND_URL}popular?limit=16`
         const name = event.target.elements["name"].value
         const location = event.target.elements["location"].value
         const cost_min = event.target.elements["cost_min"].value
@@ -86,7 +86,7 @@ export const Vehicles = () => {
         await getNextData(url, true)
     }
     const goToDetail = (id)=> {
-        navigate(`/vehicles/${id}`)
+        navigate(`/vehicle/${id}`)
     }
     return (
         <LayoutB>

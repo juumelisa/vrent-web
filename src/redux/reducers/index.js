@@ -74,6 +74,22 @@ const rootReducer = combineReducers({
                 state.isLoading = false
                 state.isError = true
                 return state
+            case 'SEARCH_VEHICLE_PENDING':
+                state.isLoading = true
+                return state
+            case 'SEARCH_VEHICLE_FULFILLED':{
+                const {data} = action.payload
+                console.log(data)
+                state.vehicles = data.result
+                state.page = data.pageInfo
+                state.isLoading = false
+                return state
+            }
+            case 'SEARCH_VEHICLE_REJECTED':
+                state.isLoading = false
+                state.isError = true
+                return state
+            case 'SEARCH_VEHICLE':
             default:
                 return {...state}
         }

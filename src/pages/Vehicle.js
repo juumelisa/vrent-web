@@ -1,9 +1,10 @@
-import { useEffect } from "react"
-import { connect, useSelector } from "react-redux"
+import { useEffect, useState } from "react"
+import { connect, useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Layout from "../components/Layout"
 import SubmitButton from "../components/SubmitButton"
 import { getVehicles, getNextData } from "../redux/actions/vehicles"
+import { searchVehicle } from "../redux/actions/vehicles"
 
 export const Vehicle = ({getVehicles, getNextData}) =>{
     const {vehicles: vhc} = useSelector(state => state)
@@ -11,12 +12,31 @@ export const Vehicle = ({getVehicles, getNextData}) =>{
     // const [page, setPage] = useState({})
     // const [errorMsg, setErrorMsg] = useState(null)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     // const dp = useDispatch()
     // const {REACT_APP_BACKEND_URL} = process.env
+
+    // const [formValue, setFormValue] = useState({
+    //     name: '',
+    //     location: ''
+    // })
     useEffect(()=>{
         console.log(vhc.page.next)
         getVehicles()
     },[])
+    const onSearch = (e)=>{
+        e.preventDefault()
+        const name = e.target.elements['name'].value
+        const location = e.target.elements['location'].value
+        const category = e.target.elements['category'].value
+        const cost_min = e.target.elements['cost_min'].value
+        const cost_max = e.target.elements['cost_max'].value
+        const type = e.target.elements['type'].value
+        const sortBy = e.target.elements['sortBy'].value
+        const data = {name, location, category, cost_min, cost_max, type, sortBy}
+        console.log(data)
+        dispatch(searchVehicle(data))
+    }
     const nextData = (url) =>{
         getNextData(url)
         console.log(vhc.vehicles.result)
@@ -29,7 +49,7 @@ export const Vehicle = ({getVehicles, getNextData}) =>{
         <main className='container my-5'>
             <div className="row">
                 <div className="search-filter col-12 col-md-3 my-2">
-                    <form id='search' className="search">
+                    <form onSubmit={onSearch} id='search' className="search">
                         <h2 className="fs-3">Filter</h2>
                         <input className="py-2 my-2" name="name" type="text" placeholder="Vehicle name" />
                         <input className="py-2 my-2" name="location" type="text" placeholder="Location" />
@@ -37,20 +57,20 @@ export const Vehicle = ({getVehicles, getNextData}) =>{
                         <input className="py-2 my-2" name="cost_max" type="number" placeholder="Maximum cost" />
                         <label className="mt-4 fs-6 fw-bold" htmlFor="category">Category :</label>
                         <select id="category" className="mt-2">
-                            <option defaultValue="">All</option>
+                            <option selected value="">All</option>
                             <option value="1">Car</option>
                             <option value="2">Motorbike</option>
                             <option value="3">Bike</option>
                         </select>
                         <label className="mt-4 fs-6 fw-bold" htmlFor="type">Type :</label>
                         <select id="type" className="mt-2">
-                            <option defaultValue="">All</option>
+                            <option selected value="">All</option>
                             <option value="manual">Manual</option>
                             <option value="matic">Matic</option>
                         </select>
                         <label className="mt-4 fs-6 fw-bold" htmlFor="sortBy">Sort by : </label>
                         <select id="sortBy" className="mt-2">
-                            <option defaultValue="id DESC">New Arrival</option>
+                            <option selected value="id DESC">New Arrival</option>
                             <option value="totalRent DESC">Popular</option>
                             <option value="cost ASC">Lowest Price</option>
                             <option value="cost DESC">Highest Price</option>
