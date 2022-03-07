@@ -43,7 +43,6 @@ const ChangePassword = ()=> {
             <input type="password" name="confirmPassword" placeholder="Confirmation password" className="fs-4" />
             <button type="submit" className="fs-4 mb-3">Change password</button>
           </form>
-            <Link to="/forgot-password" className="forgot-password" style={{ textDecoration: 'underline', color: '#1572A1' }}>Forgot password?</Link>
         </div>
         <FooterB />
       </div>

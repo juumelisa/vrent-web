@@ -31,11 +31,13 @@ const Login = ()=> {
           <h1 className="my-5">Login</h1>
           <form onSubmit={onLogin} className="login-form">
             {auth.isError && auth.errorMsg && <div className='alert alert-danger mb-5'>{auth.errorMsg}</div>}
+            {!auth.isError && auth.errorMsg && <div className='alert alert-success mb-5'>{auth.errorMsg}</div>}
             <input type="text" name="username" placeholder="Email or username" className="fs-4" />
             <input type="password" name="password" placeholder="Password" className="fs-4" />
             <button type="submit" className="fs-4 mb-3">Login</button>
             <Link to="/forgot-password" className="forgot-password" style={{ textDecoration: 'underline', color: '#1572A1' }}>Forgot password?</Link>
           </form>
+          <Link to="/forgot-password">Forgot password?</Link>
           <div className="login-way d-flex">
             <div className="line" />
             <div className="way fs-5 text-center">or try another way</div>
