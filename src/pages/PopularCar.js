@@ -6,12 +6,13 @@ import { FaChevronRight } from 'react-icons/fa';
 export function PopularCar() {
   const [vehicles, setVehicles] = useState([]);
   const navigate = useNavigate();
+  const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
     getVehicles();
   }, []);
 
   const getVehicles = async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_URL}/popular?category=1&sortBy=totalRent+DESC&limit=4`);
+    const { data } = await axios.get(`${REACT_APP_BACKEND_URL}popular?category=1&sortBy=totalRent+DESC&limit=4`);
     setVehicles(data.result);
   };
   const goToDetail = (id) => {

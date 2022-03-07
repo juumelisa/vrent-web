@@ -6,13 +6,13 @@ import Layout from '../components/Layout';
 export function ListOfCar() {
   const [vehicles, setVehicles] = useState([]);
   const [page, setPage] = useState({});
-
+  const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
     getVehicles();
   }, []);
 
   const getVehicles = async () => {
-    const { data } = await axios.get('http://localhost:8000/popular/1?limit=16');
+    const { data } = await axios.get(`${REACT_APP_BACKEND_URL}popular/category=1?limit=16`);
     setVehicles(data.result);
     setPage(data.pageInfo);
   };

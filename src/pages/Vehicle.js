@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect} from "react"
 import { connect, useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Layout from "../components/Layout"
@@ -21,7 +21,6 @@ export const Vehicle = ({getVehicles, getNextData}) =>{
     //     location: ''
     // })
     useEffect(()=>{
-        console.log(vhc.page.next)
         getVehicles()
     },[])
     const onSearch = (e)=>{
