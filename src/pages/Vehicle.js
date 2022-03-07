@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { connect, useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { connect, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Layout from "../components/Layout"
 import SubmitButton from "../components/SubmitButton"
@@ -7,11 +7,11 @@ import { getVehicles, getNextData } from "../redux/actions/vehicles"
 
 export const Vehicle = ({getVehicles, getNextData}) =>{
     const {vehicles: vhc} = useSelector(state => state)
-    const [vehicles, setVehicles] = useState([])
-    const [page, setPage] = useState({})
-    const [errorMsg, setErrorMsg] = useState(null)
+    // const [vehicles, setVehicles] = useState([])
+    // const [page, setPage] = useState({})
+    // const [errorMsg, setErrorMsg] = useState(null)
     const navigate = useNavigate()
-    const dp = useDispatch()
+    // const dp = useDispatch()
     // const {REACT_APP_BACKEND_URL} = process.env
     useEffect(()=>{
         console.log(vhc.page.next)
