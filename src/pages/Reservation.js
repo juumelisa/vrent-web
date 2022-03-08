@@ -44,7 +44,8 @@ export const Reservation = (props)=> {
     const data = {vehicle_id, sum, rent_date, return_date}
     console.log(data)
     dispatch(makeReservation(data, token))
-    if(!reservation.isError && !reservation.isLoading){
+    console.log(reservation.isLoading, reservation.isError)
+    if(!reservation.isLoading && !reservation.isError){
       navigate(`/payment/${id}`)
     }
 
@@ -58,6 +59,7 @@ export const Reservation = (props)=> {
             <p className="fs-3 m-0" style={{ lineHeight: '80px' }}>Reservation</p>
           </div>
         </div>
+        {reservation.isError && reservation.message && <div className='alert alert-danger mb-5'>{reservation.message}</div>}
         <div className="detail-section row">
           <img src={vehicles?.image} alt={vehicles?.name} className="col-12 col-md-7" />
           <div className="vehicle-details col-12 col-md-5">
@@ -93,7 +95,7 @@ export const Reservation = (props)=> {
           </div>
           <div className="btn text-center my-3 fs-5">
             Total: Rp.
-            {vehicles?.cost * counter.num}
+            {vehicles?.cost * counter.num} /day
           </div>
           <button type="submit" className="fs-5 fw-bold py-0">Go to payment</button>
         </form>

@@ -156,13 +156,16 @@ const rootReducer = combineReducers({
                 state.total = data.totalOrder
                 state.rentDate = data.rentDate
                 state.returnDate = data.returnDate
-                return {...state}
+                state.isLoading = false
+                state.isError = false
+                state.message = data.message
+                return state
             }
             case 'FINAL_RESERVATION_REJECTED':{
                 const {message} = action.payload.response.data
                 console.log(message)
                 state.isLoading = false
-                state.isError = false
+                state.isError = true
                 state.message = message
                 return state
             }
