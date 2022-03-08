@@ -20,7 +20,7 @@ export function VehicleType() {
     setVehicles(data.result);
   };
   const goToDetail = (id) => {
-    navigate(`/vehicles/${id}`);
+    navigate(`/vehicle/${id}`);
   };
   return (
     <Layout>

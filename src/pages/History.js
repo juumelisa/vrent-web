@@ -7,9 +7,13 @@ import history2 from '../assets/images/history-2.png';
 import Layout from '../components/Layout';
 
 export function History() {
+  const token = window.localStorage.getItem('token')
   const [vehicles, setVehicles] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
+    if(!token){
+      navigate('/login')
+    }
     getVehicles();
   }, []);
 

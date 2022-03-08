@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa';
 import { getData } from '../helpers/http';
 import Layout from '../components/Layout';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { makeReservation } from '../redux/actions/reservation';
 
-export function Payment(props) {
+export const Payment = (props) =>{
+  const token = window.localStorage.getItem('token')
+  const dispatch = useDispatch()
   const [vehicles, setVehicles] = useState([]);
   const {counter} = useSelector(state=>state)
+  const {reservation} = useSelector(state=>state)
   const { id } = useParams();
+  const navigate = useNavigate()
   const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
+    if(!token){
+      navigate('/login')
+    }
     getVehicles(id);
   }, []);
 
@@ -22,6 +30,16 @@ export function Payment(props) {
       console.log(err.message);
     }
   };
+
+  const finalReservation = () =>{
+    const vehicle_id = reservation.vehicle_id
+    const sum = reservation.total
+    const rent_date = reservation.rentDate
+    const return_date = reservation.returnDate
+    const data = {vehicle_id, sum, rent_date, return_date}
+    console.log(data)
+    makeReservation(data, token)
+  }
   return (
     <Layout>
       <main className="container my-5">
@@ -55,7 +73,7 @@ export function Payment(props) {
             </div>
           </div>
           <div className="payment-section col-12 col-md-4">
-            <form>
+            <form onSubmit={finalReservation}>
               <div className="payment code fw-bold">Payment Code</div>
               <div className="copy-code row fw-bold fs-4">
                 <p className="col-8">#FG1209878YZS</p>
@@ -94,6 +112,6 @@ export function Payment(props) {
   );
 }
 
-const mapStateToProps = state=>({counter: state.counter})
-
-export default connect(mapStateToProps)(Payment);
+const mapStateToProps = state=>({reservation: state.reservation})
+const mapDispatchToProps = {makeReservation}
+export default connect(mapStateToProps, mapDispatchToProps)(Payment);

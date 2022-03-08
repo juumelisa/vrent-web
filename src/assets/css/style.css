@@ -48,8 +48,10 @@ form button:hover{
     background-color: #1572A1;
     color: white;
 }
-
-.vehicles img{
+.img-fit img{
+    object-fit: cover;
+}
+.vehicles img, .popular-vehicles img{
   width: 100%;
   height: 100%;
   object-fit: cover;

@@ -21,7 +21,10 @@ const reservationState = {
     vehicleId: 0,
     total: 0,
     rentDate: '',
-    returnDate: ''
+    returnDate: '',
+    isError: false,
+    isLoading: false,
+    message: null
 }
 const rootReducer = combineReducers({
     auth,
@@ -120,7 +123,33 @@ const rootReducer = combineReducers({
     },
     reservation : (state=reservationState, action)=>{
         switch (action.type){
-            case 'RESERVATION_DATA': {
+            case 'RESERVATION_DATA_PENDING': {
+                state.isLoading = true
+                state.isError = false
+                return state
+            }
+            case 'RESERVATION_DATA_FULFILLED': {
+                const data = action.payload
+                console.log(data)
+                state.vehicleId = data.vehicleId
+                state.total = data.total
+                state.rentDate = data.rentDate
+                state.returnDate = data.returnDate
+                return {...state}
+            }
+            case 'RESERVATION_DATA_REJECTED': {
+                const {message} = action.payload.response.data
+                state.isLoading = false
+                state.isError = true
+                state.message = message
+                return state
+            }
+            case 'FINAL_RESERVATION_PENDING':{
+                state.isLoading = true
+                state.isError = false
+                return state
+            }
+            case 'FINAL_RESERVATION_FULFILLED':{
                 const data = action.payload
                 console.log(action.payload)
                 state.vehicleId = data.vehicleId
@@ -128,6 +157,14 @@ const rootReducer = combineReducers({
                 state.rentDate = data.rentDate
                 state.returnDate = data.returnDate
                 return {...state}
+            }
+            case 'FINAL_RESERVATION_REJECTED':{
+                const {message} = action.payload.response.data
+                console.log(message)
+                state.isLoading = false
+                state.isError = false
+                state.message = message
+                return state
             }
         default:
             return {...state}

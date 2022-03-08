@@ -40,6 +40,7 @@ const auth = (state=initialState, action)=>{
           const {data} = action.payload
           state.isLoading = false
           state.userData = data.result
+          window.localStorage.setItem('userData', JSON.stringify(state.userData))
           return {...state}
         }
         case 'AUTH_LOGOUT': {
@@ -121,6 +122,26 @@ const auth = (state=initialState, action)=>{
           return {...state}
         }
         case 'AUTH_CHANGE_PASSWORD_REJECTED': {
+          const {message} = action.payload.response.data
+          console.log(message)
+          state.isLoading = false
+          state.isError = true
+          state.errorMsg = message
+          return {...state}
+        }
+        case 'AUTH_CHANGE_USERDATA_PENDING':{
+          state.isLoading = true
+          return state
+        }
+        case 'AUTH_CHANGE_USERDATA_FULFILLED': {
+          const {data} = action.payload
+          console.log(data.message)
+          state.isLoading = false
+          state.isError = false
+          state.errorMsg = data.message
+          return {...state}
+        }
+        case 'AUTH_CHANGE_USERDATA_REJECTED': {
           const {message} = action.payload.response.data
           console.log(message)
           state.isLoading = false

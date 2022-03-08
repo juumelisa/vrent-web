@@ -62,3 +62,17 @@ export const getDataUser = (token)=> {
     payload: httpAuth(token).get('/profile')
   })
 }
+
+export const changeDataUser = (data, token)=> {
+  const param = new URLSearchParams() //query string-like body
+  param.append('email', data.email)
+  param.append('address', data.address)
+  param.append('username', data.username)
+  param.append('phone_number', data.phone_number)
+  param.append('birthdate', data.birthdate)
+  console.log(token)
+  return({
+    type: 'AUTH_CHANGE_USERDATA',
+    payload: httpAuth(token).patch('/users', param)
+  })
+}

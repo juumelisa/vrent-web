@@ -11,22 +11,23 @@ import { connect, useSelector } from 'react-redux';
 
 export const Homepage=({getDataUser})=> {
   const auth = useSelector(state=>state.auth)
+  const token = window.localStorage.getItem('token')
   const {REACT_APP_BACKEND_URL} = process.env
   const [vehicles, setVehicles] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    if(auth.token!==null && auth.token!==undefined){
+    if(token!==null && token!==undefined){
       getDataUser(auth.token)
     }
     getVehicles();
-  }, []);
+  }, [auth.token]);
 
   const getVehicles = async () => {
     const { data } = await axios.get(`${REACT_APP_BACKEND_URL}popular?sortBy=totalRent+DESC`);
     setVehicles(data.result);
   };
   const goToDetail = (id) => {
-    navigate(`/vehicles/${id}`);
+    navigate(`/vehicle/${id}`);
   };
   const handleSearch = async (event) => {
     event.preventDefault();

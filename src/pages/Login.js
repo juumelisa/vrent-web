@@ -17,7 +17,9 @@ const Login = ()=> {
     const username = e.target.elements['username'].value
     const password = e.target.elements['password'].value
     dispatch(login(username, password))
-    navigate('/')
+    if(!auth.isLoading && !auth.isError){
+      navigate('/')
+    }
   }
   return (
     <>

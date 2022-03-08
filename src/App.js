@@ -29,6 +29,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { getDataUser } from './redux/actions/auth';
 import ChangePassword from './pages/ChangePassword';
 import AccountConfirmation from './pages/AccountConfirmation';
+import { getDataUser } from './redux/actions/auth';
 
 const App = ()=> {
   const auth = useSelector(state=>state.auth)
@@ -37,17 +38,19 @@ const App = ()=> {
   useEffect(()=>{
     const token = window.localStorage.getItem('token')
     console.log(token)
-    // if(token){
-    //   dispatch({
-    //     type: 'AUTH_LOGIN_FULFILLED',
-    //     payload: {
-    //       result: {
-    //         token
-    //       }
-    //     }
-    //   })
-    //   dispatch(getDataUser(token))
-    // }
+    if(token){
+      dispatch({
+        type: 'AUTH_LOGIN_FULFILLED',
+        payload: {
+          data: {
+            result: {
+              token
+            }
+          }
+        }
+      })
+      dispatch(getDataUser(token))
+    }
   }, [dispatch, auth.token])
 
     return (

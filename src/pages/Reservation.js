@@ -4,16 +4,22 @@ import { FaChevronLeft } from 'react-icons/fa';
 import { getData } from '../helpers/http';
 import Layout from '../components/Layout';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { reservationData } from '../redux/actions/reservation';
+import { makeReservation } from '../redux/actions/reservation';
 
 export const Reservation = (props)=> {
   const {counter} = useSelector(state=>state)
+  const auth = useSelector(state=>state.auth)
+  const reservation = useSelector(state => state.reservation)
+  const token = window.localStorage.getItem('token')
   const [vehicles, setVehicles] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
+    if(!token){
+      navigate('/login')
+    }
     getVehicles(id);
   }, []);
 
@@ -30,14 +36,17 @@ export const Reservation = (props)=> {
   };
   const onReservation = (e)=>{
     e.preventDefault()
-    const vehicleId = id
-    const totalOrder = counter.num
-    const rentDate = e.target.elements['rent_date'].value
-    const returnDate = e.target.elements['return_date'].value
-    const data = {vehicleId, totalOrder, rentDate, returnDate}
+    const vehicle_id = id
+    const sum = counter.num
+    console.log(typeof(vehicle_id), typeof(sum))
+    const rent_date = e.target.elements['rent_date'].value
+    const return_date = e.target.elements['return_date'].value
+    const data = {vehicle_id, sum, rent_date, return_date}
     console.log(data)
-    dispatch(reservationData(data))
-    navigate(`/payment/${id}`)
+    dispatch(makeReservation(data, token))
+    if(!reservation.isError && !reservation.isLoading){
+      navigate(`/payment/${id}`)
+    }
 
   }
   return (
@@ -93,6 +102,6 @@ export const Reservation = (props)=> {
   );
 }
 
-const mapStateToProps = state=>({counter: state.counter})
-const mapDispatchToProps = {reservationData}
+const mapStateToProps = state=>({counter: state.counter, auth: state.auth})
+const mapDispatchToProps = {makeReservation}
 export default connect(mapStateToProps, mapDispatchToProps)(Reservation);

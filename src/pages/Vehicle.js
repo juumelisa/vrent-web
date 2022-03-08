@@ -69,10 +69,10 @@ export const Vehicle = ({getVehicles, getNextData}) =>{
                         </select>
                         <label className="mt-4 fs-6 fw-bold" htmlFor="sortBy">Sort by : </label>
                         <select id="sortBy" className="mt-2">
-                            <option selected value="id DESC">New Arrival</option>
-                            <option value="totalRent DESC">Popular</option>
-                            <option value="cost ASC">Lowest Price</option>
-                            <option value="cost DESC">Highest Price</option>
+                            <option selected value="id+DESC">New Arrival</option>
+                            <option value="totalRent+DESC">Popular</option>
+                            <option value="cost+ASC">Lowest Price</option>
+                            <option value="cost+DESC">Highest Price</option>
                         </select>
                         <SubmitButton>Search</SubmitButton>
                     </form>

@@ -16,7 +16,7 @@ export function PopularMotorbike() {
     setVehicles(data.result);
   };
   const goToDetail = (id) => {
-    navigate(`/vehicles/${id}`);
+    navigate(`/vehicle/${id}`);
   };
   return (
     <main className="container">

@@ -27,7 +27,7 @@ export function ListOfPopularCar() {
     setPage(data.pageInfo);
   };
   const goToDetail = (id) => {
-    navigate(`/vehicles/${id}`);
+    navigate(`/vehicle/${id}`);
   };
   return (
     <Layout>

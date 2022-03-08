@@ -7,7 +7,7 @@ import FooterB from '../components/FooterB';
 import { register } from '../redux/actions/auth';
 
 export const Register=()=> {
-  const dispatch = useDispatch ()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const auth = useSelector(state => state.auth)
 

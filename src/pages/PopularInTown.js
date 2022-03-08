@@ -30,7 +30,7 @@ export const PopularInTown =()=> {
     setPage(data.pageInfo);
   };
   const goToDetail = (id) => {
-    navigate(`/vehicles/${id}`);
+    navigate(`/vehicle/${id}`);
   };
   return (
     <Layout>
@@ -42,10 +42,10 @@ export const PopularInTown =()=> {
         {char.isLoading&&
               <Skeleton height={150} containerClassName='row' count={8} wrapper={({children})=>(<div className='col-md-3'>{children}</div>)} />
           }
-          {!char.isLoading && <div className='row my-5'>
+          {!char.isLoading && <div className='row my-5 vehicles'>
               {vehicles.map((data, idx)=>{
                   return(
-                      <div onClick={()=>goToDetail(data.id)} style={{cursor: 'pointer'}} key={String(data.id)} className='col-md-3'>
+                      <div onClick={()=>goToDetail(data.id)} style={{cursor: 'pointer'}} key={String(data.id)} className='col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3'>
                           <div className='position-relative mb-2'>
                               <img className='img-fluid' src={data.image} alt={data.name} />
                               <div className='position-absolute bottom-0 start-0 bg-white px-3 py-2'>{data.name}</div>
