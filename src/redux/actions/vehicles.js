@@ -2,10 +2,17 @@ import {default as axios} from "axios"
 
 const {REACT_APP_BACKEND_URL} = process.env
 
-export const getVehicles = ()=>{
+export const getVehicles = (limit, category, sortBy)=>{
+    let url = `${REACT_APP_BACKEND_URL}popular?limit=${limit}`
+    if(category){
+        url = `${url}&category=${category}`
+    }
+    if(sortBy){
+        url = `${url}&sortBy=${sortBy}`
+    }
     return{
         type: 'GET_VEHICLES',
-        payload: axios.get(`${REACT_APP_BACKEND_URL}popular?limit=16`)
+        payload: axios.get(url)
     }
 }
 

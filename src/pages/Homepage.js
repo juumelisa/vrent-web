@@ -1,31 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { default as axios } from 'axios';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaChevronRight } from 'react-icons/fa';
 import { AiFillStar } from 'react-icons/ai';
 import Layout from '../components/Layout';
 import testimony from '../assets/images/edward-testimony.png';
 import SubmitButton from '../components/SubmitButton';
-import { getDataUser } from '../redux/actions/auth';
 import { connect, useSelector } from 'react-redux';
+import { getVehicles } from '../redux/actions/vehicles';
 
-export const Homepage=({getDataUser})=> {
-  const auth = useSelector(state=>state.auth)
-  const token = window.localStorage.getItem('token')
-  const {REACT_APP_BACKEND_URL} = process.env
-  const [vehicles, setVehicles] = useState([]);
+export const Homepage=({getVehicles})=> {
+  const {vehicles: vhc} = useSelector(state => state)
+  // const [vehicles, setVehicles] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    if(token!==null && token!==undefined){
-      getDataUser(auth.token)
-    }
-    getVehicles();
-  }, [auth.token]);
+    getVehicles(4, null, 'totalRent+DESC');
+  }, [getVehicles]);
 
-  const getVehicles = async () => {
-    const { data } = await axios.get(`${REACT_APP_BACKEND_URL}popular?sortBy=totalRent+DESC`);
-    setVehicles(data.result);
-  };
+  // const getVehicles = async () => {
+  //   const { data } = await axios.get(`${REACT_APP_BACKEND_URL}popular?sortBy=totalRent+DESC`);
+  //   setVehicles(data.result);
+  // };
   const goToDetail = (id) => {
     navigate(`/vehicle/${id}`);
   };
@@ -66,7 +60,7 @@ export const Homepage=({getDataUser})=> {
             </div>
           </div>
           <div className="row vehicles">
-            {vehicles.map((data, idx) => (
+            {vhc.vehicles.map((data, idx) => (
               <div key={data.id} onClick={() => goToDetail(data.id)} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{ cursor: 'pointer' }}>
                 <img className="img-fluid" src={data.image} alt={data.name} />
                 <div className="location position-absolute bottom-0 bg-white p-2">
@@ -103,6 +97,6 @@ export const Homepage=({getDataUser})=> {
     </Layout>
   );
 }
-const mapStateToProps = state => ({auth: state.auth})
-const mapDispatchToProps = {getDataUser}
+const mapStateToProps = state => ({vehicles: state.vehicles})
+const mapDispatchToProps = {getVehicles}
 export default connect(mapStateToProps, mapDispatchToProps)(Homepage);

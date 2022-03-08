@@ -8,21 +8,11 @@ import { searchVehicle } from "../redux/actions/vehicles"
 
 export const Vehicle = ({getVehicles, getNextData}) =>{
     const {vehicles: vhc} = useSelector(state => state)
-    // const [vehicles, setVehicles] = useState([])
-    // const [page, setPage] = useState({})
-    // const [errorMsg, setErrorMsg] = useState(null)
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    // const dp = useDispatch()
-    // const {REACT_APP_BACKEND_URL} = process.env
-
-    // const [formValue, setFormValue] = useState({
-    //     name: '',
-    //     location: ''
-    // })
     useEffect(()=>{
-        getVehicles()
-    },[])
+        getVehicles(16, null, null)
+    },[getVehicles])
     const onSearch = (e)=>{
         e.preventDefault()
         const name = e.target.elements['name'].value
