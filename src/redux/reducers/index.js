@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
 import auth from "./auth";
 
-
 const counterState = {
     num: 1
 }
