@@ -1,0 +1,53 @@
+.res-quantity, .vehicle-details .detail-checkout{
+  border: 1px solid #9AD0EC;
+  border-radius: 10px;
+}
+.vehicle-details p{
+  padding: 0;
+  margin: 0;
+}
+.detail-section .vehicle-details h2, .detail-section .vehicle-details h3{
+  color: #1572A1;
+}
+.reservation-form{
+  width: 100%;
+}
+.reservation-form input{
+  width: 100%;
+}
+.reservation-form .btn{
+  width: 100%;
+  border: 1px solid #9AD0EC;
+  line-height: 50px;
+  padding: 0;
+  border-radius: 10px;
+}
+.reservation-form button{
+  line-height: 50px;
+}
+
+@media(min-width: 768px){
+  .reservation-form h3{
+    line-height: 50px;
+  }
+  .reservation-form input{
+    width: 33%;
+    height: 50px;
+    margin-left: 20px;
+  }
+  .reservation-form .btn, .reservation-form button{
+    line-height: 50px;
+  }
+}
+@media(min-width: 992px){
+  .reservation-form h3{
+    line-height: 70px;
+  }
+  .reservation-form input{
+    width: 35%;
+    height: 70px;
+  }
+  .reservation-form .btn, .reservation-form button{
+    line-height: 70px;
+  }
+}

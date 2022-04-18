@@ -1,0 +1,61 @@
+.identity-section p{
+  color: rgba(0,0,0,0.6)
+}
+.profile-form input{
+  width: 100%;
+  background-color: transparent;
+  border-radius: 0;
+  border-bottom: 1px solid black;
+  padding: 0;
+}
+.user-button button{
+  line-height: 50px;
+  padding: 0;
+}
+.user-button .btn{
+  width: 100%;
+  color: white;
+  border-radius: 10px;
+  line-height: 50px;
+  padding: 0;
+}
+.user-button .change-password{
+  background-color: #1572A1;
+}
+.user-button .cancel{
+  background-color: rgba(0,0,0,0.2);
+}
+
+form .gender-section{
+  width: 200px;
+  padding: 0;
+  margin: 0 auto;
+}
+.gender-section .gender-selection{
+  width: 50%;
+}
+.gender-selection input{
+  opacity: 0;
+}
+.gender-selection .checkmark{
+  border: 3px solid black;
+}
+.gender-selection input:checked ~ .checkmark{
+  background-color: #E3BEC6;
+}
+
+@media(min-width: 768px){
+  .profile-form button, .profile-form .btn{
+    line-height: 60px;
+    width: 32%;
+  }
+  .profile-form .btn{
+    margin-left: 2%;
+  }
+}
+
+@media(min-width: 992px){
+  .profile-form button, .profile-form .btn{
+    line-height: 70px;
+  }
+}

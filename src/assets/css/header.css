@@ -1,0 +1,76 @@
+.navbar-toggler{
+  color: #1572A1;
+  border: 1px solid #1572a1
+}
+.nav-item{
+  text-align: center;
+}
+.nav-item a{
+  color: #B8BECD;
+}
+.nav-item a:hover{
+  color: black;
+}
+.active a{
+  color:black;
+}
+nav .collapse ul li{
+  margin: 5px 0;
+}
+nav .collapse ul li .btn{
+  color: black;
+  background-color: #9AD0EC;
+  border: 1px solid #9AD0EC;
+  width: 132px;
+}
+nav .collapse ul li .login{
+  background-color: white;
+  outline: none;
+}
+nav .collapse ul li .btn:hover{
+  background-color: #1572A1;
+  border: 1px solid #1572A1;
+}
+nav .collapse ul li .login:hover{
+  background-color: white;
+}
+nav .collapse ul li .login:active{
+  outline: none;
+}
+.avatar{
+  border-radius: 50%;
+}
+.iconSum{
+  background-color: #9AD0EC;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  line-height: 20px;
+}
+.header-form{
+  width: 100%;
+  align-items: center;
+}
+.searching-form{
+  max-width: 210px;
+  margin: 0 auto;
+}
+.searching-form input{
+  background-color: transparent;
+  border-radius: 0;
+  border: 1px solid #AFB0B9;
+}
+.searching-form button, .searching-form button:hover{
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  right: 0;
+  color: #B8BECD;
+}
+
+@media(min-width: 992px){
+    nav .collapse ul li{
+      margin-left: 30px;
+    }
+}

@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&display=swap');
+
+body{
+  font-family: 'Nunito', sans-serif;
+}
+a{
+  text-decoration: none;
+}
+main{
+  padding: 0;
+}
+
+.select .notif, .week-section .vehicles{
+  width: 80%;
+}
+.history{
+  right: 0;
+  top: 0;
+  transform: translateY(-50%);
+}
+.selection .select-all{
+  right: 0;
+}
+.selection .select-all input, .history .container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.checkmark {
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  border: 1px solid #B8BECD;
+  border-radius: 10px;
+}
+.select-all .selection .container input:checked ~ .checkmark {
+  background-color: #E3BEC6;
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.select-all .selection .container input:checked ~ .checkmark:after {
+  display: block;
+}
+.select-all .selection .container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.history-form input{
+  width: 100%;
+}
+.history-form button{
+  background-color: transparent;
+  width: 30px;
+  top: 0;
+  right: 0;
+}
+
+@media(min-width: 768px){
+  .week-section .vehicles img{
+    width: 50%;
+  }
+  .week-section .vehicles .rent-details{
+    padding-left: 15px;
+  }
+}
