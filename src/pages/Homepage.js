@@ -60,7 +60,7 @@ export const Homepage=({getVehicles})=> {
             </div>
           </div>
           <div className="row vehicles">
-            {vhc.vehicles.map((data, idx) => (
+            {vhc.vehicles.map((data) => (
               <div key={data.id} onClick={() => goToDetail(data.id)} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{ cursor: 'pointer' }}>
                 <img className="img-fluid" src={data.image} alt={data.name} />
                 <div className="location position-absolute bottom-0 bg-white p-2">

@@ -20,8 +20,6 @@ import ListOfPopularCar from './pages/ListOfPopularCar';
 import ListOfPopularMotorbike from './pages/ListOfPopularMotorbike';
 import Payment from './pages/Payment';
 import Counter from './pages/Counter';
-import { CharacterList } from './pages/CharacterList';
-import Character from './pages/Character';
 import Header from './components/Header';
 import Vehicle from './pages/Vehicle';
 import {Detail} from './pages/Detail';
@@ -63,8 +61,6 @@ const App = ()=> {
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="change-password" element={<ChangePassword />} />
           <Route path="vehicle-list" element={<VehicleType />} />
-          <Route path="character-list" element={<CharacterList />} />
-          <Route path="character" element={<Character />} />
           <Route path="popular-in-town" element={<PopularInTown />} />
           <Route path="popular-car" element={<ListOfPopularCar />} />
           <Route path="popular-motorbike" element={<ListOfPopularMotorbike />} />

@@ -1,4 +1,4 @@
-import { useEffect} from "react"
+import React, { useEffect} from "react"
 import { connect, useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Layout from "../components/Layout"
@@ -79,7 +79,7 @@ export const Vehicle = ({getVehicles, getNextData}) =>{
                         </div>
                     } */}
                     <div className="row vehicles">
-                        {vhc.vehicles.map((data, idx)=>{
+                        {vhc.vehicles.map((data)=>{
                             return(
                                 <div key={data.id} onClick={()=>goToDetail(data.id)} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{cursor: "pointer"}}>
                                     <img className="img-fluid" src={data.image} alt={data.name} />

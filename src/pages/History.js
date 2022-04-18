@@ -140,8 +140,8 @@ export function History() {
             </div>
           </div>
           <div className="new-arrival col-12 col-lg-3">
-            {vehicles.map((data, idx) => (
-              <div className="new-vehicles position-relative py-3" style={{ cursor: 'pointer' }} onClick={() => goToDetail(data.id)}>
+            {vehicles.map((data) => (
+              <div key={data.id} className="new-vehicles position-relative py-3" style={{ cursor: 'pointer' }} onClick={() => goToDetail(data.id)}>
                 <img className="img-fluid" src={data.image} alt={data.name} />
                 <div className="location position-absolute bottom-0 bg-white p-2">
                   <h6 className="m-0">{data.name}</h6>

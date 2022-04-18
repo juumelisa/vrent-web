@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import background from '../assets/images/login-background.png';
 import FooterB from '../components/FooterB';

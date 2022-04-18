@@ -3,7 +3,6 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import logo from '../assets/images/logo.png';
-import user from '../assets/images/user.png';
 import messageIcon from '../assets/images/email.png';
 
 export const Header = ()=> {

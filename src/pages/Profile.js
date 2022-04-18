@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -9,15 +9,8 @@ export const Profile = ({getDataUser})=> {
   const auth = useSelector(state=>state.auth)
   console.log(auth)
   const token = window.localStorage.getItem('token')
-  const userData = JSON.parse(window.localStorage.getItem('userData'))
   const dispatch = useDispatch()
-  const [formValue, setFormValue] = useState({
-    email: userData.email,
-    address: userData.address,
-    phone_number: userData.phone_number,
-    username: userData.username,
-    birthdate: userData.birthdate
-  })
+  
   const navigate = useNavigate()
   useEffect(()=>{
     if(!token){
