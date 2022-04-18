@@ -10,6 +10,7 @@ export const PopularInTown =()=> {
   const [vehicles, setVehicles] = useState([]);
   const [page, setPage] = useState({});
   const navigate = useNavigate();
+  // eslint-disable-next-line no-undef
   const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
     getVehicles();
@@ -43,7 +44,7 @@ export const PopularInTown =()=> {
               <Skeleton height={150} containerClassName='row' count={8} wrapper={({children})=>(<div className='col-md-3'>{children}</div>)} />
           }
           {!char.isLoading && <div className='row my-5 vehicles'>
-              {vehicles.map((data, idx)=>{
+              {vehicles.map((data)=>{
                   return(
                       <div onClick={()=>goToDetail(data.id)} style={{cursor: 'pointer'}} key={String(data.id)} className='col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3'>
                           <div className='position-relative mb-2'>

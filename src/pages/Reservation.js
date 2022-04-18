@@ -8,13 +8,13 @@ import { makeReservation } from '../redux/actions/reservation';
 
 export const Reservation = (props)=> {
   const {counter} = useSelector(state=>state)
-  const auth = useSelector(state=>state.auth)
   const reservation = useSelector(state => state.reservation)
   const token = window.localStorage.getItem('token')
   const [vehicles, setVehicles] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch()
+  // eslint-disable-next-line no-undef
   const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
     if(!token){

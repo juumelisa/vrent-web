@@ -13,6 +13,7 @@ export const Detail = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formQty, setFormQty] = useState(counter.num);
+  // eslint-disable-next-line no-undef
   const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
     getVehicles(id);
@@ -39,12 +40,6 @@ export const Detail = (props) => {
         dp({type: 'DECREMENT'})
         setFormQty(counter.num)
     }
-  }
-  const changeQty =(e)=>{
-      e.preventDefault()
-      const sum = e.target.elements['qty'].value
-      console.log(sum)
-      change(sum)
   }
   const goBack = () => {
     window.history.back();

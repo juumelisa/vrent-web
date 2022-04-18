@@ -10,6 +10,7 @@ export const Vehicles = () => {
     const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams()
     const [errorMsg, setErrorMsg] = useState(null)
+    // eslint-disable-next-line no-undef
     const {REACT_APP_BACKEND_URL} = process.env
 
     useEffect(()=>{
@@ -134,7 +135,7 @@ export const Vehicles = () => {
                             </div>
                         }
                         <div className="row vehicles">
-                            {vehicles.map((data, idx)=>{
+                            {vehicles.map((data)=>{
                                 return(
                                     <div key={data.id} onClick={()=>goToDetail(data.id)} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{cursor: "pointer"}}>
                                         <img className="img-fluid" src={data.image} alt={data.name} />

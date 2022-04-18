@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// eslint-disable-next-line no-undef
 const {REACT_APP_BACKEND_URL} = process.env
 
 const httpAuth = (token)=> {

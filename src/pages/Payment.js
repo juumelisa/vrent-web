@@ -3,17 +3,17 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa';
 import { getData } from '../helpers/http';
 import Layout from '../components/Layout';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { makeReservation } from '../redux/actions/reservation';
 
 export const Payment = (props) =>{
   const token = window.localStorage.getItem('token')
-  const dispatch = useDispatch()
   const [vehicles, setVehicles] = useState([]);
   const {counter} = useSelector(state=>state)
   const {reservation} = useSelector(state=>state)
   const { id } = useParams();
   const navigate = useNavigate()
+  // eslint-disable-next-line no-undef
   const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
     if(!token){

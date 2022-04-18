@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { getData } from '../helpers/http';
 import Layout from '../components/Layout';
-import { change } from '../redux/actions/counter';
 
 export function VehicleDetail(props) {
   const [vehicles, setVehicles] = useState([]);
   const { id } = useParams();
-  const navigate = useNavigate();
   const qty = 2;
   const [formQty, setFormQty] = useState(qty);
+  // eslint-disable-next-line no-undef
   const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
     getVehicles(id);
@@ -34,9 +33,6 @@ export function VehicleDetail(props) {
   };
   const goBack = () => {
     window.history.back();
-  };
-  const goToReservation = (id) => {
-    navigate(`/reservation/${id}`);
   };
   return (
     <Layout>
