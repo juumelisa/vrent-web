@@ -1,5 +1,6 @@
 import {default as axios} from "axios"
 
+// eslint-disable-next-line no-undef
 const {REACT_APP_BACKEND_URL} = process.env
 
 export const getVehicles = (limit, category, sortBy)=>{

@@ -7,9 +7,10 @@ import testimony from '../assets/images/edward-testimony.png';
 import SubmitButton from '../components/SubmitButton';
 import { connect, useSelector } from 'react-redux';
 import { getVehicles } from '../redux/actions/vehicles';
+import Helmets from '../components/Helmets';
 
 export const Homepage=({getVehicles})=> {
-  const {vehicles: vhc} = useSelector(state => state)
+  const {vehicles: vhc, auth} = useSelector(state => state)
   // const [vehicles, setVehicles] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -29,7 +30,9 @@ export const Homepage=({getVehicles})=> {
     navigate(`/vehicles?name=${searchVehicle}`, { replace: true });
   };
   return (
+    <>
     <Layout>
+      <Helmets title={'Home'} />
       <div className="search-section">
         <div className="search-background py-5">
           <div className="container">
@@ -51,6 +54,11 @@ export const Homepage=({getVehicles})=> {
       <main className="container">
         <div className="popular-section py-5">
           <div className="heading-section d-flex align-items-center my-3" style={{ width: '100%' }}>
+            {auth.userData.role === 'admin' &&
+              <div>
+                <Link to="/add-item">Add New Item</Link>
+              </div>
+            }
             <h1 style={{ width: '50%' }}>Popular in town</h1>
             <div className="other-vehicles text-end" style={{ width: '50%' }}>
               <Link to="/popular-in-town" style={{ color: '#1572A1' }}>
@@ -95,6 +103,7 @@ export const Homepage=({getVehicles})=> {
         </div>
       </main>
     </Layout>
+    </>
   );
 }
 const mapStateToProps = state => ({vehicles: state.vehicles})

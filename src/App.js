@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ChangePassword from './pages/ChangePassword';
 import AccountConfirmation from './pages/AccountConfirmation';
 import { getDataUser } from './redux/actions/auth';
+import { AddItem } from './pages/AddItem';
 
 const App = ()=> {
   const auth = useSelector(state=>state.auth)
@@ -77,6 +78,7 @@ const App = ()=> {
           <Route path="counter" element={<Counter />} />
           <Route path="header" element={<Header />} />
           <Route path="vehicle" element={<Vehicle />} />
+          <Route path="add-item" element={<AddItem />} />
         </Routes>
       </HistoryRouter>
     );
