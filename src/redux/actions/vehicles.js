@@ -1,4 +1,5 @@
 import {default as axios} from "axios"
+import httpAuth from "../../helpers/httpAuth"
 
 // eslint-disable-next-line no-undef
 const {REACT_APP_BACKEND_URL} = process.env
@@ -43,4 +44,15 @@ export const searchVehicle = (data)=>{
         type: 'SEARCH_VEHICLE',
         payload: axios.get(url)
     })
+}
+
+export const editVehicle = (token, data, id) => {
+  const inputData = new FormData()
+  for (const key in data) {
+    inputData.append(key, data[key]);
+  }
+  return {
+    type: 'EDIT_VEHICLE',
+    payload: httpAuth(token, true).patch(`vehicles/${id}`, inputData)
+  }
 }

@@ -22,7 +22,11 @@ export const Homepage=({getVehicles})=> {
   //   setVehicles(data.result);
   // };
   const goToDetail = (id) => {
-    navigate(`/vehicle/${id}`);
+    if(auth.userData.role === 'admin') {
+      navigate(`/edit-item/${id}`)
+    } else {
+      navigate(`/vehicle/${id}`);
+    }
   };
   const handleSearch = async (event) => {
     event.preventDefault();

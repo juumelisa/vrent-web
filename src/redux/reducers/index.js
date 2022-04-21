@@ -7,6 +7,7 @@ const counterState = {
 const vehicleState = {
     vehicles: [],
     page: {},
+    vehicle: {},
     isLoading: false,
     isError: false
 }
@@ -91,7 +92,19 @@ const rootReducer = combineReducers({
                 state.isLoading = false
                 state.isError = true
                 return state
-            case 'SEARCH_VEHICLE':
+            case 'EDIT_VEHICLE_PENDING':
+              state.isLoading = true;
+              state.isError = false;
+              return {...state}
+            case 'EDIT_VEHICLE_FULFILLED':
+              state.isError = false;
+              state.isLoading = false;
+              state.vehicle = action.payload;
+              return {...state}
+            case 'EDIT_VEHICLE_REJECTED':
+              state.isError = true;
+              state.isLoading = false;
+              return {...state}
             default:
                 return {...state}
         }
