@@ -56,3 +56,15 @@ export const editVehicle = (token, data, id) => {
     payload: httpAuth(token, true).patch(`vehicles/${id}`, inputData)
   }
 }
+
+export const addVehicle = (token, data) => {
+  const inputData = new FormData()
+  for (const key in data) {
+    inputData.append(key, data[key]);
+  }
+  console.log(data)
+  return {
+    type: 'ADD_VEHICLE',
+    payload: httpAuth(token, true).post('vehicles', inputData)
+  }
+}

@@ -7,6 +7,8 @@ import { FaChevronLeft } from 'react-icons/fa';
 import defaultImg from "../assets/images/default-img.png";
 import { Input } from "../components/Input";
 import { editVehicle, getVehicleDetail } from "../redux/actions/vehicles";
+import { Qtybutton } from "../components/Qtybutton";
+import { Button } from "../components/Button";
 
 export const EditItem = () => {
 	const {auth, detail} = useSelector(state => state)
@@ -18,6 +20,7 @@ export const EditItem = () => {
 	const [cost, setCost] = useState()
 	const [seat, setSeat] = useState()
 	const [location, setLocation] = useState()
+  const [qty, setQty] = useState(detail.vehicle.qty)
   const dispatch = useDispatch();
 	// const [category, setCategory] = useState()
 	// const [type, setType] = useState();
@@ -38,19 +41,19 @@ export const EditItem = () => {
 		console.log(picture)
 	}
   const changeItem = () => {
-    const data = {name, image}
+    const data = {name, image, qty, cost, seat, location}
     dispatch(editVehicle(auth.token, data, id))
   }
 	return (
 		<>
-			<Helmets title={'Add New Item'} />
+			<Helmets title={'Edit Item'} />
 			<Layout>
 				<div className="container">
-					<div className="d-flex flex-row align-items-center">
+					<div className="d-flex flex-row align-items-center py-4">
 						<div onClick={goBack}>
 							<FaChevronLeft size={30}/>
 						</div>
-						<h1 className="fs-3 p-0 m-0 ms-3">Add New Item</h1>
+						<h1 className="fs-3 p-0 m-0 ms-3">Edit Item</h1>
 					</div>
 					<div className="d-flex flex-column flex-lg-row">
 						<div className="col-12 col-md-8 col-lg-6 mx-auto m-lg-0">
@@ -60,14 +63,14 @@ export const EditItem = () => {
                 <input type="file" onChange={onFileChange} id="uploaded"
                 className="position-absolute start-50 top-50 translate-middle" style={{width: '100%', height: '100%'}}/>
               </div>
-              <div className="d-flex flex-column flex-md-row col-12 col-md-8 col-lg-6">
-                <div className="col-12 py-2 pe-1">
+              <div className="d-flex flex-row col-12 col-lg-6">
+                <div className="col-6 py-2 pe-1">
                   <img src={picture? picture : detail.vehicle.image ? detail.vehicle.image : defaultImg} width="100%" height={200} style={{objectFit: "cover"}}
                   className="rounded-3"/>
                   <input type="file" onChange={onFileChange}
                   className="position-absolute start-50 top-50 translate-middle opacity-0"/>
                 </div>
-                <div className="col-12 py-2 ps-1">
+                <div className="col-6 py-2 ps-1">
                   <img src={picture? picture : detail.vehicle.image ? detail.vehicle.image : defaultImg} width="100%" height={200} style={{objectFit: "cover"}}
                   className="rounded-3"/>
                   <input type="file" onChange={onFileChange}
@@ -112,19 +115,23 @@ export const EditItem = () => {
                 <option value="1">Available</option>
                 <option value="0">Full booked</option>
               </select>
+              <Qtybutton qty={qty} onPlus={() => setQty(qty+1)} onMinus={() =>  qty > 0 ? setQty(qty-1) : ''}/>
 						</div>
 					</div>
-          <div className="d-flex flex-column flex-md-row">
+          <div className="d-flex flex-column flex-md-row py-5">
             <div className="col-12 col-md-4">
-              <select className="form-select bg-color-2 lh-lg" aria-label="Default select example" id="category">
+              <select className="form-select bg-color-2 lh-lg fs-6" aria-label="Default select example" id="category">
                 <option selected>Add item to</option>
                 <option value="1">Car</option>
                 <option value="2">Bike</option>
                 <option value="3">Motorbike</option>
               </select>
             </div>
-            <div className="col-12 col-md-8">
-              <button onClick={() => changeItem()}>Save item</button>
+            <div className="col-12 col-md-4 px-1">
+              <Button onAction={() => changeItem()} variant="dark">Save changes</Button>
+            </div>
+            <div className="col-12 col-md-4 px-1">
+              <Button onAction={() => changeItem()}>Delete</Button>
             </div>
           </div>
 				</div>

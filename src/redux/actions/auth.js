@@ -2,7 +2,7 @@ import httpAuth from "../../helpers/httpAuth"
 
 
 export const login = (username, password)=> {
-  const param = new URLSearchParams() //query string-like body
+  const param = new URLSearchParams()
   param.append('username', username)
   param.append('password', password)
   return({

@@ -28,15 +28,15 @@ h1{
     border-top: 2px solid black;
     width: 32px;
 }
-form input{
+/* form input{
     background-color: rgba(239, 218, 215, 0.8);
     border-radius: 8px;
     border: none;
     outline: none;
     padding: 10px;
     margin-bottom: 10px;
-}
-form button{
+} */
+/* form button{
     width: 100%;
     background-color: #9AD0EC;
     border: none;
@@ -47,7 +47,7 @@ form button{
 form button:hover{
     background-color: #1572A1;
     color: white;
-}
+} */
 .img-fit img{
     object-fit: cover;
 }

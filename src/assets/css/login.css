@@ -27,7 +27,7 @@
   width: 100%;
   margin: 0 auto;
 }
-.login-form input{
+/* .login-form input{
   width: 100%;
   line-height: 50px;
   padding: 0 20px;
@@ -36,7 +36,7 @@
 .login-form button{
   line-height: 50px;
   padding: 0;
-}
+} */
 .login-way .line{
   border: none;
   width: 15%;
@@ -50,7 +50,7 @@
   width: 70%;
 }
 
-.login-choices .btn{
+/* .login-choices .btn{
   border-radius: 10px;
   width: 100%;
   line-height: 50px;
@@ -62,15 +62,15 @@
 .login-choices .register{
   background-color: #1572A1;
   color: white;
-}
+} */
 
 @media(min-width: 768px){
   .top-wrapper{
-    padding: 0 10%;
+    max-width: 500px;
   }
-  .login-form input, .login-form button, .login-choices .btn{
+  /* .login-form input, .login-form button, .login-choices .btn{
     line-height: 60px;
-  }
+  } */
   .login-way .line{
     width:30%;
   }
@@ -86,7 +86,7 @@
   .right-container{
     width: 50%;
   }
-  .login-form input, .login-form button, .login-choices .btn{
+  /* .login-form input, .login-form button, .login-choices .btn{
     line-height: 70px;
-  }
+  } */
 }

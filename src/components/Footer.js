@@ -9,7 +9,7 @@ export default class Footer extends Component {
   render() {
     return (
       <footer className="mt-5 mx-auto">
-        <div className="container position-relative row mx-auto px-0 pb-5 pb-lg-0">
+        <div className="container position-relative row mx-auto pb-5 pb-lg-0">
           <div className="col-12 col-lg-5 mx-auto ms-lg-0 p-0">
             <div className="text-lg-start">
               <div className="col-12 col-lg-1">

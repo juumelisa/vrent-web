@@ -105,6 +105,19 @@ const rootReducer = combineReducers({
               state.isError = true;
               state.isLoading = false;
               return {...state}
+            case 'ADD_VEHICLE_PENDING':
+              state.isLoading = true;
+              state.isError = false;
+              return {...state}
+            case 'ADD_VEHICLE_FULFILLED':
+              state.isError = false;
+              state.isLoading = false;
+              state.vehicle = action.payload;
+              return {...state}
+            case 'ADD_VEHICLE_REJECTED':
+              state.isError = true;
+              state.isLoading = false;
+              return {...state}
             default:
                 return {...state}
         }

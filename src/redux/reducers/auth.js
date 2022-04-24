@@ -3,7 +3,8 @@ const initialState = {
     userData: {},
     isLoading: false,
     isError: false,
-    errorMsg: ''
+    errorMsg: null,
+    message: null,
 }
 
 const auth = (state=initialState, action)=>{
@@ -98,7 +99,7 @@ const auth = (state=initialState, action)=>{
           console.log(data.message)
           state.isLoading = false
           state.isError = false
-          state.errorMsg = data.message
+          state.message = data.message
           return {...state}
         }
         case 'AUTH_FORGOT_PASSWORD_REJECTED': {
@@ -147,6 +148,12 @@ const auth = (state=initialState, action)=>{
           state.isLoading = false
           state.isError = true
           state.errorMsg = message
+          return {...state}
+        }
+        case 'AUTH_CLEAR' : {
+          state.isError = false
+          state.errorMsg = null
+          state.message = null
           return {...state}
         }
         default: {
