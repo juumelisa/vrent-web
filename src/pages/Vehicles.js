@@ -115,7 +115,7 @@ export const Vehicles = () => {
                             </select>
                             <label className="mt-4 fs-6 fw-bold" htmlFor="sortBy">Sort by : </label>
                             <select id="sortBy" className="mt-2">
-                                <option defaultValue="id DESC">New Arrival</option>
+                                <option value="id DESC">New Arrival</option>
                                 <option value="totalRent DESC">Popular</option>
                                 <option value="cost ASC">Lowest Price</option>
                                 <option value="cost DESC">Highest Price</option>

@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import auth from "./auth";
+import histories from "./histories"
 
 const counterState = {
     num: 1
@@ -8,7 +9,7 @@ const vehicleState = {
     vehicles: [],
     page: {},
     vehicle: {},
-    isLoading: false,
+    isLoading: true,
     isError: false
 }
 const detailState = {
@@ -28,6 +29,7 @@ const reservationState = {
 }
 const rootReducer = combineReducers({
     auth,
+    histories,
     counter: (state=counterState, action) =>{
         switch(action.type){
             case 'INCREMENT':

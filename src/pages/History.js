@@ -1,32 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { default as axios } from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
-import history1 from '../assets/images/history-1.png';
-import history2 from '../assets/images/history-2.png';
+import defaultImg from '../assets/images/default-img.png';
 import Layout from '../components/Layout';
+import { useDispatch, useSelector } from 'react-redux';
+import { historyAdmin, historyUser } from '../redux/actions/histories';
+import Helmets from '../components/Helmets';
+import { twoDates } from '../helpers/dateToString';
+import { getVehicles } from '../redux/actions/vehicles';
 
-export function History() {
+export const  History = () => {
   const token = window.localStorage.getItem('token')
-  const [vehicles, setVehicles] = useState([]);
+  const {auth, histories, vehicles} = useSelector(state => state)
+  const [selectedId, setSelectedId] = useState([])
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    if(!token){
+    getVehicles()
+    if(auth.userData.role === 'admin') {
+      console.log('admin')
+      console.log(dispatch(historyAdmin(token)))
+      dispatch(historyAdmin(token))
+    } else if (auth.userData.role === 'user') {
+      dispatch(historyUser(token))
+    } else {
       navigate('/login')
     }
-    getVehicles();
   }, []);
-
-  const getVehicles = async () => {
-    const { data } = await axios.get('http://localhost:8000/popular?sortBy=id+DESC&limit=2');
-    setVehicles(data.result);
-  };
-  const goToDetail = (id) => {
-    navigate(`/vehicles/${id}`);
-  };
-
+  const handleValue = e => {
+    if(e.target.checked) {
+      setSelectedId([...selectedId, e.target.value])
+    }
+    else{
+      setSelectedId(selectedId.filter(el => el !== e.target.value))
+    }
+  }
+  const goToDetail = id => {
+    navigate(`/vehicle/${id}`)
+  }
   return (
     <Layout>
+      <Helmets title="History" />
       <main className="container my-5">
         <div className="row">
           <div className="history-container col-12 col-lg-9">
@@ -46,101 +60,34 @@ export function History() {
                   <FaSearch />
                 </button>
               </form>
-
-              <div className="selection position-relative">
-                <div className="select-all position-absolute">
-                  <label className="container">
-                    Delete
-                            <input type="checkbox" />
-                    <span className="checkmark" />
-                  </label>
-                </div>
-              </div>
-              <div className="notification">
-                <div className="today-section">
-                  <h5>Today</h5>
-                  <div className="select position-relative">
-                    <div className="notif position-relative">
-                              <p>Please finish your payment for vespa for Vespa Rental Jogja</p>
-                              <div className="notif-arrow position-absolute">
-                                <i className="fa-solid fa-chevron-right" />
-                              </div>
-                            </div>
-                    <div className="history position-absolute">
-                              <label className="container">
-                                <input type="checkbox" name="history-1" />
-                                <span className="checkmark" />
-                              </label>
-                            </div>
-                  </div>
-                  <div className="select position-relative">
-                    <div className="notif position-relative">
-                              <p>Your payment has been confirmed!</p>
-                              <div className="notif-arrow position-absolute">
-                                <i className="fa-solid fa-chevron-right" />
-                              </div>
-                            </div>
-                    <div className="history position-absolute">
-                              <label className="container">
-                                <input type="checkbox" name="history-2" />
-                                <span className="checkmark" />
-                              </label>
-                            </div>
-                  </div>
-                </div>
-                <div className="week-section">
-                  <h5>A week ago</h5>
-                  <div className="select position-relative">
-                    <div className="history position-absolute">
-                              <label className="container">
-                                <input type="checkbox" name="history-3" />
-                                <span className="checkmark" />
-                              </label>
-                            </div>
-                    <div className="vehicles d-flex flex-wrap">
-                              <img src={history1} alt="history 1" />
-                              <div className="rent-details">
-                                <div className="date-detai">
-                                  <h6>Vespa Matic</h6>
-                                  <p>Jan 18 to 21 2021</p>
-                                </div>
-                                <div className="payment-status">
-                                  <h6>Prepayment: Rp.245.000</h6>
-                                  <p>Has been returned</p>
-                                </div>
-                              </div>
-                            </div>
-                  </div>
-                  <div className="select position-relative">
-                    <div className="history position-absolute">
-                              <label className="container">
-                                <input type="checkbox" name="history-4" />
-                                <span className="checkmark" />
-                              </label>
-                            </div>
-                    <div className="vehicles d-flex flex-wrap">
-                              <img src={history2} alt="history 2" />
-                              <div className="rent-details">
-                                <div className="date-detai">
-                                  <h6>Vespa Matic</h6>
-                                  <p>Jan 18 to 21 2021</p>
-                                </div>
-                                <div className="payment-status">
-                                  <h6>Prepayment: Rp.245.000</h6>
-                                  <p>Has been returned</p>
-                                </div>
-                              </div>
-                            </div>
-                  </div>
-                </div>
-              </div>
               <div className="delete-button">
                 <button>Delete selected item</button>
               </div>
             </div>
           </div>
+          
+          {!histories.isLoading && !histories.isError && <div className="col-12 col-lg-8">
+            {histories.data.map((data) => (
+              <div key={data.id} className="d-flex flex-row py-3">
+                <div className="col-9 d-flex flex-column flex-md-row">
+                  <img className="img-fluid col-12 col-md-6" src={data.image} onError={e => e.target.src=defaultImg} alt={data.id} style={{height: "200px", borderRadius: "20px", objectFit: "cover"}} />
+                  <div className="col-12 col-md-6 px-3">
+                    <p className="fw-bold p-0 m-0">{data.vehicle}</p>
+                    <p>{twoDates(data.rent_date, data.return_date)}</p>
+                    <p className="fw-bold p-0 m-0">Prepayment: {data.min_prepayment.toLocaleString("id-ID")}</p>
+                    <p className={`${data.status === 'Cancelled' ? 'text-danger' : 'text-success'}`}>{data.status}</p>
+                  </div>
+                </div>
+                <div className="position-relative d-flex justify-content-end col-3">
+                  <input className="position-absolute top-0 start-100 translate-middle-x opacity-0" type="checkbox" value={data.id} onChange={handleValue} id="history" />
+                  <span className="checkmark position-absolute top-0 start-100 translate-middle-x"></span>
+                </div>
+              </div>
+            ))}
+          </div>}
           <div className="new-arrival col-12 col-lg-3">
-            {vehicles.map((data) => (
+            {!vehicles.isLoading && !vehicles.isError && <div>
+            {vehicles.vehicles.map((data) => (
               <div key={data.id} className="new-vehicles position-relative py-3" style={{ cursor: 'pointer' }} onClick={() => goToDetail(data.id)}>
                 <img className="img-fluid" src={data.image} alt={data.name} />
                 <div className="location position-absolute bottom-0 bg-white p-2">
@@ -149,9 +96,9 @@ export function History() {
                 </div>
               </div>
             ))}
-
+            </div>}
             <div className="another-vehicle">
-              <Link to="/vehicles">
+              <Link to="/vehicle">
                 View more
                 <i className="fa-solid fa-chevron-down" />
               </Link>
@@ -163,4 +110,4 @@ export function History() {
   );
 }
 
-export default History;
+export default History

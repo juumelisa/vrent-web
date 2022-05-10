@@ -4,10 +4,10 @@ import { FaChevronRight } from 'react-icons/fa';
 import { AiFillStar } from 'react-icons/ai';
 import Layout from '../components/Layout';
 import testimony from '../assets/images/edward-testimony.png';
-import SubmitButton from '../components/SubmitButton';
 import { connect, useSelector } from 'react-redux';
 import { getVehicles } from '../redux/actions/vehicles';
 import Helmets from '../components/Helmets';
+import { Button } from '../components/Button';
 
 export const Homepage=({getVehicles})=> {
   const {vehicles: vhc, auth} = useSelector(state => state)
@@ -50,7 +50,7 @@ export const Homepage=({getVehicles})=> {
                 <div className="form-space" />
                 <input type="date" />
               </div>
-              <SubmitButton>Search</SubmitButton>
+              <Button variant={'dark'}>Search</Button>
             </form>
           </div>
         </div>

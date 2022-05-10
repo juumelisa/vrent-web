@@ -56,7 +56,6 @@ export const changePassword = (data)=> {
 }
 
 export const getDataUser = (token)=> {
-  console.log(token)
   return({
     type: 'AUTH_USERDATA',
     payload: httpAuth(token).get('/profile')
