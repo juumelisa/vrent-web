@@ -8,23 +8,6 @@
   border-bottom: 1px solid black;
   padding: 0;
 }
-.user-button button{
-  line-height: 50px;
-  padding: 0;
-}
-.user-button .btn{
-  width: 100%;
-  color: white;
-  border-radius: 10px;
-  line-height: 50px;
-  padding: 0;
-}
-.user-button .change-password{
-  background-color: #1572A1;
-}
-.user-button .cancel{
-  background-color: rgba(0,0,0,0.2);
-}
 
 form .gender-section{
   width: 200px;
@@ -37,25 +20,11 @@ form .gender-section{
 .gender-selection input{
   opacity: 0;
 }
-.gender-selection .checkmark{
+.gender-selection .checkRadio{
   border: 3px solid black;
+  width: 25px;
+  height: 25px;
 }
-.gender-selection input:checked ~ .checkmark{
+.gender-selection input:checked ~ .checkRadio{
   background-color: #E3BEC6;
-}
-
-@media(min-width: 768px){
-  .profile-form button, .profile-form .btn{
-    line-height: 60px;
-    width: 32%;
-  }
-  .profile-form .btn{
-    margin-left: 2%;
-  }
-}
-
-@media(min-width: 992px){
-  .profile-form button, .profile-form .btn{
-    line-height: 70px;
-  }
 }

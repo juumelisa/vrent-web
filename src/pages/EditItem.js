@@ -38,7 +38,6 @@ export const EditItem = () => {
 	const onFileChange = e => {
 		setImage(e.target.files[0])
 		setPicture(URL.createObjectURL(e.target.files[0]))
-		console.log(picture)
 	}
   const changeItem = () => {
     const data = {name, image, qty, cost, seat, location}

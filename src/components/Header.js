@@ -1,19 +1,20 @@
-import React from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import logo from '../assets/images/logo.png';
 import messageIcon from '../assets/images/email.png';
+import { Input } from './Input';
+import defaultUser from '../assets/images/default-user.png'
 
 export const Header = ()=> {
-  const auth = useSelector(state=>state.auth)
-  const token = window.localStorage.getItem('token')
+  const token = window.localStorage.getItem('seranToken')
+  const userData = JSON.parse(window.localStorage.getItem('seranUserData'))
     const navigate = useNavigate();
+    const [name, setName] = useState('');
     const dp = useDispatch()
-    const handleSearch = async (event) => {
-      event.preventDefault();
-      const searchVehicle = event.target.elements.name.value;
-      navigate(`/vehicle?name=${searchVehicle}`, { replace: true });
+    const handleSearch = () => {
+      navigate(`/vehicles?name=${name}`, { replace: true });
     };
     const onLogout = ()=>{
       dp({type: 'AUTH_LOGOUT'})
@@ -32,7 +33,7 @@ export const Header = ()=> {
                   <Link className="nav-link" aria-current="page" to="/">Home</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/vehicle">Vehicle Type</Link>
+                  <Link className="nav-link" to="/vehicles">Vehicle Type</Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/history">History</Link>
@@ -40,11 +41,11 @@ export const Header = ()=> {
                 <li className="nav-item">
                   <Link className="nav-link" to="/">About</Link>
                 </li>
-                {token!==null && token!==undefined && <div className="d-flex flex-column flex-lg-row">
+                {userData && <div className="d-flex flex-column flex-lg-row">
                   <li>
                     <form onSubmit={handleSearch} className="header-form" id="search">
                       <div className="searching-form position-relative">
-                        <input type="text" name="name" placeholder="Search vehicle" />
+                        <Input type="text" name="name" placeholder="Search vehicle" variant="border" value={name} onChange={e => setName(e.target.value)} />
                         <button className="search-icon position-absolute">
                                     <FaSearch />
                                   </button>
@@ -58,7 +59,7 @@ export const Header = ()=> {
                         <div className="iconSum position-absolute top-0 start-100 translate-middle">1</div>
                       </div>
                     </Link>
-                    <Link to="/profile" role="button" className="img-fit"><img className="avatar ms-5" src={auth.userData.image} alt="user" width="40" height="40" /></Link>
+                    <Link to="/profile" role="button" className="img-fit"><img className="avatar ms-5" src={userData.image || defaultUser} onError={e => e.target.src={defaultUser}} alt="user" width="40" height="40" /></Link>
                   </li>
                   <li className="text-center"><div onClick={onLogout} className="btn btn-primary login" role="button">Logout</div></li>
                 </div>
@@ -76,6 +77,5 @@ export const Header = ()=> {
       );
     }
 
-const mapStateToProps = state=>({auth: state.auth})
 
-export default connect(mapStateToProps)(Header)
+export default Header

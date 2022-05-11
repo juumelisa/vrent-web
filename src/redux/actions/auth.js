@@ -44,7 +44,7 @@ export const forgotPassword = (username)=> {
 }
 
 export const changePassword = (data)=> {
-  const param = new URLSearchParams() //query string-like body
+  const param = new URLSearchParams()
   param.append('username', data.username)
   param.append('confirmCode', data.confirmCode)
   param.append('password', data.password)
@@ -52,6 +52,16 @@ export const changePassword = (data)=> {
   return({
     type: 'AUTH_CHANGE_PASSWORD',
     payload: httpAuth().post('/auth/forgot-password', param)
+  })
+}
+export const changeOldPassword = (data, token) => {
+  const param = new URLSearchParams()
+  for (let x in data) {
+    param.append(x, data[x])
+  }
+  return({
+    type: 'AUTH_EDIT_PASSWORD',
+    payload: httpAuth(token).patch('auth/change-password', param)
   })
 }
 
@@ -63,15 +73,12 @@ export const getDataUser = (token)=> {
 }
 
 export const changeDataUser = (data, token)=> {
-  const param = new URLSearchParams() //query string-like body
-  param.append('email', data.email)
-  param.append('address', data.address)
-  param.append('username', data.username)
-  param.append('phone_number', data.phone_number)
-  param.append('birthdate', data.birthdate)
-  console.log(token)
+  const param = new FormData()
+  for (let x in data) {
+    param.append(x, data[x])
+  }
   return({
     type: 'AUTH_CHANGE_USERDATA',
-    payload: httpAuth(token).patch('/users', param)
+    payload: httpAuth(token, true).patch('/users', param)
   })
 }
