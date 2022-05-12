@@ -8,20 +8,22 @@ import { historyAdmin, historyUser } from '../redux/actions/histories';
 import Helmets from '../components/Helmets';
 import { twoDates } from '../helpers/dateToString';
 import { getVehicles } from '../redux/actions/vehicles';
+import { Input } from '../components/Input';
 
 export const  History = () => {
-  const token = window.localStorage.getItem('token')
-  const {auth, histories, vehicles} = useSelector(state => state)
+  const token = window.localStorage.getItem('seranToken')
+  const userData = JSON.parse(window.localStorage.getItem('seranUserData'))
+  const {histories, vehicles} = useSelector(state => state)
   const [selectedId, setSelectedId] = useState([])
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     getVehicles()
-    if(auth.userData.role === 'admin') {
+    if(userData.role === 'admin') {
       console.log('admin')
       console.log(dispatch(historyAdmin(token)))
       dispatch(historyAdmin(token))
-    } else if (auth.userData.role === 'user') {
+    } else if (userData.role === 'user') {
       dispatch(historyUser(token))
     } else {
       navigate('/login')
@@ -43,7 +45,11 @@ export const  History = () => {
       <Helmets title="History" />
       <main className="container my-5">
         <div className="row">
-          <div className="history-container col-12 col-lg-9">
+          <div className="col-12 col-lg-8">
+            <div className="position-relative">
+              <Input type="text" variant="pink" />
+              <FaSearch className="position-absolute top-50 end-0 translate-middle-y me-3" size={24} style={{cursor: "pointer"}}/>
+            </div>
             <div className="search-history">
               <form className="history-form position-relative">
                 <input type="text" name="history" placeholder="Search history" />

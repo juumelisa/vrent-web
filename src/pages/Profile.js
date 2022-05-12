@@ -8,7 +8,8 @@ import { changeDataUser } from '../redux/actions/auth';
 import { Button } from '../components/Button';
 import defaultUser from '../assets/images/default-user.png'
 import { GrEdit } from 'react-icons/gr';
-
+// eslint-disable-next-line no-unused-vars
+import loadingGif from '../assets/images/50820-blue-loading.gif'
 export const Profile = ()=> {
   const auth = useSelector(state=>state.auth)
   const token = window.localStorage.getItem('seranToken')
@@ -37,13 +38,13 @@ export const Profile = ()=> {
 	const onFileChange = e => {
 		setImage(e.target.files[0])
 		setPicture(URL.createObjectURL(e.target.files[0]))
-    console.log(image)
 	}
   const changeData = () => {
+    dispatch({
+      type: 'AUTH_CLEAR'
+    })
     const data = {email, address, phone_number: phoneNumber, username, birthdate, gender, image}
     dispatch(changeDataUser(data, token))
-    // getDataUser(token)
-    // navigate('/profile')
   }
     return (
       <Layout>
@@ -106,12 +107,12 @@ export const Profile = ()=> {
                 </div>
                 <div className="input-identity  col-12 col-md-6">
                   <label htmlFor="birthdate" className="fs-5 my-3">Birthdate (DD/MM/YY) :</label>
-                  <Input type="date" variant="line" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
+                  <Input type="date" variant="line" value={birthdate} onChange={e => setBirthdate(e.target.value)} max={new Date().toLocaleDateString('en-CA')}/>
                 </div>
               </div>
             </div>
           </form>
-          <div className="d-flex flex-wrap flex-md-row my-4">
+          {!auth.isLoading && <div className="d-flex flex-wrap flex-md-row my-4">
             <div className="col-12 col-md-4 p-1">
               <Button variant="dark" onAction={changeData}>Save Change</Button>
             </div>
@@ -121,7 +122,12 @@ export const Profile = ()=> {
             <div className="col-12 col-md-4 p-1">
               <Button>Cancel</Button>
             </div>
-          </div>
+          </div>}
+          {auth.isLoading && !auth.isError && <div className="position-absolute top-0 start-0 vw-100 vh-100 d-flex justify-content-center align-items-center">
+            <div className="bg-white shadow-lg px-5 mx-auto">
+              <img src={loadingGif} width={100} height={100} alt="loading" />
+            </div>
+          </div>}
         </main>
       </Layout>
     );

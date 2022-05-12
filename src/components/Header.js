@@ -1,21 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaSearch } from 'react-icons/fa';
 import logo from '../assets/images/logo.png';
 import messageIcon from '../assets/images/email.png';
-import { Input } from './Input';
 import defaultUser from '../assets/images/default-user.png'
 
 export const Header = ()=> {
   const token = window.localStorage.getItem('seranToken')
   const userData = JSON.parse(window.localStorage.getItem('seranUserData'))
     const navigate = useNavigate();
-    const [name, setName] = useState('');
     const dp = useDispatch()
-    const handleSearch = () => {
-      navigate(`/vehicles?name=${name}`, { replace: true });
-    };
     const onLogout = ()=>{
       dp({type: 'AUTH_LOGOUT'})
       navigate('/')
@@ -42,16 +36,6 @@ export const Header = ()=> {
                   <Link className="nav-link" to="/">About</Link>
                 </li>
                 {userData && <div className="d-flex flex-column flex-lg-row">
-                  <li>
-                    <form onSubmit={handleSearch} className="header-form" id="search">
-                      <div className="searching-form position-relative">
-                        <Input type="text" name="name" placeholder="Search vehicle" variant="border" value={name} onChange={e => setName(e.target.value)} />
-                        <button className="search-icon position-absolute">
-                                    <FaSearch />
-                                  </button>
-                      </div>
-                    </form>
-                  </li>
                   <li className="profile-message text-center d-flex justify-content-center">
                     <Link to="/">
                       <div className="message-notif position-relative">
