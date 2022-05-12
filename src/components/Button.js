@@ -1,27 +1,12 @@
 import React from 'react';
 
-export class Button extends React.Component {
-  state = {
-    angka: this.props.num,
-  };
-
-  addAngka = () => {
-    this.setState({ angka: parseInt(this.state.angka) + 1 });
-  };
-
-  minusAngka = () => {
-    this.setState({ angka: parseInt(this.state.angka) - 1 });
-  };
-
-  render() {
-    return (
-      <div>
-        <button onClick={() => this.minusAngka()}>-</button>
-        {this.state.angka}
-        <button onClick={() => this.addAngka()}>+</button>
-      </div>
-    );
+export const Button = ({children, onAction, variant}) => {
+  const btn = {
+    width: '100%',
+    // height: '60px',
+    borderRadius: '10px',
   }
+  return(
+    <button onClick={onAction} style={btn} className={`my-2 fs-5 py-3 rounded-3 ${variant === 'dark' ? 'bg-color-1 text-white border-0' : variant === 'light' ? 'bg-color-2 border-0' : variant === 'white' ? 'bg-white shadow border-0' : 'bg-light border'}`}>{children}</button>
+  )
 }
-
-export default Button;

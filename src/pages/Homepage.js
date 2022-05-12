@@ -1,35 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaChevronRight } from 'react-icons/fa';
 import { AiFillStar } from 'react-icons/ai';
 import Layout from '../components/Layout';
 import testimony from '../assets/images/edward-testimony.png';
-import SubmitButton from '../components/SubmitButton';
-import { connect, useSelector } from 'react-redux';
+import defaultImg from '../assets/images/default-img.png';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { getVehicles } from '../redux/actions/vehicles';
+import Helmets from '../components/Helmets';
+import { Button } from '../components/Button';
+import { Input } from '../components/Input';
+import { getDataUser } from '../redux/actions/auth';
 
 export const Homepage=({getVehicles})=> {
-  const {vehicles: vhc} = useSelector(state => state)
-  // const [vehicles, setVehicles] = useState([]);
+  const {vehicles: vhc, auth} = useSelector(state => state)
+  const token = window.localStorage.getItem('seranToken')
+  const userData = window.localStorage.getItem('seranUserData')
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState('');
+  const [date, setDate] = useState(new Date().toLocaleDateString('en-CA'));
   useEffect(() => {
     getVehicles(4, null, 'totalRent+DESC');
+    if (token && !userData) {
+      dispatch(getDataUser(token))
+    }
   }, [getVehicles]);
 
-  // const getVehicles = async () => {
-  //   const { data } = await axios.get(`${REACT_APP_BACKEND_URL}popular?sortBy=totalRent+DESC`);
-  //   setVehicles(data.result);
-  // };
   const goToDetail = (id) => {
-    navigate(`/vehicle/${id}`);
+    if(auth.userData.role === 'admin') {
+      navigate(`/edit-item/${id}`)
+    } else {
+      navigate(`/vehicle/${id}`);
+    }
   };
-  const handleSearch = async (event) => {
-    event.preventDefault();
-    const searchVehicle = event.target.elements.name.value;
-    navigate(`/vehicles?name=${searchVehicle}`, { replace: true });
+  const handleSearch = () => {
+    navigate(`/vehicles?name=${search}`, { replace: true });
   };
   return (
+    <>
     <Layout>
+      <Helmets title={'Home'} />
       <div className="search-section">
         <div className="search-background py-5">
           <div className="container">
@@ -37,32 +48,37 @@ export const Homepage=({getVehicles})=> {
             <form onSubmit={handleSearch} className="fs-5" style={{ width: '100%' }}>
               <h2 className="fs-4 p-0 mb-5">Vehicle Finder</h2>
               <div className="line mb-5" />
-              <input type="text" name="name" placeholder="Type the vehicle (ex. motorbike)" className="col-12" />
+              <Input placeholder="Type the vehicle (ex. motorbike)" variant="pink" value={search} onChange={e => setSearch(e.target.value)}/>
               <div className="location-date col-12 d-flex flex-column flex-md-row p-0">
-                <input type="text" name="location" placeholder="Location" />
-                <div className="form-space" />
-                <input type="date" />
+                <Input placeholder="Location" variant={"pink"} />
+                <div className="mx-1" />
+                <Input type="date" variant={"pink"} value={date} onChange={e => setDate(e.target.value)} min={new Date().toLocaleDateString('en-CA')}/>
               </div>
-              <SubmitButton>Search</SubmitButton>
+              <Button variant={'dark'}>Search</Button>
             </form>
           </div>
         </div>
       </div>
       <main className="container">
-        <div className="popular-section py-5">
+        <div className="py-5">
           <div className="heading-section d-flex align-items-center my-3" style={{ width: '100%' }}>
+            {auth.userData.role === 'admin' &&
+              <div>
+                <Link to="/add-item">Add New Item</Link>
+              </div>
+            }
             <h1 style={{ width: '50%' }}>Popular in town</h1>
             <div className="other-vehicles text-end" style={{ width: '50%' }}>
               <Link to="/popular-in-town" style={{ color: '#1572A1' }}>
                 View all
-<FaChevronRight className="ms-3" />
+                <FaChevronRight className="ms-3" />
               </Link>
             </div>
           </div>
-          <div className="row vehicles">
+          <div className="row">
             {vhc.vehicles.map((data) => (
               <div key={data.id} onClick={() => goToDetail(data.id)} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{ cursor: 'pointer' }}>
-                <img className="img-fluid" src={data.image} alt={data.name} />
+                <img className="img-fluid" src={data.image} alt={data.name} onError={e => e.target.src=defaultImg} style={{height: "200px"}}/>
                 <div className="location position-absolute bottom-0 bg-white p-2">
                   <h6 className="m-0">{data.name}</h6>
                   <p className="m-0">{data.location}</p>
@@ -95,6 +111,7 @@ export const Homepage=({getVehicles})=> {
         </div>
       </main>
     </Layout>
+    </>
   );
 }
 const mapStateToProps = state => ({vehicles: state.vehicles})

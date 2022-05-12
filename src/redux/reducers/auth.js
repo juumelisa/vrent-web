@@ -3,7 +3,8 @@ const initialState = {
     userData: {},
     isLoading: false,
     isError: false,
-    errorMsg: ''
+    errorMsg: null,
+    message: null,
 }
 
 const auth = (state=initialState, action)=>{
@@ -16,17 +17,14 @@ const auth = (state=initialState, action)=>{
         }
         case 'AUTH_LOGIN_FULFILLED': {
             const {data} = action.payload
-            console.log(action.payload)
-            console.log(data)
             state.isLoading = false
             state.isError = false
             state.token = data.result.token
-            window.localStorage.setItem('token', state.token)
+            window.localStorage.setItem('seranToken', state.token)
             return {...state}
         }
         case 'AUTH_LOGIN_REJECTED': {
           const {message} = action.payload.response.data
-          console.log(message)
           state.isLoading = false
           state.isError = true
           state.errorMsg = message
@@ -40,13 +38,14 @@ const auth = (state=initialState, action)=>{
           const {data} = action.payload
           state.isLoading = false
           state.userData = data.result
-          window.localStorage.setItem('userData', JSON.stringify(state.userData))
+          window.localStorage.setItem('seranUserData', JSON.stringify(state.userData))
           return {...state}
         }
         case 'AUTH_LOGOUT': {
           state.token = null
           state.userData = {}
-          window.localStorage.removeItem('token')
+          window.localStorage.removeItem('seranToken')
+          window.localStorage.removeItem('seranUserData')
           return state
         }
         case 'AUTH_REGISTER_PENDING':{
@@ -55,7 +54,6 @@ const auth = (state=initialState, action)=>{
         }
         case 'AUTH_REGISTER_FULFILLED': {
           const {data} = action.payload
-          console.log(data.message)
           state.isLoading = false
           state.isError = false
           state.errorMsg = data.message
@@ -63,7 +61,6 @@ const auth = (state=initialState, action)=>{
         }
         case 'AUTH_REGISTER_REJECTED': {
           const {message} = action.payload.response.data
-          console.log(message)
           state.isLoading = false
           state.isError = true
           state.errorMsg = message
@@ -75,7 +72,6 @@ const auth = (state=initialState, action)=>{
         }
         case 'AUTH_ACCOUNT_CONFIRMATION_FULFILLED': {
           const {data} = action.payload
-          console.log(data.message)
           state.isLoading = false
           state.isError = false
           state.errorMsg = data.message
@@ -83,7 +79,6 @@ const auth = (state=initialState, action)=>{
         }
         case 'AUTH_ACCOUNT_CONFIRMATION_REJECTED': {
           const {message} = action.payload.response.data
-          console.log(message)
           state.isLoading = false
           state.isError = true
           state.errorMsg = message
@@ -95,15 +90,13 @@ const auth = (state=initialState, action)=>{
         }
         case 'AUTH_FORGOT_PASSWORD_FULFILLED': {
           const {data} = action.payload
-          console.log(data.message)
           state.isLoading = false
           state.isError = false
-          state.errorMsg = data.message
+          state.message = data.message
           return {...state}
         }
         case 'AUTH_FORGOT_PASSWORD_REJECTED': {
           const {message} = action.payload.response.data
-          console.log(message)
           state.isLoading = false
           state.isError = true
           state.errorMsg = message
@@ -115,7 +108,6 @@ const auth = (state=initialState, action)=>{
         }
         case 'AUTH_CHANGE_PASSWORD_FULFILLED': {
           const {data} = action.payload
-          console.log(data.message)
           state.isLoading = false
           state.isError = false
           state.errorMsg = data.message
@@ -123,7 +115,25 @@ const auth = (state=initialState, action)=>{
         }
         case 'AUTH_CHANGE_PASSWORD_REJECTED': {
           const {message} = action.payload.response.data
-          console.log(message)
+          state.isLoading = false
+          state.isError = true
+          state.errorMsg = message
+          return {...state}
+        }
+        
+        case 'AUTH_EDIT_PASSWORD_PENDING':{
+          state.isLoading = true
+          return state
+        }
+        case 'AUTH_EDIT_PASSWORD_FULFILLED': {
+          const {data} = action.payload
+          state.isLoading = false
+          state.isError = false
+          state.errorMsg = data.message
+          return {...state}
+        }
+        case 'AUTH_EDIT_PASSWORD_REJECTED': {
+          const {message} = action.payload.response.data
           state.isLoading = false
           state.isError = true
           state.errorMsg = message
@@ -135,7 +145,8 @@ const auth = (state=initialState, action)=>{
         }
         case 'AUTH_CHANGE_USERDATA_FULFILLED': {
           const {data} = action.payload
-          console.log(data.message)
+          state.userData = data.result
+          window.localStorage.setItem('seranUserData', JSON.stringify(state.userData))
           state.isLoading = false
           state.isError = false
           state.errorMsg = data.message
@@ -143,10 +154,15 @@ const auth = (state=initialState, action)=>{
         }
         case 'AUTH_CHANGE_USERDATA_REJECTED': {
           const {message} = action.payload.response.data
-          console.log(message)
           state.isLoading = false
           state.isError = true
           state.errorMsg = message
+          return {...state}
+        }
+        case 'AUTH_CLEAR' : {
+          state.isError = false
+          state.errorMsg = null
+          state.message = null
           return {...state}
         }
         default: {

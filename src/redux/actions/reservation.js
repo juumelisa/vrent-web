@@ -6,7 +6,6 @@ export const makeReservation = (data, token)=> {
   param.append('sum', data.sum)
   param.append('rent_date', data.rent_date)
   param.append('return_date', data.return_date)
-  console.log(data)
   return({
     type: 'FINAL_RESERVATION',
     payload: httpAuth(token).post('/histories', param)
@@ -14,7 +13,6 @@ export const makeReservation = (data, token)=> {
 }
 
 export const reservationData = (data) =>{
-    console.log(data)
     return{
         type: 'RESERVATION_DATA',
         payload: data

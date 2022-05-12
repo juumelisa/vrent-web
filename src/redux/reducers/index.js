@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import auth from "./auth";
+import histories from "./histories"
 
 const counterState = {
     num: 1
@@ -7,8 +8,10 @@ const counterState = {
 const vehicleState = {
     vehicles: [],
     page: {},
-    isLoading: false,
-    isError: false
+    vehicle: {},
+    isLoading: true,
+    isError: false,
+    errMsg: null
 }
 const detailState = {
     vehicle: [],
@@ -27,6 +30,7 @@ const reservationState = {
 }
 const rootReducer = combineReducers({
     auth,
+    histories,
     counter: (state=counterState, action) =>{
         switch(action.type){
             case 'INCREMENT':
@@ -48,6 +52,8 @@ const rootReducer = combineReducers({
         switch(action.type){
             case 'GET_VEHICLES_PENDING':
                 state.isLoading = true
+                state.isError = false
+                state.errMsg = null
                 return state
             case 'GET_VEHICLES_FULFILLED':{
                 const {data} = action.payload
@@ -55,14 +61,20 @@ const rootReducer = combineReducers({
                 state.vehicles = data.result
                 state.page = data.pageInfo
                 state.isLoading = false
+                state.isError = false
+                state.errMsg = null
                 return state
             }
-            case 'GET_VEHICLES_REJECTED':
+            case 'GET_VEHICLES_REJECTED': {
+                const {message} = action.payload.response.data
                 state.isLoading = false
                 state.isError = true
+                state.errMsg = message
                 return state
+            }
             case 'GET_NEXTDATA_PENDING':
                 state.isLoading = true
+                state.isError = false
                 return state
             case 'GET_NEXTDATA_FULFILLED':{
                 const {data} = action.payload
@@ -70,14 +82,21 @@ const rootReducer = combineReducers({
                 state.vehicles = state.vehicles.concat(data.result)
                 state.page = data.pageInfo
                 state.isLoading = false
+                state.isError = false
+            state.errMsg = null
                 return state
             }
-            case 'GET_NEXTDATA_REJECTED':
-                state.isLoading = false
-                state.isError = true
-                return state
+            case 'GET_NEXTDATA_REJECTED': {
+              const {message} = action.payload.response.data
+              state.isLoading = false
+              state.isError = true
+              state.errMsg = message
+              return state
+          }
             case 'SEARCH_VEHICLE_PENDING':
                 state.isLoading = true
+                state.isError = false
+            state.errMsg = null
                 return state
             case 'SEARCH_VEHICLE_FULFILLED':{
                 const {data} = action.payload
@@ -85,13 +104,59 @@ const rootReducer = combineReducers({
                 state.vehicles = data.result
                 state.page = data.pageInfo
                 state.isLoading = false
+                state.isError = false
+                state.errMsg = null
                 return state
             }
-            case 'SEARCH_VEHICLE_REJECTED':
+            case 'SEARCH_VEHICLE_REJECTED':{
+                const {message} = action.payload.response.data
                 state.isLoading = false
                 state.isError = true
+                state.errMsg = message
                 return state
-            case 'SEARCH_VEHICLE':
+            }
+            case 'EDIT_VEHICLE_PENDING':
+              state.isLoading = true;
+              state.isError = false;
+              state.errMsg = null
+              return {...state}
+            case 'EDIT_VEHICLE_FULFILLED':
+              state.isError = false;
+              state.isLoading = false;
+              state.vehicle = action.payload;
+              state.errMsg = null
+              return {...state}
+            case 'EDIT_VEHICLE_REJECTED':{
+              const {message} = action.payload.response.data
+              state.isLoading = false
+              state.isError = true
+              state.errMsg = message
+              return state
+          }
+            case 'ADD_VEHICLE_PENDING':
+              state.isLoading = true;
+              state.isError = false;
+            state.errMsg = null
+              return {...state}
+            case 'ADD_VEHICLE_FULFILLED':
+              state.isError = false;
+              state.isLoading = false;
+              state.vehicle = action.payload;
+            state.errMsg = null
+              return {...state}
+            case 'ADD_VEHICLE_REJECTED':{
+              const {message} = action.payload.response.data
+              state.isLoading = false
+              state.isError = true
+              state.errMsg = message
+            state.errMsg = null
+
+              return state
+          }
+          case 'CLEAR_VEHICLE': {
+            state.errMsg = null
+            return {...state}
+          }
             default:
                 return {...state}
         }

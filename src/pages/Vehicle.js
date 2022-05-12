@@ -5,6 +5,7 @@ import Layout from "../components/Layout"
 import SubmitButton from "../components/SubmitButton"
 import { getVehicles, getNextData } from "../redux/actions/vehicles"
 import { searchVehicle } from "../redux/actions/vehicles"
+import defaultImg from "../assets/images/default-img.png"
 
 export const Vehicle = ({getVehicles, getNextData}) =>{
     const {vehicles: vhc} = useSelector(state => state)
@@ -28,7 +29,6 @@ export const Vehicle = ({getVehicles, getNextData}) =>{
     }
     const nextData = (url) =>{
         getNextData(url)
-        console.log(vhc.vehicles.result)
     }
     const goToDetail = (id)=> {
         navigate(`/vehicle/${id}`)
@@ -59,7 +59,7 @@ export const Vehicle = ({getVehicles, getNextData}) =>{
                         </select>
                         <label className="mt-4 fs-6 fw-bold" htmlFor="sortBy">Sort by : </label>
                         <select id="sortBy" className="mt-2">
-                            <option selected value="id+DESC">New Arrival</option>
+                            <option value="id+DESC">New Arrival</option>
                             <option value="totalRent+DESC">Popular</option>
                             <option value="cost+ASC">Lowest Price</option>
                             <option value="cost+DESC">Highest Price</option>
@@ -82,7 +82,7 @@ export const Vehicle = ({getVehicles, getNextData}) =>{
                         {vhc.vehicles.map((data)=>{
                             return(
                                 <div key={data.id} onClick={()=>goToDetail(data.id)} className="col-12 col-md-6 col-lg-3 popular-vehicles position-relative py-3" style={{cursor: "pointer"}}>
-                                    <img className="img-fluid" src={data.image} alt={data.name} />
+                                    <img className="img-fluid" src={data.image} alt={data.name} onError={e => e.target.src=defaultImg} style={{height: "200px"}}/>
                                     <div className="location position-absolute bottom-0 bg-white p-2">
                                         <h6 className="m-0">{data.name}</h6>
                                         <p className="m-0">{data.location}</p>

@@ -13,10 +13,10 @@ import './assets/css/login.css';
 import './assets/css/forgot-password.css';
 import './assets/css/payment.css';
 import './assets/css/vehicle-detail.css';
-import './assets/css/history.css';
 import './assets/css/reservation.css';
 import './assets/css/profile.css';
-import './assets/css/components.css';
+import './assets/css/checkbox.css';
+import './assets/sass/custom.scss';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
