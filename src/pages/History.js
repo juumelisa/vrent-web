@@ -23,7 +23,7 @@ export const  History = () => {
       console.log('admin')
       console.log(dispatch(historyAdmin(token)))
       dispatch(historyAdmin(token))
-    } else if (userData.role === 'user') {
+    } else if (userData.role === 'User') {
       dispatch(historyUser(token))
     } else {
       navigate('/login')
