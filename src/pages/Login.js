@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import googleLogo from '../assets/images/google-logo.png';
@@ -15,17 +15,27 @@ const Login = ()=> {
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth)
   const navigate = useNavigate()
-  const [username, setUsername] = useState()
+  const queryParams = new URLSearchParams(window.location.search)
+  const [username, setUsername] = useState(queryParams.get("username"))
   const [password, setPassword] = useState()
-  const onLogin = (e)=>{
-    e.preventDefault()
+  const [errorMessage, setErrorMessage] = useState()
+  useEffect(() => {
+    if (!auth.message) {
+      dispatch({
+        type: 'AUTH_CLEAR'
+      })
+    }
+  }, [])
+  const onLogin = ()=>{
+    setErrorMessage()
     dispatch({
       type: 'AUTH_CLEAR'
     })
-    dispatch(login(username, password))
-    // if(!auth.isLoading && !auth.isError){
-    //   navigate('/')
-    // }
+    if(!username || !password) {
+      setErrorMessage('Please fill in all the fields')
+    } else{
+      dispatch(login(username, password))
+    }
   }
   return (
     <>
@@ -39,15 +49,15 @@ const Login = ()=> {
       <div className="right-container pt-5">
         <div className="top-wrapper mx-2 mx-md-auto">
           <h1 className="my-5">Login</h1>
-          <form onSubmit={onLogin} className="login-form">
-            {auth.isError && auth.errorMsg && <div className='alert alert-danger mb-5'>{auth.errorMsg}</div>}
-            {!auth.isError && auth.errorMsg && <div className='alert alert-success mb-5'>{auth.errorMsg}</div>}
+            {errorMessage && <div className='alert alert-danger mb-5'>{errorMessage}</div>}
+            {auth.isError && auth.errorMsg && !errorMessage && <div className='alert alert-danger mb-5'>{auth.errorMsg}</div>}
+            {!auth.isError && auth.message && <div className='alert alert-success mb-5'>{auth.message}</div>}
             <Input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)} variant="pink" placeholder="Email or username"/>
             <InputPassword variant="pink" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password"/>
-            <Button variant="light">Login</Button>
+            <Button variant="light" onAction={onLogin}>Login</Button>
             <Link to="/forgot-password" className="forgot-password mt-4" style={{ textDecoration: 'underline', color: '#1572A1' }}>Forgot password?</Link>
-          </form>
-          <Link to="/forgot-password" className="opacity-0">Forgot password?</Link>
+            <div className="pb-1"></div>
+            <Link to="/forgot-password" className="opacity-0">Forgot password?</Link>
           <div className="login-way d-flex">
             <div className="line" />
             <div className="way fs-5 text-center">or try another way</div>

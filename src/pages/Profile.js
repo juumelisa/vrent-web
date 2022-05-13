@@ -10,6 +10,7 @@ import defaultUser from '../assets/images/default-user.png'
 import { GrEdit } from 'react-icons/gr';
 // eslint-disable-next-line no-unused-vars
 import loadingGif from '../assets/images/50820-blue-loading.gif'
+import Helmets from '../components/Helmets';
 export const Profile = ()=> {
   const auth = useSelector(state=>state.auth)
   const token = window.localStorage.getItem('seranToken')
@@ -48,6 +49,7 @@ export const Profile = ()=> {
   }
     return (
       <Layout>
+        <Helmets title={"Edit Profile"} />
         <main className="container mb-5">
           <h1>Profile</h1>
           <div className="user-profile text-center">

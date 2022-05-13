@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import background from '../assets/images/login-background.png';
@@ -20,14 +20,16 @@ const ChangePassword = ()=> {
   const [password, setPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
 
-  // useEffect(() => {
-  //   setUsername(useParams().username)
-  // })
+  useEffect(() => {
+    if(auth.message === 'Password was changed') {
+      navigate(`/login?username=${username}`)
+    }
+  })
 
   const onChangePassword = () =>{
     const data = {username, confirmCode, password, confirmPassword}
     dispatch(changePassword(data))
-    navigate('/login')
+    // navigate('/login')
   }
   return (
     <>
@@ -39,17 +41,17 @@ const ChangePassword = ()=> {
         <img src={background} alt="background" className="position-fixed" />
       </div>
       <div className="right-container pt-5">
-        <div className="top-wrapper">
+        <div className="top-wrapper mx-auto">
           <h1 className="my-5">Change Password</h1>
           {auth.isError && auth.errorMsg && <div className='alert alert-danger mb-5'>{auth.errorMsg}</div>}
           {!auth.isError && <div className='alert alert-success mb-5'>{auth.message}</div>}
-          <form onSubmit={onChangePassword} className="login-form">
+          {/* <form onSubmit={onChangePassword} className="login-form"> */}
             <Input type="text" placeholder="Email or username" value={username} id="username" variant="pink" onChange={e => setUsername(e.target.value)}/>
             <Input type="number" placeholder="Confirmation code" value={confirmCode} id="code" variant="pink" onChange={e => setConfirmCode(e.target.value)}/>
             <InputPassword placeholder={"New password"} variant="pink" value={password} onChange={e => setPassword(e.target.value)}/>
             <InputPassword placeholder={"Confirm new password"} variant="pink" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
-            <Button variant="dark">Change password</Button>
-          </form>
+            <Button variant="dark" onAction={onChangePassword}>Change password</Button>
+          {/* </form> */}
         </div>
         <FooterB />
       </div>

@@ -44,6 +44,7 @@ const auth = (state=initialState, action)=>{
         case 'AUTH_LOGOUT': {
           state.token = null
           state.userData = {}
+          state.message = null
           window.localStorage.removeItem('seranToken')
           window.localStorage.removeItem('seranUserData')
           return state
@@ -56,7 +57,7 @@ const auth = (state=initialState, action)=>{
           const {data} = action.payload
           state.isLoading = false
           state.isError = false
-          state.errorMsg = data.message
+          state.message = data.message
           return {...state}
         }
         case 'AUTH_REGISTER_REJECTED': {
@@ -74,7 +75,7 @@ const auth = (state=initialState, action)=>{
           const {data} = action.payload
           state.isLoading = false
           state.isError = false
-          state.errorMsg = data.message
+          state.message = data.message
           return {...state}
         }
         case 'AUTH_ACCOUNT_CONFIRMATION_REJECTED': {
@@ -110,7 +111,7 @@ const auth = (state=initialState, action)=>{
           const {data} = action.payload
           state.isLoading = false
           state.isError = false
-          state.errorMsg = data.message
+          state.message = data.message
           return {...state}
         }
         case 'AUTH_CHANGE_PASSWORD_REJECTED': {

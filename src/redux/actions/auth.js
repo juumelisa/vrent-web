@@ -75,7 +75,9 @@ export const getDataUser = (token)=> {
 export const changeDataUser = (data, token)=> {
   const param = new FormData()
   for (let x in data) {
-    param.append(x, data[x])
+    if(data[x]){
+      param.append(x, data[x])
+    }
   }
   return({
     type: 'AUTH_CHANGE_USERDATA',
