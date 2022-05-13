@@ -13,3 +13,17 @@ export const historyAdmin = (token) =>{
       payload: httpAuth(token).get('/histories')
   })
 }
+
+export const deleteHistoryUser = (token, id) => {
+  return({
+    type: 'DELETE_HISTORY',
+    payload: httpAuth(token).patch(`histories/delete/user/${id}`)
+  })
+}
+
+export const deleteHistoryAdmin = (token, id) => {
+  return({
+    type: 'DELETE_HISTORY',
+    payload: httpAuth(token).patch(`histories/delete/${id}`)
+  })
+}

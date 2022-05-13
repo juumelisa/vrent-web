@@ -1,6 +1,6 @@
 const initialState = {
   data: {},
-  isLoading: true,
+  isLoading: false,
   isError: false,
   errorMsg: null,
   message: null,
@@ -16,18 +16,43 @@ const histories = (state=initialState, action)=>{
     case 'GET_HISTORY_FULFILLED': {
       const {data} = action.payload
       state.data = data.result
+      window.localStorage.setItem('seranHistory', JSON.stringify(state.data))
       state.isLoading = false
       state.isError = false
       return {...state}
     }
     case 'GET_HISTORY_REJECTED': {
+      const {data} = action.payload.response
       state.isLoading = false
       state.isError = true
+      state.errorMsg = data.message
       return {...state}
     }
-      default: {
-          return {...state}
-      }
+    case 'DELETE_HISTORY_PENDING': {
+      state.isLoading = true
+      state.isError = false
+      state.errorMsg = null
+      state.message = null
+      return {...state}
+    }
+    case 'DELETE_HISTORY_FULFILLED': {
+      const {data} = action.payload
+      state.message = data.message
+      state.isError = false
+      state.isError = false
+      state.isLoading = false
+      return {...state}
+    }
+    case 'DELETE_HISTORY_REJECTED': {
+      const {data} = action.payload.response
+      state.errorMsg = data.message
+      state.isError = true
+      state.isLoading = false
+      return {...state}
+    }
+    default: {
+      return {...state}
+    }
   }
 }
 

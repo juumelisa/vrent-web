@@ -6,6 +6,7 @@ import { Button } from '../components/Button';
 import { changeOldPassword } from '../redux/actions/auth';
 import loadingGif from '../assets/images/50820-blue-loading.gif'
 import { InputPassword } from '../components/InputPassword';
+import Helmets from '../components/Helmets';
 
 export const EditPassword = ()=> {
   const auth = useSelector(state=>state.auth)
@@ -31,8 +32,9 @@ export const EditPassword = ()=> {
   }
     return (
       <Layout>
+        <Helmets title={"Change Password"} />
         <main className="container vh-100 d-flex flex-column justify-content-center">
-          <h1 className="pb-5 text-center">ChangePassword</h1>
+          <h1 className="pb-5 text-center">Change Password</h1>
           {auth.isError && auth.errorMsg && <div className='alert alert-danger mb-5'>{auth.errorMsg}</div>}
           {!auth.isError && auth.errorMsg && <div className='alert alert-success mb-5'>{auth.errorMsg}</div>}
           <form className="profile-form pb-3">
