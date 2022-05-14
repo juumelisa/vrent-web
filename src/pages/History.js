@@ -24,14 +24,16 @@ export const  History = () => {
   const [errorSelection, setErrorSelection] = useState()
   const [deleteHistory, setDeleteHistory] = useState(false)
   useEffect(() => {
-    dispatch(getVehicles())
-    if(userData.role === 'admin') {
-      dispatch(historyAdmin(token))
-    } else if (userData.role === 'User' || userData.role === 'user') {
-      dispatch(historyUser(token))
+    if(token) {
+      if(userData.role === 'admin' || userData.role === 'Admin') {
+        dispatch(historyAdmin(token))
+      } else{
+        dispatch(historyUser(token))
+      }
     } else {
-      navigate('/login')
+        navigate('/login')
     }
+    dispatch(getVehicles())
   }, []);
   const checkAll = e => {
     const check = document.getElementsByName("history")
