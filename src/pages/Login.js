@@ -14,6 +14,7 @@ import { login } from '../redux/actions/auth';
 const Login = ()=> {
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth)
+  const token = window.localStorage.getItem('seranToken')
   const navigate = useNavigate()
   const queryParams = new URLSearchParams(window.location.search)
   const [username, setUsername] = useState(queryParams.get("username"))
@@ -39,7 +40,7 @@ const Login = ()=> {
   }
   return (
     <>
-    {auth.token!==null && <Navigate to="/" />}
+    {token!==null && <Navigate to="/" />}
     <Helmets title={"Login"}/>
     <main className="d-flex flex-wrap flex-lg-row position-relative">
       <div></div>
