@@ -1,79 +1,85 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa';
-import { getData } from '../helpers/http';
 import Layout from '../components/Layout';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { makeReservation } from '../redux/actions/reservation';
+import { Button } from '../components/Button';
+import { editHistoryStatus, getHistoryDetail, historyAdmin, historyUser } from '../redux/actions/histories';
+import Helmets from '../components/Helmets';
+import defaultImg from '../assets/images/default-img.png';
+import { Loading } from '../components/Loading';
 
-export const Payment = (props) =>{
-  const token = window.localStorage.getItem('token')
-  const [vehicles, setVehicles] = useState([]);
-  const {counter} = useSelector(state=>state)
-  const {reservation} = useSelector(state=>state)
+export const Payment = () =>{
+  const token = window.localStorage.getItem('seranToken')
+  const userData = window.localStorage.getItem('seranUserData')
+  const {vehicles, histories} = useSelector(state=>state)
   const { id } = useParams();
   const navigate = useNavigate()
-  // eslint-disable-next-line no-undef
-  const {REACT_APP_BACKEND_URL} = process.env
+  const dispatch = useDispatch()
+  const [toHistory, setToHistory] = useState(false)
   useEffect(() => {
     if(!token){
       navigate('/login')
+    }else {
+      dispatch(getHistoryDetail(token, id))
+      if(userData.role === 'Admin' || userData.role === 'admin'){
+        dispatch(historyAdmin(token))
+      } else {
+        dispatch(historyUser(token))
+      }
     }
-    getVehicles(id);
   }, []);
 
-  const getVehicles = async (id) => {
-    try {
-      const { data } = await getData(`${REACT_APP_BACKEND_URL}vehicles/${id}`, props.history);
-      setVehicles(data.result);
-    } catch (err) {
-      console.log(err.message);
+  const finishPayment = () => {
+    dispatch(editHistoryStatus(token, {status: 'Booked', id}))
+    setToHistory(true)
+  }
+  const cancelOrder = () => {
+    dispatch(editHistoryStatus(token, {status: 'Cancelled', id}))
+  }
+  const detailPayment = () => {
+    let list = []
+    for (let i = 0; i<histories.detail.sum; i++) {
+      list.push(
+        <p key={i}>1 bike: Rp {histories.detail.cost?.toLocaleString('id-ID')}</p>
+      )
     }
-  };
-
-  const finalReservation = () =>{
-    const vehicle_id = reservation.vehicle_id
-    const sum = reservation.total
-    const rent_date = reservation.rentDate
-    const return_date = reservation.returnDate
-    const data = {vehicle_id, sum, rent_date, return_date}
-    console.log(data)
-    makeReservation(data, token)
+    return list
   }
   return (
+    <>
+    {!histories.isLoading && toHistory && <Navigate to="/history" />}
     <Layout>
+      <Helmets title="Reservation Detail" />
       <main className="container my-5">
         <div className="back-arrow">
-          <Link to="/" className="d-flex my-5" style={{ color: 'black' }}>
+          <div className="d-flex my-5" style={{ color: 'black', cursor: "pointer"}} onClick={() => window.history.back()}>
             <FaChevronLeft className="fs-3 me-md-5" style={{ height: '80px' }} />
             <p className="fs-3 m-0" style={{ lineHeight: '80px' }}>Reservation</p>
-          </Link>
+          </div>
         </div>
-        <div className="row">
+        {histories.isError && <div className='alert alert-danger mb-5'>{histories.errorMsg}</div>}
+        {!histories.isLoading && <div className="row">
           <div className="order-section col-12 col-md-8 pe-5">
             <div className="user-identity pb-3">
               <p className="fw-bold">Identity: </p>
               <div className="user-contact pb-3" style={{ borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
-                <p className="py-0 my-0">Samantha Doe (+6290987682)</p>
-                <p className="py-0 my-0">samanthadoe@mail.com</p>
+                <p className="py-0 my-0">{histories.detail.recipient}</p>
+                <p className="py-0 my-0">{histories.detail.email}</p>
               </div>
             </div>
             <div className="vehicle-detail d-flex">
-              <img src={vehicles?.image} alt={vehicles?.name} width="100%" height="100%" />
+              <img src={histories.detail.image} onError={e => e.target.src={defaultImg}} alt={vehicles?.name} width="100%" height="100%" />
               <div className="ms-3">
-                <p className="fs-4 fw-bold">
-                  {vehicles?.name}
-                  {' '}
-                  {vehicles?.year}
-                </p>
-                <p className="py-0 my-0">Location: {vehicles?.location}</p>
-                <p className="py-0 my-0">{counter.num} x Rp{vehicles?.cost}</p>
-                <p className="py-0 my-0">Rp{counter.num * vehicles?.cost}</p>
+                <p className="fs-4 fw-bold">{histories.detail.vehicle}</p>
+                <p className="py-0 my-0">Location: {histories.detail.location}</p>
+                <p className="py-0 my-0">{histories.detail.sum} x Rp {histories.detail.cost?.toLocaleString('id-ID')}</p>
+                <p className="py-0 my-0">Rp {histories.detail.total_cost?.toLocaleString('id-ID')}</p>
               </div>
             </div>
           </div>
           <div className="payment-section col-12 col-md-4">
-            <form onSubmit={finalReservation}>
               <div className="payment code fw-bold">Payment Code</div>
               <div className="copy-code row fw-bold fs-4">
                 <p className="col-8">#FG1209878YZS</p>
@@ -81,34 +87,32 @@ export const Payment = (props) =>{
               </div>
               <div className="detail-checkout">
                 <p className="fw-bold">Order details: </p>
-                <p>
-                  {' '}
-                  1 bike: Rp.
-                      {vehicles?.cost}
-                </p>
-                <p style={{ borderBottom: '1px solid black' }}>
-                  {' '}
-                  1 bike: Rp.
-                      {vehicles?.cost}
-                </p>
-                <p className="fw-bold">
-                  Total: Rp.
-                      {vehicles?.cost * counter.num}
-                </p>
+                {detailPayment()}
               </div>
-              <div className="payment-method">
-                <input type="text" placeholder="Select payment method" style={{ width: '100%' }} />
+              <div className="mb-3">
+              {histories.detail.status === 'Wait for payment' && <select className="form-select" aria-label="Disabled select example" disabled>
+                <option selected>Payment method</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>}
               </div>
-              <button type="submit">
-                Finish payment:
-                <span>59:30</span>
-              </button>
-            </form>
+              {histories.detail.status === 'Wait for payment' && <Button variant="light" onAction={finishPayment}>
+                <div className="d-flex justify-content-center">
+                  <p className="m-0 p-0">Finish payment</p>
+                  <p className="m-0 p-0 ms-2 text-danger">59:30</p>
+                </div>
+              </Button>}
+              {(histories.detail.status === 'Booked' || histories.detail.status === 'Wait for payment') && <Button variant="dark" onAction={cancelOrder}>Cancel</Button>}
+              {histories.detail.status !== 'Booked' && histories.detail.status !== 'Wait for payment' && <Button variant="border-light">{histories.detail.status}</Button>}
           </div>
-        </div>
-
+        </div>}
       </main>
+      {histories.isLoading && <div className="position-absolute top-0 start-0 position-fixed">
+          <Loading />
+        </div>}
     </Layout>
+    </>
   );
 }
 

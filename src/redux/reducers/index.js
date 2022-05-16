@@ -16,17 +16,22 @@ const vehicleState = {
 const detailState = {
     vehicle: [],
     isLoading: false,
-    isError: false
+    isError: false,
+    message: null,
+    errorMsg: null
 
 }
 const reservationState = {
+  data: {},
+    id: null,
     vehicleId: 0,
     total: 0,
     rentDate: '',
     returnDate: '',
     isError: false,
     isLoading: false,
-    message: null
+    message: null,
+    errorMsg: null
 }
 const rootReducer = combineReducers({
     auth,
@@ -171,11 +176,14 @@ const rootReducer = combineReducers({
             case 'GET_VEHICLES_DETAIL_FULFILLED': {
                 const {data} = action.payload
                 state.vehicle = data.result
+                state.message = data.message
                 state.isLoading = false
                 state.isError = false
                 return state
             }
             case 'GET_VEHICLE_DETAIL_REJECTED': {
+              const {data} = action.page.response
+              state.errorMsg = data.message
                 state.isLoading = false
                 state.isError = true
                 return state
@@ -194,18 +202,17 @@ const rootReducer = combineReducers({
             }
             case 'RESERVATION_DATA_FULFILLED': {
                 const data = action.payload
-                console.log(data)
                 state.vehicleId = data.vehicleId
                 state.total = data.total
-                state.rentDate = data.rentDate
-                state.returnDate = data.returnDate
+                state.rentDate = data.rent_date
+                state.returnDate = data.return_date
                 return {...state}
             }
             case 'RESERVATION_DATA_REJECTED': {
                 const {message} = action.payload.response.data
                 state.isLoading = false
                 state.isError = true
-                state.message = message
+                state.errorMsg = message
                 return state
             }
             case 'FINAL_RESERVATION_PENDING':{
@@ -214,12 +221,8 @@ const rootReducer = combineReducers({
                 return state
             }
             case 'FINAL_RESERVATION_FULFILLED':{
-                const data = action.payload
-                console.log(action.payload)
-                state.vehicleId = data.vehicleId
-                state.total = data.totalOrder
-                state.rentDate = data.rentDate
-                state.returnDate = data.returnDate
+                const {data} = action.payload
+                state.data = data.result
                 state.isLoading = false
                 state.isError = false
                 state.message = data.message
@@ -227,11 +230,18 @@ const rootReducer = combineReducers({
             }
             case 'FINAL_RESERVATION_REJECTED':{
                 const {message} = action.payload.response.data
-                console.log(message)
                 state.isLoading = false
                 state.isError = true
-                state.message = message
+                state.errorMsg = message
                 return state
+            }
+            case 'RESERVATION_CLEAR': {
+              state.data = {}
+              state.message = null
+              state.errorMsg = null
+              state.isError = false
+              state.isLoading = false
+              return {...state}
             }
         default:
             return {...state}

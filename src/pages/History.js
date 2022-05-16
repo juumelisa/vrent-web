@@ -4,7 +4,7 @@ import { FaSearch } from 'react-icons/fa';
 import defaultImg from '../assets/images/default-img.png';
 import Layout from '../components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteHistoryAdmin, deleteHistoryUser, historyAdmin, historyUser } from '../redux/actions/histories';
+import { deleteHistoryAdmin, deleteHistoryUser } from '../redux/actions/histories';
 import Helmets from '../components/Helmets';
 import { twoDates } from '../helpers/dateToString';
 import { getVehicles } from '../redux/actions/vehicles';
@@ -16,23 +16,19 @@ import { BsFillPatchCheckFill, BsXOctagonFill } from 'react-icons/bs'
 export const  History = () => {
   const token = window.localStorage.getItem('seranToken')
   const userData = JSON.parse(window.localStorage.getItem('seranUserData'))
-  const [history, setHistory] = useState(JSON.parse(window.localStorage.getItem('seranHistory')))
+  const [history, setHistory] = useState()
   const {histories, vehicles} = useSelector(state => state)
   const [selectedId, setSelectedId] = useState([])
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [errorSelection, setErrorSelection] = useState()
   const [deleteHistory, setDeleteHistory] = useState(false)
+  // const [isDele]
   useEffect(() => {
-    if(token) {
-      if(userData.role === 'admin' || userData.role === 'Admin') {
-        dispatch(historyAdmin(token))
-      } else{
-        dispatch(historyUser(token))
-      }
-    } else {
+    if(!token) {
         navigate('/login')
     }
+    setHistory(JSON.parse(window.localStorage.getItem('seranHistory')))
     dispatch(getVehicles())
   }, []);
   const checkAll = e => {
@@ -74,6 +70,13 @@ export const  History = () => {
       })
     }
   }
+  const setNewHistory = () => {
+    window.localStorage.setItem('seranHistory', JSON.stringify(history))
+    setDeleteHistory(false)
+  }
+  const reservationDetail = id => {
+    navigate(`/payment/${id}`)
+  }
   const goToDetail = id => {
     navigate(`/vehicle/${id}`)
   }
@@ -87,7 +90,7 @@ export const  History = () => {
           {!histories.isLoading && histories.isError && <div className="col-12 col-lg-8 d-flex justify-content-center align-items-center vh-100">
             <h1>{histories.errorMsg}</h1>
           </div>}
-          {history && history.length > 0 && <div className="col-12 col-lg-8">
+          {!histories.isLoading && history && history.length > 0 && <div className="col-12 col-lg-8">
             <div className="position-relative">
               <Input type="text" variant="pink" />
               <FaSearch className="position-absolute top-50 end-0 translate-middle-y me-3" size={24} style={{cursor: "pointer"}}/>
@@ -107,7 +110,7 @@ export const  History = () => {
             {errorSelection && <div className='alert alert-danger mb-5'>{errorSelection}</div>}
             {history.map((data) => (
               <div key={data.id} className="d-flex flex-row py-3">
-                <div className="col-9 d-flex flex-column flex-md-row">
+                <div className="col-9 d-flex flex-column flex-md-row" onClick={() => reservationDetail(data.id)} style={{cursor: "pointer"}}>
                   <img className="img-fluid col-12 col-md-6" src={data.image} onError={e => e.target.src=defaultImg} alt={data.id} style={{height: "200px", borderRadius: "20px", objectFit: "cover"}} />
                   <div className="col-12 col-md-6 px-3">
                     <p className="fw-bold p-0 m-0">{data.vehicle}</p>
@@ -149,7 +152,7 @@ export const  History = () => {
         </div>
       </main>
     </Layout>
-      {!histories.isLoading && deleteHistory && <div className="position-absolute top-0 start-0 vh-100 vw-100 bg-dark bg-opacity-25 d-flex justify-content-center align-items-center position-fixed" onClick={() => setDeleteHistory(false)}>
+      {!histories.isLoading && deleteHistory && <div className="position-absolute top-0 start-0 vh-100 vw-100 bg-dark bg-opacity-25 d-flex justify-content-center align-items-center position-fixed" onClick={setNewHistory}>
         {!histories.isError && <div className="bg-white p-5 shadow-lg rounded-3">
           <BsFillPatchCheckFill size={50} className="text-success"/>
           <p>{histories.message}</p>

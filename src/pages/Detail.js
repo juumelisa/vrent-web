@@ -1,55 +1,60 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { getData } from '../helpers/http';
 import Layout from '../components/Layout';
 import { change } from '../redux/actions/counter';
 import { connect, useDispatch, useSelector } from 'react-redux';
+import { Button } from '../components/Button';
+import { BsSuitHeart, BsSuitHeartFill } from 'react-icons/bs'
+import { getVehicleDetail } from '../redux/actions/vehicles';
+import { Loading } from '../components/Loading';
+import Helmets from '../components/Helmets';
 
-export const Detail = (props) => {
-    const {counter} = useSelector(state=>state)
-    const dp = useDispatch()
-  const [vehicles, setVehicles] = useState([]);
+export const Detail = () => {
+  const {counter, detail} = useSelector(state=>state)
   const { id } = useParams();
+  // eslint-disable-next-line no-unused-vars
   const navigate = useNavigate();
   const [formQty, setFormQty] = useState(counter.num);
-  // eslint-disable-next-line no-undef
-  const {REACT_APP_BACKEND_URL} = process.env
+  const [love, setLove] = useState(false)
+  const dispatch = useDispatch()
   useEffect(() => {
-    getVehicles(id);
+    dispatch(getVehicleDetail(id))
   }, []);
 
-  const getVehicles = async (id) => {
-    try {
-      const { data } = await getData(`${REACT_APP_BACKEND_URL}vehicles/${id}`, props.history);
-      setVehicles(data.result);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
+  // eslint-disable-next-line no-unused-vars
+  // const getVehicles = async (id) => {
+  //   try {
+  //     const { data } = await getData(`${REACT_APP_BACKEND_URL}vehicles/${id}`, props.history);
+  //     setVehicles(data.result);
+  //   } catch (err) {
+  //     console.log(err.message);
+  //   }
+  // };
   const changeForm = (e)=>{
     change(e.target.value)
       setFormQty(e.target.value)
   }
   const onIncrement = ()=>{
-    dp({type: 'INCREMENT'})
+    dispatch({type: 'INCREMENT'})
     setFormQty(counter.num)
   }
   const onDecrement = ()=>{
       if(counter.num>1){
-        dp({type: 'DECREMENT'})
+        dispatch({type: 'DECREMENT'})
         setFormQty(counter.num)
     }
   }
   const goBack = () => {
     window.history.back();
   };
-  const goToReservation = (e) => {
-    change(e.target.elements['qty'].value);
+  const goToReservation = () => {
+    change(formQty);
     navigate(`/reservation/${id}`)
   };
   return (
     <Layout>
+      {!detail.isLoading && <Helmets title={`${detail.vehicle.name}`} />}
       <main className="container my-5">
         <div className="back-arrow" onClick={goBack}>
           <div to="/vehicles" className="d-flex my-5" style={{ color: 'black' }}>
@@ -57,70 +62,76 @@ export const Detail = (props) => {
             <p className="fs-3 m-0" style={{ lineHeight: '80px' }}>Detail</p>
           </div>
         </div>
-        <div className="detail-vehicle d-flex flex-column flex-md-row">
+        {!detail.isLoading && !detail.isError && <div className="detail-vehicle d-flex flex-column flex-md-row">
           <div className="vehicle-pictures">
             <div className="main-image">
-              <img src={vehicles?.image} alt={vehicles?.name} />
+              <img src={detail.vehicle.image} alt={detail.vehicle.name} />
             </div>
             <div className="another-images row pt-4" style={{ width: '100%', margin: '0' }}>
               <div className="arrow col-2 col-sm-1 position-relative">
                 <FaChevronLeft className="position-absolute top-50 start-0 translate-middle-y fs-2" />
               </div>
-              <img src={vehicles?.image} alt={vehicles?.name} className="col-4 col-sm-5" />
-              <img src={vehicles?.image} alt={vehicles?.name} className="col-4 col-sm-5" />
+              <img src={detail.vehicle.image} alt={detail.vehicle.name} className="col-4 col-sm-5" />
+              <img src={detail.vehicle.image} alt={detail.vehicle.name} className="col-4 col-sm-5" />
               <div className="arrow col-2 col-sm-1 position-relative">
                 <FaChevronRight className="position-absolute top-50 end-0 translate-middle-y fs-3" />
               </div>
             </div>
           </div>
-          <div className="detail">
+          <div className="detail position-relative col-6">
             <div className="city">
               <h2 className="fw-bold">
-                {vehicles?.name}
-                {' '}
-                {vehicles?.year}
+                {detail.vehicle.name} {detail.vehicle.year}
               </h2>
-              <h3 className="fs-4 fw-bold mb-4">{vehicles?.location}</h3>
+              <h3 className="fs-4 fw-bold mb-4">{detail.vehicle?.location}</h3>
             </div>
             <h4 className="fs-5 fw-bold m-0" style={{ color: '#087E0D' }}>Available</h4>
             <p className="m-0" style={{ color: '#9B0A0A' }}>No prepayment</p>
             <div className="about my-3">
               <p className="m-0">
-                Capacity :
-                {vehicles?.seat}
-                {' '}
-                person
+                Capacity : {detail.vehicle.seat} person
               </p>
               <p className="m-0">
-                Type :
-                {vehicles?.type}
+                Type : {detail.vehicle.type}
               </p>
               <p className="m-0">Reservation before 2 PM</p>
             </div>
-            <p className="price fs-3 fw-bold text-end" style={{ color: 'black' }}>
-              Rp
-              {vehicles?.cost}
-              /day
+            <p className="price fs-3 fw-bold text-center" style={{ color: 'black' }}>
+              Rp {detail.vehicle.cost?.toLocaleString('id-ID')}/day
             </p>
+            <div className="position-absolute bottom-0 start-50 translate-middle-x">
+              <div className="d-flex flex-row justify-content-center align-items-center">
+              <Button variant="light" onAction={onIncrement}>
+                <p className="m-0 p-0 px-3 fw-bold">+</p>
+              </Button>
+              <input type="number" value={formQty} onChange={changeForm} className="border-0 text-center fs-3 mx-5" style={{outline: "none"}}/>
+              <Button variant="border-light" onAction={onDecrement}>
+                <p className="m-0 p-0 px-3 fw-bold">-</p>
+              </Button>
+              </div>
+            </div>
           </div>
+        </div>}
+        <div className="d-flex flex-column flex-md-row mt-5">
+          <Button variant="border-light">Chat Admin</Button>
+          <div className="m-2"></div>
+          <Button variant="dark" onAction={goToReservation}>Reservation</Button>
+          <div className="m-2"></div>
+          <Button variant="border-light" onAction={() => setLove(!love)}>
+            <div className="d-flex flex-row justify-content-center align-items-center">
+              {love && <BsSuitHeartFill className="me-3 text-danger" />}
+              {!love && <BsSuitHeart className="me-3 text-danger"/>}
+              <p className="m-0 p-0">Like</p>
+            </div>
+          </Button>
         </div>
-        <form onSubmit={goToReservation} className="position-relative pt-5" id="reservation">
-          <div className="qty-btn d-flex justify-content-center">
-            <div className="plus btn fw-bold" onClick={() => onIncrement()}>+</div>
-            <input className="qty-form text-center fw-bold" type="number" name="qty" value={formQty} onChange={changeForm} style={{ backgroundColor: 'white', margin: '0' }} />
-            <div className="minus btn fw-bold" onClick={() => onDecrement()}>-</div>
-          </div>
-          <div className="button row my-4">
-            <div className="button-group col-12 col-md-9 d-flex flex-column-reverse flex-md-row">
-              <Link to="/" className="btn col-12 col-md-6 my-2 fs-4">Chat admin</Link>
-              <button className="my-2 fs-4" type="submit">Reservation</button>
-            </div>
-            <div className="like-btn col-12 col-md-3">
-              <Link to="/" className="btn col-12 fs-4 text-center my-2">Like</Link>
-            </div>
-          </div>
-        </form>
       </main>
+      {detail.isLoading && <div className="position-absolute position-fixed top-0 start-0 d-flex justify-content-center align-items-center vh-100 vw-100">
+        <Loading />
+      </div>}
+      {detail.isError && <div className="position-absolute position-fixed top-0 start-0 d-flex justify-content-center align-items-center vh-100 vw-100">
+        <h1>{detail.errorMsg}</h1>
+      </div>}
     </Layout>
   );
 }

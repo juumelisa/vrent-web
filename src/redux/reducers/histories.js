@@ -1,5 +1,6 @@
 const initialState = {
   data: {},
+  detail: {},
   isLoading: false,
   isError: false,
   errorMsg: null,
@@ -28,6 +29,25 @@ const histories = (state=initialState, action)=>{
       state.errorMsg = data.message
       return {...state}
     }
+    case 'GET_HISTORY_DETAIL_PENDING': {
+      state.isLoading = true
+      state.isError = false
+      return {...state}
+    }
+    case 'GET_HISTORY_DETAIL_FULFILLED': {
+      const {data} = action.payload
+      state.detail = data.result
+      state.isLoading = false
+      state.isError = false
+      return {...state}
+    }
+    case 'GET_HISTORY_DETAIL_REJECTED': {
+      const {data} = action.payload.response
+      state.isLoading = false
+      state.isError = true
+      state.errorMsg = data.message
+      return {...state}
+    }
     case 'DELETE_HISTORY_PENDING': {
       state.isLoading = true
       state.isError = false
@@ -44,6 +64,29 @@ const histories = (state=initialState, action)=>{
       return {...state}
     }
     case 'DELETE_HISTORY_REJECTED': {
+      const {data} = action.payload.response
+      state.errorMsg = data.message
+      state.isError = true
+      state.isLoading = false
+      return {...state}
+    }
+    case 'EDIT_HISTORY_PENDING': {
+      state.isLoading = true
+      state.isError = false
+      state.errorMsg = null
+      state.message = null
+      return {...state}
+    }
+    case 'EDIT_HISTORY_FULFILLED': {
+      const {data} = action.payload
+      state.detail = data.result
+      state.message = data.message
+      state.isError = false
+      state.isError = false
+      state.isLoading = false
+      return {...state}
+    }
+    case 'EDIT_HISTORY_REJECTED': {
       const {data} = action.payload.response
       state.errorMsg = data.message
       state.isError = true

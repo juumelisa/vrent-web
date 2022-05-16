@@ -51,7 +51,6 @@ export const Register=()=> {
     }
     const data = {name, username, email, password, confirmPassword: password}
     dispatch(register(data))
-    // navigate(`/account-confirmation?email=${data.email}`)
   }
   return (
     <>
