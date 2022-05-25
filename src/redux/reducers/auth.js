@@ -47,6 +47,8 @@ const auth = (state=initialState, action)=>{
           state.message = null
           window.localStorage.removeItem('seranToken')
           window.localStorage.removeItem('seranUserData')
+          window.localStorage.removeItem('seranHistory')
+
           return state
         }
         case 'AUTH_REGISTER_PENDING':{
