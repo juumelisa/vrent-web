@@ -25,9 +25,13 @@ export const Reservation = () => {
   // eslint-disable-next-line no-unused-vars
   const [errorForm, setErrorForm] = useState()
   useEffect(() => {
-    if (reservation.data.id){
-      navigate(`/payment/${reservation.data.id}`)
-    } else {
+    dispatch({
+      type: 'CLEAR_PAYMENT_STATE',
+    })
+    dispatch({
+      type: 'CLEAR_HISTORY',
+    })
+    if (!reservation.data.id){
       dispatch({
         type: 'RESERVATION_CLEAR'
       })
@@ -67,7 +71,7 @@ export const Reservation = () => {
   }
   return (
     <>
-    {reservation.data.id && <Navigate to={`/payment/${reservation.data.id}`}/>}
+    {reservation.data.id && <Navigate to={`/payment/${reservation.data.id}?new=true`} />}
     <Layout>
       <Helmets title="Reservation" />
       <main className="container my-5">

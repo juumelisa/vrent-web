@@ -15,7 +15,7 @@ export const Header = ()=> {
       navigate('/')
     }
       return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-white sticky-top my-2">
+        <nav className="navbar navbar-expand-lg navbar-light bg-white sticky-top my-2" style={{zIndex: 990}}>
           <div className="container my-2">
             <Link className="navbar-brand" to="/"><img className="img-fluid" alt="logo" width="40" height="40" src={logo} /></Link>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">

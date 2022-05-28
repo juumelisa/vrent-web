@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { FaChevronRight } from 'react-icons/fa';
 import { AiFillStar } from 'react-icons/ai';
 import Layout from '../components/Layout';
@@ -11,9 +11,11 @@ import Helmets from '../components/Helmets';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
 import { getDataUser } from '../redux/actions/auth';
+import { editHistoryStatus } from '../redux/actions/histories';
 
 export const Homepage=({getVehicles})=> {
-  const {vehicles: vhc, auth} = useSelector(state => state)
+  const {vehicles: vhc, auth, payment, history} = useSelector(state => state)
+  const { payments } = useParams();
   const token = window.localStorage.getItem('seranToken')
   const userData = window.localStorage.getItem('seranUserData')
   const navigate = useNavigate();
@@ -24,6 +26,9 @@ export const Homepage=({getVehicles})=> {
     getVehicles(4, null, 'totalRent+DESC');
     if (token && !userData) {
       dispatch(getDataUser(token))
+    }
+    if (payments === 'true' && payment.data.transaction_status === 'settlement') {
+      dispatch(editHistoryStatus(token, {status: 'Booked', id: payment.data.order_id}))
     }
   }, [getVehicles]);
 
@@ -39,6 +44,7 @@ export const Homepage=({getVehicles})=> {
   };
   return (
     <>
+    {payments === 'true' && !history.isLoading && <Navigate to={`/payment/${payment.data.order_id}`} />}
     <Layout>
       <Helmets title={'Home'} />
       <div className="search-section">

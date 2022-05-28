@@ -19,18 +19,12 @@ export const Detail = () => {
   const [love, setLove] = useState(false)
   const dispatch = useDispatch()
   useEffect(() => {
+    dispatch({
+      type: 'RESERVATION_CLEAR'
+    })
     dispatch(getVehicleDetail(id))
   }, []);
 
-  // eslint-disable-next-line no-unused-vars
-  // const getVehicles = async (id) => {
-  //   try {
-  //     const { data } = await getData(`${REACT_APP_BACKEND_URL}vehicles/${id}`, props.history);
-  //     setVehicles(data.result);
-  //   } catch (err) {
-  //     console.log(err.message);
-  //   }
-  // };
   const changeForm = (e)=>{
     change(e.target.value)
       setFormQty(e.target.value)

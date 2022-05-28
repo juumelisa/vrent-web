@@ -28,6 +28,9 @@ export const  History = () => {
     if(!token) {
         navigate('/login')
     }
+    dispatch({
+      type: 'CLEAR_PAYMENT_STATE'
+    })
     setHistory(JSON.parse(window.localStorage.getItem('seranHistory')))
     dispatch(getVehicles())
   }, []);
