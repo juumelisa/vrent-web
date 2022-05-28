@@ -4,7 +4,7 @@ import { FaSearch } from 'react-icons/fa';
 import defaultImg from '../assets/images/default-img.png';
 import Layout from '../components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteHistoryAdmin, deleteHistoryUser } from '../redux/actions/histories';
+import { deleteHistoryAdmin, deleteHistoryUser, historyAdmin, historyUser } from '../redux/actions/histories';
 import Helmets from '../components/Helmets';
 import { twoDates } from '../helpers/dateToString';
 import { getVehicles } from '../redux/actions/vehicles';
@@ -16,6 +16,7 @@ import { BsFillPatchCheckFill, BsXOctagonFill } from 'react-icons/bs'
 export const  History = () => {
   const token = window.localStorage.getItem('seranToken')
   const userData = JSON.parse(window.localStorage.getItem('seranUserData'))
+  const historiesData = JSON.parse(window.localStorage.getItem('seranHistory'))
   const [history, setHistory] = useState()
   const {histories, vehicles} = useSelector(state => state)
   const [selectedId, setSelectedId] = useState([])
@@ -23,7 +24,15 @@ export const  History = () => {
   const navigate = useNavigate();
   const [errorSelection, setErrorSelection] = useState()
   const [deleteHistory, setDeleteHistory] = useState(false)
-  // const [isDele]
+  useEffect(() => {
+    if (!historiesData) {
+      if (userData.role === 'Admin' || userData.role === 'admin') {
+        dispatch(historyAdmin(token))
+      } else {
+        dispatch(historyUser(token))
+      }
+    }
+  })
   useEffect(() => {
     if(!token) {
         navigate('/login')
@@ -64,12 +73,12 @@ export const  History = () => {
       setErrorSelection()
       setDeleteHistory(true)
       selectedId.forEach( x => {
+        setHistory(history.filter(el => el.id !== x))
         if (userData.role === 'Admin') {
           dispatch(deleteHistoryAdmin(token, x))
         } else {
           dispatch(deleteHistoryUser(token, x))
         }
-        setHistory(history.filter(el => el.id !== x))
       })
     }
   }
