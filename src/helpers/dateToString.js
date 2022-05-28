@@ -14,3 +14,11 @@ export const twoDates = (dateA, dateB) => {
     return `${dateToString(dateA)} ${yearA} to ${dateToString(dateB)} ${yearB}`
   }
 }
+
+export const dateDifference = (dateA, dateB) => {
+  const firstDate = new Date(dateA);
+  const secondDate = new Date(dateB);
+  const diff =
+    Math.abs(firstDate.getTime() - secondDate.getTime()) / (1000 * 3600 * 24);
+  return diff;
+};

@@ -93,6 +93,14 @@ const histories = (state=initialState, action)=>{
       state.isLoading = false
       return {...state}
     }
+    case 'CLEAR_HISTORY': {
+      state.detail = {}
+      state.isLoading = false
+      state.isError = false
+      state.errorMsg = null
+      state.message = null
+      return {...state}
+    }
     default: {
       return {...state}
     }
