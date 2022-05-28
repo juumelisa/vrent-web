@@ -27,8 +27,8 @@ export const Payment = () =>{
   const dispatch = useDispatch()
   
   useEffect(() => {
-    if (histories.detail.cost) {
-      createPaymentStatus()
+    if (newData) {
+      createPaymentStatus();
     }
     if(!token){
       navigate('/login')
@@ -42,11 +42,7 @@ export const Payment = () =>{
     }
   }, []);
   useEffect(() => {
-    if (newData) {
-      createPaymentStatus();
-    } else {
-      dispatch(getPaymentStatus(id))
-    }
+    dispatch(getPaymentStatus(id))
   }, [])
   useEffect(() => {
     if (histories.detail.status === 'Wait for payment' && payment.data.transaction_status === 'settlement') {
