@@ -29,17 +29,13 @@ import { getDataUser } from './redux/actions/auth';
 import { AddItem } from './pages/AddItem';
 import { EditItem } from './pages/EditItem';
 import EditPassword from './pages/EditPassword';
-import { historyAdmin, historyUser } from './redux/actions/histories';
 
 const App = ()=> {
   const auth = useSelector(state=>state.auth)
-  const {histories} = useSelector(state => state)
   const history = createBrowserHistory({window})
   const dispatch = useDispatch()
   useEffect(()=>{
     const token = window.localStorage.getItem('seranToken')
-    const userData = JSON.parse(window.localStorage.getItem('seranUserData'))
-    const localHistories = JSON.parse(window.localStorage.getItem('seranHistory'))
     if(token){
       dispatch({
         type: 'AUTH_LOGIN_FULFILLED',
@@ -51,14 +47,6 @@ const App = ()=> {
           }
         }
       })
-      if (userData) {
-        if (!localHistories || localHistories.length < 1 || histories.data || !histories.errorMsg)
-          if (userData.role === 'Admin' || userData.role === 'admin') {
-            dispatch(historyAdmin(token))
-          } else {
-            dispatch(historyUser(token))
-          }
-      }
       // dispatch(getDataUser(token))
     }
   }, [dispatch, auth.token])
