@@ -6,6 +6,7 @@ import Layout from '../components/Layout';
 export function ListOfCar() {
   const [vehicles, setVehicles] = useState([]);
   const [page, setPage] = useState({});
+  // eslint-disable-next-line no-undef
   const {REACT_APP_BACKEND_URL} = process.env
   useEffect(() => {
     getVehicles();
@@ -37,7 +38,7 @@ export function ListOfCar() {
               <p className="text-center">Click item to see details and reservation</p>
             </div>
             <div className="vehicles d-flex flex-wrap justify-content-center">
-              {vehicles.map((data, idx) => {
+              {vehicles.map((data) => {
                 const url = `/vehicles/${data.vehicle_id}`;
                 return (
                   <div key={data.id} className="popular-vehicle p-2 position-relative">

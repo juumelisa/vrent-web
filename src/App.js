@@ -29,6 +29,7 @@ import { getDataUser } from './redux/actions/auth';
 import { AddItem } from './pages/AddItem';
 import { EditItem } from './pages/EditItem';
 import EditPassword from './pages/EditPassword';
+import Chat from './pages/Chat';
 
 const App = ()=> {
   const auth = useSelector(state=>state.auth)
@@ -79,6 +80,7 @@ const App = ()=> {
           <Route path="header" element={<Header />} />
           <Route path="add-item" element={<AddItem />} />
           <Route path="edit-item/:id" element={<EditItem />} />
+          <Route path="chat" element={<Chat />} />
         </Routes>
       </HistoryRouter>
     );

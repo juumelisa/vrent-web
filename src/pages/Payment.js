@@ -12,7 +12,7 @@ import { Loading } from '../components/Loading';
 import Helmet from 'react-helmet';
 // eslint-disable-next-line no-unused-vars
 import { createPayment, getPaymentStatus } from '../redux/actions/payment';
-import { dateDifference } from '../helpers/dateToString';
+import { checkHours, dateDifference } from '../helpers/dateToString';
 // eslint-disable-next-line no-undef
 const {MIDTRANS_CLIENT_KEY} = process.env
 
@@ -148,9 +148,15 @@ export const Payment = () =>{
               </div>
               <div className="mb-3">
               </div>
-              {histories.detail.status === 'Wait for payment' && <Button variant="light" onAction={updatePayment}>
+              {histories.detail.status === 'Wait for payment' && checkHours(histories.detail.created_at, new Date()) < 2 && <Button variant="light" onAction={updatePayment}>
                 <div className="d-flex justify-content-center">
                   <p className="m-0 p-0">Finish payment</p>
+                  <p className="m-0 p-0 ms-2 text-danger">59:30</p>
+                </div>
+              </Button>}
+              {histories.detail.status === 'Wait for payment' && checkHours(histories.detail.created_at, new Date()) >= 2 && <Button variant="light">
+                <div className="d-flex justify-content-center">
+                  <p className="m-0 p-0">Expired</p>
                   <p className="m-0 p-0 ms-2 text-danger">59:30</p>
                 </div>
               </Button>}

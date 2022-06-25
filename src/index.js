@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './assets/css/header.css';
+import './assets/css/chat.css';
 import './assets/css/style.css';
 import './assets/css/footer.css';
 import './assets/css/vehicles.css';

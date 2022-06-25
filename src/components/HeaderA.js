@@ -46,7 +46,7 @@ export const HeaderA = (auth)=> {
                   </form>
                 </li>
                 <li className="profile-message text-center d-flex justify-content-center">
-                  <Link to="/">
+                  <Link to="/chat">
                     <div className="message-notif position-relative">
                       <img src={messageIcon} alt="message icon" width="40" />
                       <div className="iconSum position-absolute top-0 start-100 translate-middle">1</div>
