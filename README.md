@@ -1,7 +1,8 @@
 # Seran - Vehicle Rent
 
-Seran Vehicle Rent is a web application where user can create reservation to rent some vehicles.
+A web application where user can rental a vehicle in some areas. It’s built using Node JS, Express and MySQL for API and React JS library for frontend, with the help of Bootstrap for its visual and using Redux as state management. The app also integrated with Midtrans payment gateway.
 
+## Scree
 
 ## Installation
 
