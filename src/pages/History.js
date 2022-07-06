@@ -32,7 +32,7 @@ export const  History = () => {
         dispatch(historyUser(token))
       }
     }
-  })
+  }, [])
   useEffect(() => {
     if(!token) {
         navigate('/login')

@@ -73,7 +73,7 @@ export const Profile = ()=> {
             <div className="contact-section">
               <p className="fs-5 fw-bold m-0">{userData.email}</p>
               <p className="fs-5 fw-bold m-0">{userData.phone_number}</p>
-              <p className="fs-5 fw-bold">Has been active since {userData.registerYear}</p>
+              <p className="fs-5 fw-bold">Has been active since {new Date(userData.register_at).getFullYear()}</p>
             </div>
           </div>
           {auth.isError && auth.errorMsg && <div className='alert alert-danger mb-5'>{auth.errorMsg}</div>}

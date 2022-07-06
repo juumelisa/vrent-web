@@ -1,0 +1,12 @@
+.chat{
+  height: 100%;
+}
+.bubble{
+  display: inline-block;
+}
+.bubbleBlue{
+  background-color: #9AD0EC;
+}
+.inputChat{
+  background-color: rgb(239, 215, 215);
+}
