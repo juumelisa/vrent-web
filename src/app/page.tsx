@@ -4,6 +4,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import backgroundImage from "../assets/images/background-image.png"
 import edwardNewGate from "../assets/images/edward-newgate.png"
+import rose from "../assets/images/rose.jpg"
+import michael from "../assets/images/michael.jpg"
+import jonas from "../assets/images/jonas.jpg"
 
 export default function Home() {
   return (
@@ -35,15 +38,30 @@ export default function Home() {
       <div className="w-full p-5 md:p-10 xl:p-20">
         <div>
           <h2 className="font-bold text-5xl">Testimonials</h2>
-          <div className="w-full flex p-5 md:p-10 xl:p-20 gap-5">
-            <div className="w-1/2 flex flex-col justify-center items-start text-left gap-5">
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 py-5 md:py-10 xl:py-20 gap-5">
+            <div className="border border-gray-100 rounded-md p-5 flex flex-col justify-start items-center text-left gap-3">
+              <Image src={edwardNewGate} alt="background image z-10" className="w-40 h-40 object-cover rounded-full" />
               <p>⭐️⭐️⭐️⭐️⭐️</p>
+              <p className="font-bold">Edward, Germany</p>
               <p>{`"It was the right decision to rent vehicle here, I spent less money and enjoy the trip. It was an amazing experience to have a ride for wildlife trip!"`}</p>
-              <p className="font-bold">Edward Newgate</p>
-              <p className="font-semibold">Founder Circle</p>
             </div>
-            <div className="w-1/2 flex justify-end">
-              <Image src={edwardNewGate} alt="background image z-10" className="w-4/5" />
+            <div className="border border-gray-100 rounded-md p-5 flex flex-col justify-start items-center text-left gap-2">
+              <Image src={rose} alt="background image z-10" className="w-40 h-40 object-cover rounded-full" />
+              <p>⭐️⭐️⭐️⭐️⭐️</p>
+              <p className="font-bold">Rose, Australia</p>
+              <p>{`"The entire booking process was smooth and fast. The car was delivered directly to my hotel in Ubud and it was in excellent condition. Highly recommend for anyone traveling around Bali!"`}</p>
+            </div>
+            <div className="border border-gray-100 rounded-md p-5 flex flex-col justify-start items-center text-left gap-2">
+              <Image src={michael} alt="background image z-10" className="w-40 h-40 object-cover rounded-full" />
+              <p>⭐️⭐️⭐️⭐️⭐️</p>
+              <p className="font-bold">Michael, Singapore</p>
+              <p>{`"I needed a car for a business trip in Jakarta, and this service exceeded my expectations. The vehicle was clean, reliable, and the driver was very professional. Will definitely use again."`}</p>
+            </div>
+            <div className="border border-gray-100 rounded-md p-5 flex flex-col justify-start items-center text-left gap-2">
+              <Image src={jonas} alt="background image z-10" className="w-40 h-40 object-cover rounded-full" />
+              <p>⭐️⭐️⭐️⭐️⭐️</p>
+              <p className="font-bold">Jonas, USA</p>
+              <p>{`"I stayed in Indonesia for two months and needed a long-term rental. The company gave me a great deal and even provided free maintenance support. Super convenient!"`}</p>
             </div>
           </div>
         </div>
