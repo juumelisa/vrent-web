@@ -7,6 +7,7 @@ import edwardNewGate from "../assets/images/edward-newgate.png"
 import rose from "../assets/images/rose.jpg"
 import michael from "../assets/images/michael.jpg"
 import jonas from "../assets/images/jonas.jpg"
+// import { useEffect, useState } from "react";
 
 export default function Home() {
   return (
