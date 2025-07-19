@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${openSans.variable} bg-white text-black`}
+        className={`${openSans.variable}bg-white text-black`}
       >
         <div className="relative">
           <Header />

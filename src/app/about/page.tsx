@@ -9,7 +9,7 @@ export default function Home() {
         <Image src={backgroundAboutUs} alt="background" fill style={{ objectFit: 'cover' }}/>
         <div className="bg-blue-900 opacity-70 h-full w-full absolute top-0" />
         <div className="absolute top-0 w-full h-full">
-          <div className="w-full md:w-[580px] h-full flex flex-col justify-center p-5 md:p-10 xl:p-20">
+          <div className="w-full md:w-[580px] h-full flex flex-col justify-center p-5 md:p-10 xl:p-20 text-white">
             <h1 className="font-bold text-6xl leading-20">About Us</h1>
             <div className="flex flex-col gap-5 mt-5">
               <p>We are a vehicle rental company based in Indonesia, committed to providing safe, convenient, and reliable transportation 

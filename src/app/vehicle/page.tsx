@@ -9,7 +9,7 @@ import Button from "@/components/Button";
 import { IoLocationSharp } from "react-icons/io5";
 import Link from "next/link";
 
-export default function Home() {
+export default function Vehicle() {
 const [isLoadVehicle, setIsLoadVehicle] = useState(true)
   const [isError, setIsError] = useState(false)
   const [showVehicle, setShowVehicle] = useState(false)
@@ -90,7 +90,12 @@ const [isLoadVehicle, setIsLoadVehicle] = useState(true)
         <div className="w-full lg:w-1/5">
           <p className="font-bold">Filter</p>
           <div className="bg-blue-50 p-3 mt-3">
-            <p className="font-bold">Type</p>
+            <div>
+              <p className="font-bold">Type</p>
+            </div>
+            <div>
+              <p className="font-bold">Location</p>
+            </div>
           </div>
         </div>
         <div className="w-full lg:w-4/5">

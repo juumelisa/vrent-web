@@ -19,7 +19,7 @@ export default function Button({onClick, children}: MyButtonProps) {
   return (
     <button
       onClick={onClick}
-      className="bg-blue-900 text-white rounded px-5 py-2 cursor-pointer"
+      className="w-full bg-blue-900 text-white rounded px-5 py-3 cursor-pointer"
     >
       {children}
     </button>

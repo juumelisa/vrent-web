@@ -12,11 +12,14 @@ import { fetchWithToken } from "../../lib/fetchWithToken";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { IoLocationSharp } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter()
   const [isLoadVehicle, setIsLoadVehicle] = useState(true)
   const [isError, setIsError] = useState(false)
   const [showVehicle, setShowVehicle] = useState(false)
+  const [type, setType] = useState('')
 
   const vehicleObj = {
     id: 1,
@@ -62,6 +65,11 @@ export default function Home() {
       minimumFractionDigits: 0
     }).format(value);
   };
+
+  const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    router.push(`vehicle?type=${type}`)
+  }
   return (
     <div className="absolute bg-white text-black left-0 top-0">
       <div className="relative z-10 h-screen">
@@ -74,11 +82,11 @@ export default function Home() {
               <p className="font-bold text-xl my-6">Vehicle Finder</p>
               <div className="border-t w-12" />
               <div className="mt-10">
-                <form className="grid gap-3 md:gap-5 text-black">
-                  <input name="type" placeholder="type" className="w-full py-2 px-3 bg-blue-100/90 rounded outline-0" />
+                <form onSubmit={onSubmitForm} className="grid gap-3 md:gap-5 text-black">
+                  <input name="type" placeholder="Type" onChange={(e) => setType(e.target.value)} className="w-full py-2 px-3 bg-blue-100/90 rounded outline-0" />
                   <div className="flex flex-row gap-3">
-                    <input name="location" placeholder="location" className="w-full py-2 px-3 bg-blue-100/90 rounded outline-0" />
-                    <input name="date" placeholder="date" className="w-full py-2 px-3 bg-blue-100/90 rounded outline-0" />
+                    <input name="location" placeholder="Location" className="w-full py-2 px-3 bg-blue-100/90 rounded outline-0" />
+                    <input name="date" placeholder="Date" className="w-full py-2 px-3 bg-blue-100/90 rounded outline-0" />
                   </div>
                   <button type="submit" className="bg-blue-600 text-white py-2 font-bold rounded cursor-pointer">Search</button>
                 </form>
