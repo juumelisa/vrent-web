@@ -11,6 +11,7 @@ import noData from "../assets/images/no-data.png"
 import { fetchWithToken } from "../../lib/fetchWithToken";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { IoLocationSharp } from "react-icons/io5";
 
 export default function Home() {
   const [isLoadVehicle, setIsLoadVehicle] = useState(true)
@@ -62,7 +63,7 @@ export default function Home() {
     }).format(value);
   };
   return (
-    <div className="absolute bg-white text-lg text-black left-0 top-0">
+    <div className="absolute bg-white text-black left-0 top-0">
       <div className="relative z-10 h-screen">
         <Image src={backgroundImage} alt="background image z-10" fill style={{objectFit: 'cover'}}/>
         <div className="bg-blue-900 opacity-70 h-full w-full absolute top-0" />
@@ -90,7 +91,7 @@ export default function Home() {
         <div>
           <div className="flex flex-col md:flex-row md:justify-between items-center">
             <h2 className="font-bold text-3xl">Vehicles</h2>
-            <Link href="/vehicle">View more</Link>
+            <Link href="/vehicle" className="text-blue-900">View more</Link>
           </div>
           {isLoadVehicle && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5">
             <div className="w-full">
@@ -143,7 +144,7 @@ export default function Home() {
           </div>}
           {showVehicle && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5">
             {vehicleList.map(vehicle => (
-              <div key={vehicle.id} className="w-full">
+              <Link href={`/vehicle/${vehicle.id}`} key={vehicle.id} className="w-full">
                 <div className="h-60 relative">
                   {vehicle.images.length &&
                   <Image
@@ -155,11 +156,14 @@ export default function Home() {
                   {!vehicle.images.length && <Image src={noData} alt="no image found" />}
                 </div>
                 <div className="mt-1">
-                  <p className="font-bold text-2xl">{formatRupiah(vehicle.rentPrice)}/day</p>
-                  <p className="font-bold capitalize">{vehicle.brand} {vehicle.model}</p>
-                  <p>{vehicle.city}, {vehicle.province}</p>
+                  <p className="capitalize">{vehicle.brand} {vehicle.model}</p>
+                  <p className="font-bold text-lg">{formatRupiah(vehicle.rentPrice)}/day</p>
+                  <div className="flex items-center gap-1 text-blue-900">
+                    <IoLocationSharp size={18} />
+                    <p>{vehicle.city}, {vehicle.province}</p>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>}
         </div>

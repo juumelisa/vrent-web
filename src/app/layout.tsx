@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display } from 'next/font/google';
+import { Open_Sans } from 'next/font/google';
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -15,9 +15,10 @@ import Footer from "@/components/Footer";
 //   subsets: ["latin"],
 // });
 
-const playfair = Playfair_Display({
+const openSans = Open_Sans({
   subsets: ['latin'],
-  weight: ['400', '700'], // Add other weights if needed
+  weight: ['400', '600', '700'],
+  variable: '--font-open-sans',
   display: 'swap',
 });
 
@@ -34,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${playfair.className} bg-white text-black`}
+        className={`${openSans.variable} bg-white text-black`}
       >
         <div className="relative">
           <Header />

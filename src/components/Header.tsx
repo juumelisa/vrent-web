@@ -81,7 +81,7 @@ export default function Header() {
   return (
     <header
         className={clsx("fixed z-30 w-full flex flex-row justify-between p-5 md:px-10 xl:px-20",
-        !scrolled && bgTransparent ? "bg-transparent text-white" : "bg-white text-black" )}
+        !scrolled && bgTransparent ? "bg-transparent text-white" : "bg-white text-blue-900" )}
     >
     <Link href="/" className="font-bold text-3xl">vrent</Link>
       <nav>
@@ -94,7 +94,7 @@ export default function Header() {
           <div className="flex flex-col items-end text-sm">
             {showChat &&  <div className={
                 clsx(
-                  "relative w-80 h-[400px] bg-white text-black border-2 rounded mb-5",
+                  "relative w-80 h-[400px] bg-white text-blue-900 border-2 rounded mb-5",
                   !scrolled && bgTransparent ? "border-white" : "border-blue-900"
                 )
               }>
