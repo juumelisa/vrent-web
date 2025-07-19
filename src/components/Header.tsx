@@ -5,15 +5,27 @@ import clsx from "clsx";
 import Link from "next/link";
 import { TbMessageChatbotFilled } from "react-icons/tb";
 import { IoMdClose } from "react-icons/io";
+import { FaPaperPlane } from "react-icons/fa";
+import { RiCustomerService2Fill } from "react-icons/ri";
+import { fetchWithToken } from "../../lib/fetchWithToken";
 
 export default function Header() {
   const [isChatAvailable, setIsChatAvailable] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [chatHistory, setChatHistory] = useState([{role: '', message: ''}])
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetchApiAgent()
+    const token = localStorage.getItem('token')
+    if(token) {
+      const stringChatHistory = localStorage.getItem('chatHistory') || "{}"
+      const oldChatHistory = JSON.parse(stringChatHistory)
+      setChatHistory(oldChatHistory)
+      setIsChatAvailable(true)
+    } else {
+      fetchApiAgent()
+    }
     const handleScroll = () => setScrolled(window.scrollY > 0);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -24,14 +36,41 @@ export default function Header() {
   }
 
   const fetchApiAgent = async () => {
-    const data = await fetch('/api/chat');
+    const data = await fetchWithToken('/api/chat');
     const rest = await data.json()
     if (rest.code === 200) {
       const result = rest.result[0]
       const token = result.token
       localStorage.setItem('token', token)
       setIsChatAvailable(true)
-      setChatHistory([{role: result.role, message: result.content.trim()}, {role: "user", message: "i wanna rent a car in denpasar"}])
+      const newHistory = [
+        {role: result.role, message: result.content.trim()}
+      ]
+      setChatHistory(newHistory)
+      localStorage.setItem('chatHistory', JSON.stringify(newHistory))
+    }
+  }
+
+  const onSubmitChat = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault ()
+    const newHistory = [
+      ...chatHistory,
+      {role: "user", message: message}
+    ]
+    setChatHistory(newHistory)
+    localStorage.setItem('chatHistory', JSON.stringify(newHistory))
+    setMessage('')
+    const data = await fetchWithToken('/api/chat', {method: 'POST', body: JSON.stringify({message})});
+    const rest = await data.json()
+    console.log(rest)
+    if (rest.code === 200) {
+      const result = rest.result[0]
+      const newHistoryAgent = [
+        ...newHistory,
+        {role: result.role, message: result.content.trim()}
+      ]
+      setChatHistory(newHistoryAgent)
+      localStorage.setItem('chatHistory', JSON.stringify(newHistoryAgent))
     }
   }
   return (
@@ -54,8 +93,9 @@ export default function Header() {
                   scrolled ? "border-blue-900" : "border-white"
                 )
               }>
-                <div className="bg-blue-900 text-white p-5 border-b">
-                  <p className="font-bold">vrent Agent</p>
+                <div className="bg-blue-900 text-white p-5 border-b flex gap-2">
+                <RiCustomerService2Fill size={20} />
+                  <p className="font-bold">VRent Agent</p>
                 </div>
                 <div className="w-full h-72 p-5 overflow-y-auto">
                   {chatHistory.map((chat, index)=> {
@@ -72,44 +112,12 @@ export default function Header() {
                         </div>
                       </div>
                   })}
-                  {/* <div>
-                    <div className="w-full max-w-60 bg-blue-900/20 p-2 rounded-r-md rounded-b-md">
-                      <p>Hi, i am vrent virtual assisstant. How can i help you?</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-3">
-                    <div className="w-auto max-w-60 bg-blue-400/5 p-2 rounded-l-md rounded-b-md">
-                      <p>Do you have any recommendation vehicle for 2 people?</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-1">
-                    <div className="w-auto max-w-60 bg-blue-400/5 p-2 rounded-l-md rounded-b-md">
-                      <p>Do you have</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-1">
-                    <div className="w-auto max-w-60 bg-blue-400/5 p-2 rounded-l-md rounded-b-md">
-                      <p>Do you</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-1">
-                    <div className="w-auto max-w-60 bg-blue-400/5 p-2 rounded-l-md rounded-b-md">
-                      <p>Do you have any recommendation</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-1">
-                    <div className="w-auto max-w-60 bg-blue-400/5 p-2 rounded-l-md rounded-b-md">
-                      <p>Do you have any</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-1">
-                    <div className="w-auto max-w-60 bg-blue-400/5 p-2 rounded-l-md rounded-b-md">
-                      <p>Do you have any recommendation</p>
-                    </div>
-                  </div> */}
                 </div>
                 <div className="w-full absolute bottom-0">
-                  <input className="border-blue-900 w-full bg-blue-400/10 py-3 px-5 outline-0" placeholder="Ask here"/>
+                  <form onSubmit={onSubmitChat} className="flex bg-blue-400/10">
+                    <input onChange={(e) => setMessage(e.target.value)} value={message} className="border-blue-900 w-full py-3 px-5 outline-0" placeholder="Ask here"/>
+                    <button disabled={message ? false : true} className="text-blue-900 px-5 disabled:opacity-30"><FaPaperPlane size={20}/></button>
+                  </form>
                 </div>
               </div>
             }

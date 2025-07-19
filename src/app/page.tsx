@@ -7,9 +7,62 @@ import edwardNewGate from "../assets/images/edward-newgate.png"
 import rose from "../assets/images/rose.jpg"
 import michael from "../assets/images/michael.jpg"
 import jonas from "../assets/images/jonas.jpg"
+import serverError from "../assets/images/server-error.png"
+import noData from "../assets/images/no-data.png"
+import { fetchWithToken } from "../../lib/fetchWithToken";
+import { useEffect, useState } from "react";
 // import { useEffect, useState } from "react";
 
 export default function Home() {
+  // e, setMessage] = useState("");
+  const [isLoadVehicle, setIsLoadVehicle] = useState(true)
+  const [isError, setIsError] = useState(false)
+  const [showVehicle, setShowVehicle] = useState(false)
+
+  const vehicleObj = {
+    id: 1,
+    brand: '',
+    model: '',
+    images: [],
+    city: '',
+    province: '',
+    rentPrice: 0
+  }
+  const [vehicleList, setVehicleList] = useState([vehicleObj])
+
+  useEffect(() => {
+    fetchApiAgent()
+  }, []);
+  
+  
+  const fetchApiAgent = async () => {
+    const query: Record<string,string> = {
+      order: 'createdAt',
+      sort: 'desc',
+      limit: '8',
+      offset: '0'
+    }
+    const params = new URLSearchParams(query);
+    const data = await fetchWithToken(`/api/vehicle/list?${params}`);
+    const rest = await data.json()
+    if (rest.code === 200) {
+      const result = rest.result
+      setVehicleList(result)
+      setIsLoadVehicle(false)
+      setShowVehicle(true)
+    } else {
+      setIsLoadVehicle(false)
+      setIsError(true)
+    }
+  }
+
+  const formatRupiah = (value: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0
+    }).format(value);
+  };
   return (
     <div className="relative bg-white text-lg text-black">
       <Header />
@@ -38,8 +91,64 @@ export default function Home() {
       </div>
       <div className="w-full p-5 md:p-10 xl:p-20">
         <div>
-          <h2 className="font-bold text-5xl">Testimonials</h2>
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 py-5 md:py-10 xl:py-20 gap-5">
+          <div className="flex flex-col md:flex-row md:justify-between items-center">
+            <h2 className="font-bold text-3xl">Vehicles</h2>
+            <p>View more</p>
+          </div>
+          {isLoadVehicle && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5">
+            <div className="w-full">
+              <div className="w-full h-60 animate-pulse bg-gray-200" />
+              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
+              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
+            </div>
+            <div className="w-full">
+              <div className="w-full h-60 animate-pulse bg-gray-200" />
+              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
+              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
+            </div>
+            <div className="w-full">
+              <div className="w-full h-60 animate-pulse bg-gray-200" />
+              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
+              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
+            </div>
+            <div className="w-full">
+              <div className="w-full h-60 animate-pulse bg-gray-200" />
+              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
+              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
+            </div>
+          </div>}
+          {isError && <div className="w-full h-full flex flex-col justify-center items-center mt-20">
+            <Image src={serverError} alt="server error" className="w-full max-w-96"/>
+            <div className="mt-2 flex flex-col justify-center items-center">
+              <p className="text-xl text-red-600">Oops... something went wrong</p>
+              <p>{`We'll fix it soon`}</p>
+            </div>
+          </div>}
+          {showVehicle && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5">
+            {vehicleList.map(vehicle => (
+              <div key={vehicle.id} className="w-full">
+                <div className="h-60 relative">
+                  {vehicle.images.length &&
+                  <Image
+                    src={vehicle.images[0]}
+                    alt={`${vehicle.brand} ${vehicle.model} ${vehicle.city}`}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                  />}
+                  {!vehicle.images.length && <Image src={noData} alt="no image found" />}
+                </div>
+                <div className="mt-1">
+                  <p className="font-bold text-2xl">{formatRupiah(vehicle.rentPrice)}/day</p>
+                  <p className="font-bold capitalize">{vehicle.brand} {vehicle.model}</p>
+                  <p>{vehicle.city}, {vehicle.province}</p>
+                </div>
+              </div>
+            ))}
+          </div>}
+        </div>
+        <div className="mt-20 xl:mt-40">
+          <h2 className="font-bold text-3xl">Testimonials</h2>
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 py-5 md:py-10 gap-5">
             <div className="border border-gray-100 rounded-md p-5 flex flex-col justify-start items-center text-left gap-3">
               <Image src={edwardNewGate} alt="background image z-10" className="w-40 h-40 object-cover rounded-full" />
               <p>⭐️⭐️⭐️⭐️⭐️</p>

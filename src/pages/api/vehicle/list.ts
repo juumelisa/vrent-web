@@ -1,13 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const method = req.method
-  let url = process.env.API_URL
-  if (method === 'POST') {
-    url += 'chat/store'
-  } else {
-    url += 'chat'
+  const url = process.env.API_URL + 'vehicle'
+  const rawQuery = req.query;
+  const safeQuery: Record<string,string> = {}
+  for (const key in rawQuery) {
+    const value = rawQuery[key];
+    safeQuery[key] = Array.isArray(value) ? value[0] : (value ?? '');
   }
+  const params = new URLSearchParams(safeQuery);
   const rawToken: string | string[] | undefined = req.headers['token'];
   const token = Array.isArray(rawToken) ? rawToken[0] : rawToken ?? '';
   const headers: Record<string, string> = {
@@ -16,23 +17,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     token
   };
   try {
-    let response
-    if (method === 'POST') {
-      response = await fetch(`${url}`,
-        {
+    const response = await fetch(`${url}?${params}`,
+      {
           headers,
-          method,
-          body: JSON.stringify(req.body)
-        }
-      );
-    } else {
-      response = await fetch(`${url}`,
-        {
-          headers,
-          method,
-        }
-      );
-    }
+          method: 'GET'
+      }
+    );
     const data = await response.json();
     res.status(200).json(data);
   } catch {
