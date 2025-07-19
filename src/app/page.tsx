@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import backgroundImage from "../assets/images/background-image.png"
 import edwardNewGate from "../assets/images/edward-newgate.png"
@@ -11,10 +10,9 @@ import serverError from "../assets/images/server-error.png"
 import noData from "../assets/images/no-data.png"
 import { fetchWithToken } from "../../lib/fetchWithToken";
 import { useEffect, useState } from "react";
-// import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
-  // e, setMessage] = useState("");
   const [isLoadVehicle, setIsLoadVehicle] = useState(true)
   const [isError, setIsError] = useState(false)
   const [showVehicle, setShowVehicle] = useState(false)
@@ -31,11 +29,11 @@ export default function Home() {
   const [vehicleList, setVehicleList] = useState([vehicleObj])
 
   useEffect(() => {
-    fetchApiAgent()
+    fetchVehicle()
   }, []);
   
   
-  const fetchApiAgent = async () => {
+  const fetchVehicle = async () => {
     const query: Record<string,string> = {
       order: 'createdAt',
       sort: 'desc',
@@ -64,10 +62,9 @@ export default function Home() {
     }).format(value);
   };
   return (
-    <div className="relative bg-white text-lg text-black">
-      <Header />
-      <div className="relative z-10">
-        <Image src={backgroundImage} alt="background image z-10"/>
+    <div className="absolute bg-white text-lg text-black left-0 top-0">
+      <div className="relative z-10 h-screen">
+        <Image src={backgroundImage} alt="background image z-10" fill style={{objectFit: 'cover'}}/>
         <div className="bg-blue-900 opacity-70 h-full w-full absolute top-0" />
         <div className="absolute top-0 w-full h-full">
           <div className="w-full lg:w-[580px] h-full flex flex-col justify-center p-5 md:p-10 xl:p-20 text-white">
@@ -93,9 +90,29 @@ export default function Home() {
         <div>
           <div className="flex flex-col md:flex-row md:justify-between items-center">
             <h2 className="font-bold text-3xl">Vehicles</h2>
-            <p>View more</p>
+            <Link href="/vehicle">View more</Link>
           </div>
           {isLoadVehicle && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5">
+            <div className="w-full">
+              <div className="w-full h-60 animate-pulse bg-gray-200" />
+              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
+              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
+            </div>
+            <div className="w-full">
+              <div className="w-full h-60 animate-pulse bg-gray-200" />
+              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
+              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
+            </div>
+            <div className="w-full">
+              <div className="w-full h-60 animate-pulse bg-gray-200" />
+              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
+              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
+            </div>
+            <div className="w-full">
+              <div className="w-full h-60 animate-pulse bg-gray-200" />
+              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
+              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
+            </div>
             <div className="w-full">
               <div className="w-full h-60 animate-pulse bg-gray-200" />
               <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
@@ -146,7 +163,7 @@ export default function Home() {
             ))}
           </div>}
         </div>
-        <div className="mt-20 xl:mt-40">
+        <div className="mt-10 xl:mt-20">
           <h2 className="font-bold text-3xl">Testimonials</h2>
           <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 py-5 md:py-10 gap-5">
             <div className="border border-gray-100 rounded-md p-5 flex flex-col justify-start items-center text-left gap-3">

@@ -7,7 +7,7 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <div className="w-full text-black bg-blue-400/10 p-5 md:p-10 xl:p-20">
+    <div className="w-full text-white bg-blue-900 p-5 md:p-10 xl:p-20">
       <div className="w-full flex flex-col xl:flex-row gap-5 xl:gap-10">
         <div className="w-full xl:w-1/3">
           <p>

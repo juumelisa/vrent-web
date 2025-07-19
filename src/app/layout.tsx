@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Playfair_Display } from 'next/font/google';
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -34,7 +36,13 @@ export default function RootLayout({
       <body
         className={`${playfair.className} bg-white text-black`}
       >
-        {children}
+        <div className="relative">
+          <Header />
+          <div className="relative bg-white text-black w-full p-5 md:p-10 xl:p-20 min-h-screen">
+          {children}
+          </div>
+          <Footer />
+        </div>
       </body>
     </html>
   );

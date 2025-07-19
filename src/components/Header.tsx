@@ -8,6 +8,7 @@ import { IoMdClose } from "react-icons/io";
 import { FaPaperPlane } from "react-icons/fa";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { fetchWithToken } from "../../lib/fetchWithToken";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isChatAvailable, setIsChatAvailable] = useState(false);
@@ -15,6 +16,9 @@ export default function Header() {
   const [showChat, setShowChat] = useState(false);
   const [chatHistory, setChatHistory] = useState([{role: '', message: ''}])
   const [message, setMessage] = useState("");
+  const transparentPath = ['/', '/about', '/about']
+  const pathname:string = usePathname() || ''
+  const bgTransparent = transparentPath.includes(pathname)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -26,6 +30,7 @@ export default function Header() {
     } else {
       fetchApiAgent()
     }
+    
     const handleScroll = () => setScrolled(window.scrollY > 0);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -76,7 +81,7 @@ export default function Header() {
   return (
     <header
         className={clsx("fixed z-30 w-full flex flex-row justify-between p-5 md:px-10 xl:px-20",
-        scrolled ? "bg-white text-black" : "bg-transparent text-white")}
+        !scrolled && bgTransparent ? "bg-transparent text-white" : "bg-white text-black" )}
     >
     <Link href="/" className="font-bold text-3xl">vrent</Link>
       <nav>
@@ -90,7 +95,7 @@ export default function Header() {
             {showChat &&  <div className={
                 clsx(
                   "relative w-80 h-[400px] bg-white text-black border-2 rounded mb-5",
-                  scrolled ? "border-blue-900" : "border-white"
+                  !scrolled && bgTransparent ? "border-white" : "border-blue-900"
                 )
               }>
                 <div className="bg-blue-900 text-white p-5 border-b flex gap-2">
