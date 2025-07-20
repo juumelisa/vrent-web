@@ -1,5 +1,6 @@
 "use client";
 
+import moment from "moment";
 import React from "react";
 // import { useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
@@ -18,7 +19,7 @@ export default function Calendar({ onChange, selectedData, minDate, customSelect
     customSelectClass = "px-2 py-1 border border-gray-300 rounded"
   }
   const changeDateFormat = (date: string) => {
-    return new Date(date).toISOString().split('T')[0]
+    return moment(date).format('ddd, MMM Do YYYY')
   }
 
   return (
