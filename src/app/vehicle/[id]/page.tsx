@@ -19,7 +19,6 @@ import Link from 'next/link';
 export default function Detail() {
   const params = useParams()
   const id = params && params.id ? params.id : ''
-  console.log(params)
   const [isLoadVehicle, setIsLoadVehicle] = useState(true)
   const [isError, setIsError] = useState(false)
   const [isNotFound, setIsNotFound] = useState(false)
