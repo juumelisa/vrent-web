@@ -26,7 +26,7 @@ export default function Header() {
       const stringChatHistory = localStorage.getItem('chatHistory') || "{}"
       const oldChatHistory = JSON.parse(stringChatHistory)
       setChatHistory(oldChatHistory)
-      setIsChatAvailable(true)
+      // setIsChatAvailable(true)
     } else {
       fetchApiAgent()
     }
@@ -80,10 +80,13 @@ export default function Header() {
   }
   return (
     <header
-        className={clsx("fixed z-30 w-full flex flex-row justify-between p-5 md:px-10 xl:px-20",
+        className={clsx("fixed z-30 w-full flex flex-row justify-between items-center p-5 md:px-10 xl:px-20",
         !scrolled && bgTransparent ? "bg-transparent text-white" : "bg-white text-blue-900" )}
     >
-    <Link href="/" className="font-bold text-3xl">vrent</Link>
+      
+      <Link href="/" className="font-bold text-3xl flex items-center">
+        <p>VRent</p>
+      </Link>
       <nav>
         <ul className="flex gap-6">
           <li><Link href="/about">About</Link></li>

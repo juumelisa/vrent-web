@@ -87,7 +87,7 @@ export default function Detail() {
                 style={{ objectFit: 'cover' }}
               />
             </div>
-            {vehicle.images.length && <div className='mt-5 ml-2 flex'>
+            {vehicle.images.length && <div className='mt-5 flex gap-2'>
               {vehicle.images.map((image, index) => (
                 <button onClick={() => setImageIndex(index)} key={index} className='border rounded w-24 h-24 relative'>
                   <Image
@@ -135,19 +135,10 @@ export default function Detail() {
                 <p className='mt-1'><b>Proin:</b> tincidunt pretium elit euismod suscipit</p>
               </div>
             </div>
-            <div className='flex gap-5 mt-5'>
-              <div className='w-1/2'>
-                <Button onClick={() => console.log('booked')}>Book Now</Button>
-              </div>
-              <button className='w-1/2 border border-blue-900 rounded flex justify-center items-center'>
-                <IoBookmarkOutline size={24}/>
-                <p>Bookmark</p>
-              </button>
-            </div>
           </div>
           <div className='w-1/5'>
             <div className='border border-gray-100 p-3 rounded bg-gray-50'>
-              <p>Rented by:</p>
+              <p>Host</p>
               <div className='flex justify-start items-start gap-3 mt-5'>
                 <div className='relative w-16 h-16'>
                   <Image

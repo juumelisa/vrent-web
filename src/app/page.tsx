@@ -19,15 +19,15 @@ export default function Home() {
   const [isLoadVehicle, setIsLoadVehicle] = useState(true)
   const [isError, setIsError] = useState(false)
   const [showVehicle, setShowVehicle] = useState(false)
-  const [type, setType] = useState('')
+  const [type, setType] = useState("")
 
   const vehicleObj = {
     id: 1,
-    brand: '',
-    model: '',
+    brand: "",
+    model: "",
     images: [],
-    city: '',
-    province: '',
+    city: "",
+    province: "",
     rentPrice: 0
   }
   const [vehicleList, setVehicleList] = useState([vehicleObj])
@@ -39,10 +39,10 @@ export default function Home() {
   
   const fetchVehicle = async () => {
     const query: Record<string,string> = {
-      order: 'createdAt',
-      sort: 'desc',
-      limit: '8',
-      offset: '0'
+      order: "createdAt",
+      sort: "desc",
+      limit: "8",
+      offset: "0"
     }
     const params = new URLSearchParams(query);
     const data = await fetchWithToken(`/api/vehicle/list?${params}`);
@@ -59,9 +59,9 @@ export default function Home() {
   }
 
   const formatRupiah = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'IDR',
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "IDR",
       minimumFractionDigits: 0
     }).format(value);
   };
@@ -73,7 +73,7 @@ export default function Home() {
   return (
     <div className="absolute bg-white text-black left-0 top-0">
       <div className="relative z-10 h-screen">
-        <Image src={backgroundImage} alt="background image z-10" fill style={{objectFit: 'cover'}}/>
+        <Image src={backgroundImage} alt="background image z-10" fill style={{objectFit: "cover"}}/>
         <div className="bg-blue-900 opacity-70 h-full w-full absolute top-0" />
         <div className="absolute top-0 w-full h-full">
           <div className="w-full lg:w-[580px] h-full flex flex-col justify-center p-5 md:p-10 xl:p-20 text-white">
@@ -99,7 +99,7 @@ export default function Home() {
         <div>
           <div className="flex flex-col md:flex-row md:justify-between items-center">
             <h2 className="font-bold text-3xl">Vehicles</h2>
-            <Link href="/vehicle" className="text-blue-900">View more</Link>
+            {showVehicle && <Link href="/vehicle" className="text-blue-900">View more</Link>}
           </div>
           {isLoadVehicle && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5">
             <div className="w-full">
@@ -147,7 +147,7 @@ export default function Home() {
             <Image src={serverError} alt="server error" className="w-full max-w-96"/>
             <div className="mt-2 flex flex-col justify-center items-center">
               <p className="text-xl text-red-600">Oops... something went wrong</p>
-              <p>{`We'll fix it soon`}</p>
+              <p className="text-blue-900">{`We'll fix it soon`}</p>
             </div>
           </div>}
           {showVehicle && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5">
@@ -159,7 +159,7 @@ export default function Home() {
                     src={vehicle.images[0]}
                     alt={`${vehicle.brand} ${vehicle.model} ${vehicle.city}`}
                     fill
-                    style={{ objectFit: 'cover' }}
+                    style={{ objectFit: "cover" }}
                   />}
                   {!vehicle.images.length && <Image src={noData} alt="no image found" />}
                 </div>
