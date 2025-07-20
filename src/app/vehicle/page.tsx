@@ -9,7 +9,7 @@ import Button from "@/components/Button";
 import { IoLocationSharp } from "react-icons/io5";
 import Link from "next/link";
 import Select from "@/components/Select";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type vehicleObj = {
   id: string,
@@ -24,7 +24,6 @@ type vehicleObj = {
 export default function Vehicle() {
   const tempVehicleList: vehicleObj[] = []
   const router = useRouter();
-  const searchParams = useSearchParams();
   const vehicleType: string[] = [
     "all",
     "car",
@@ -50,6 +49,7 @@ export default function Vehicle() {
   const [vehicleList, setVehicleList] = useState(tempVehicleList)
   
   useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
     const params: Record<string,string> = {}
     Object.keys(query).forEach(key => {
       const value = searchParams?.get(key) ?? '';
