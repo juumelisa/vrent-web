@@ -22,6 +22,7 @@ export default function Detail() {
   console.log(params)
   const [isLoadVehicle, setIsLoadVehicle] = useState(true)
   const [isError, setIsError] = useState(false)
+  const [isNotFound, setIsNotFound] = useState(false)
   const [showVehicle, setShowVehicle] = useState(false)
   const [imageIndex, setImageIndex] = useState(0)
   const vehicleObj = {
@@ -48,14 +49,14 @@ export default function Detail() {
     const queryParams = new URLSearchParams(query);
     const data = await fetchWithToken(`/api/vehicle/info?${queryParams}`);
     const rest = await data.json()
-    console.log(rest)
+    setIsLoadVehicle(false)
     if (rest.code === 200) {
       const result = rest.result[0]
       setVehicle(result)
-      setIsLoadVehicle(false)
       setShowVehicle(true)
+    } else if (rest.code === 404) {
+      setIsNotFound(true)
     } else {
-      setIsLoadVehicle(false)
       setIsError(true)
     }
   }
@@ -70,13 +71,27 @@ export default function Detail() {
 
   return (
     <div>
-     <div className='w-full max-w-32'>
-      <Link href="/vehicle" className="flex gap-3 items-center hover:text-blue-900 mb-5">
-          <IoMdArrowBack />
-          <p>Back To List</p>
-        </Link>
-      </div>
+      {isNotFound && <div className="w-full h-full flex flex-col justify-center items-center mt-20">
+        <div className="relative w-full h-80">
+          <Image src="/images/no-data.png" alt="server error" fill className="object-contain"/>
+        </div>
+        <div className="mt-2 flex flex-col justify-center items-center">
+          <p className="text-xl">Oops</p>
+          <p>{`We couldn't find the page you're looking for.`}</p>
+          <Link href="/">Back to home</Link>
+        </div>
+      </div>}
+      {isError && <div className="w-full h-full flex flex-col justify-center items-center mt-20">
+        <div className="relative w-full h-80">
+          <Image src="/images/server-error.png" alt="server error" fill className="object-contain"/>
+        </div>
+        <div className="mt-2 flex flex-col justify-center items-center">
+          <p className="text-xl text-red-600">Oops... something went wrong</p>
+          <p className="text-blue-900">{`We'll fix it soon`}</p>
+        </div>
+      </div>}
       {isLoadVehicle && <div>
+        <div className="w-40 h-5 mb-5 bg-gray-200 animate-pulse" />
         <div className="w-full flex lg:gap-10">
           <div className="w-1/2">
             <div className="h-96 bg-gray-200 animate-pulse w-full" />
@@ -120,6 +135,12 @@ export default function Detail() {
         </div>
       </div>}
       {showVehicle && <div>
+      <div className='w-full max-w-32'>
+        <Link href="/vehicle" className="flex gap-3 items-center hover:text-blue-900 mb-5">
+          <IoMdArrowBack />
+          <p>Back To List</p>
+        </Link>
+      </div>
         <div className="w-full flex lg:gap-10">
           <div className="w-1/2">
             <div className="h-96 relative w-full">

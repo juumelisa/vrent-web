@@ -8,7 +8,7 @@ type SelectProp = {
   onChange: (data: string) => void,
   data: string[],
   selectedData: string,
-  customSelectClass: string,
+  customSelectClass: string | null,
   customOptionClass: string | null,
   placeholder: string
 }

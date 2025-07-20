@@ -147,7 +147,14 @@ export default function Vehicle() {
           {!isLoadVehicle && <div className="bg-gray-50 p-3 mt-3 grid grid-cols-1 gap-5">
             <div>
               <p className="font-bold">Type</p>
-              <Select data={vehicleType} selectedData={query.type} onChange={(d) => handleTypeChange(d)}/>
+              <Select
+                data={vehicleType}
+                selectedData={query.type}
+                customOptionClass={null}
+                customSelectClass={null}
+                placeholder="Vehicle type"
+                onChange={(d) => handleTypeChange(d)}
+              />
             </div>
             <div>
               <p className="font-bold">Location</p>
