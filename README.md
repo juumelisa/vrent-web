@@ -1,30 +1,36 @@
-# Seran - Vehicle Rent
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A web application where user can rental a vehicle in some areas. It’s built using Node JS, Express and MySQL for API and React JS library for frontend, with the help of Bootstrap for its visual and using Redux as state management. The app also integrated with Midtrans payment gateway.
+## Getting Started
 
-## Installation
+First, run the development server:
 
-```sh
-git clone https://github.com/jumelisah/seran-frontend-react.git
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
-```sh
-npm i
-```
-```sh
-npm run start
-```
 
-## Preview
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Search
-![Screenshot (438)](https://user-images.githubusercontent.com/90091968/175776282-4f154675-59ee-4ccd-a559-3ed1cb2a40bd.png)
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-### Payment
-![Screenshot (437)](https://user-images.githubusercontent.com/90091968/175776279-cbc57b68-9604-4c9b-a1d8-7580eb82edec.png)
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-### History
-![Screenshot (439)](https://user-images.githubusercontent.com/90091968/175776285-c82652b6-2f29-4158-a264-264979fb1db0.png)
+## Learn More
 
-### Profile
-![Screenshot (441)](https://user-images.githubusercontent.com/90091968/175776288-1905e15a-b072-42ba-90a0-258df6b93904.png)
+To learn more about Next.js, take a look at the following resources:
 
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
