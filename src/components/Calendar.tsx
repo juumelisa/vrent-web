@@ -19,6 +19,7 @@ export default function Calendar({ onChange, selectedData, minDate, customSelect
     customSelectClass = "px-2 py-1 border border-gray-300 rounded"
   }
   const changeDateFormat = (date: string) => {
+    console.log(date)
     return moment(date).format('ddd, MMM Do YYYY')
   }
 
