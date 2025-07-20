@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { IoLocationSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import Select from "@/components/Select";
+import Calendar from "@/components/Calendar";
 
 export default function Home() {
   const router = useRouter()
@@ -20,6 +22,15 @@ export default function Home() {
   const [isError, setIsError] = useState(false)
   const [showVehicle, setShowVehicle] = useState(false)
   const [type, setType] = useState("")
+  const [startDate, setStartDate] = useState<string | null>(null)
+  const [endDate, setEndDate] = useState<string | null>(null)
+
+  const vehicleType: string[] = [
+    "all",
+    "car",
+    "motorbike",
+    "minivan"
+  ]
 
   const vehicleObj = {
     id: 1,
@@ -70,6 +81,14 @@ export default function Home() {
     e.preventDefault()
     router.push(`vehicle?type=${type}`)
   }
+
+  const changeStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStartDate(e.target.value)
+  }
+
+  const changeEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEndDate(e.target.value)
+  }
   return (
     <div className="absolute bg-white text-black left-0 top-0">
       <div className="relative z-10 h-screen">
@@ -83,10 +102,37 @@ export default function Home() {
               <div className="border-t w-12" />
               <div className="mt-10">
                 <form onSubmit={onSubmitForm} className="grid gap-3 md:gap-5 text-black">
-                  <input name="type" placeholder="Type" onChange={(e) => setType(e.target.value)} className="w-full py-2 px-3 bg-blue-100/90 rounded outline-0" />
+                  <Select
+                    data={vehicleType}
+                    selectedData={type}
+                    placeholder="Location"
+                    onChange={(d) => setType(d)}
+                    customSelectClass="bg-blue-100/90 p-3 rounded"
+                    customOptionClass="bg-blue-100 rounded"
+                  />
+                  <Select
+                    data={vehicleType}
+                    selectedData={type}
+                    placeholder="Vehicle type"
+                    onChange={(d) => setType(d)}
+                    customSelectClass="bg-blue-100/90 p-3 rounded"
+                    customOptionClass={null}
+                  />
                   <div className="flex flex-row gap-3">
-                    <input name="location" placeholder="Location" className="w-full py-2 px-3 bg-blue-100/90 rounded outline-0" />
-                    <input name="date" placeholder="Date" className="w-full py-2 px-3 bg-blue-100/90 rounded outline-0" />
+                    <Calendar
+                      placeholder="Start from"
+                      customSelectClass="bg-blue-100/90 p-3 rounded"
+                      selectedData={startDate}
+                      minDate={new Date().toISOString()}
+                      onChange={changeStartDate}
+                    />
+                    <Calendar
+                      placeholder="Until"
+                      customSelectClass="bg-blue-100/90 p-3 rounded"
+                      selectedData={endDate}
+                      minDate={null}
+                      onChange={changeEndDate}
+                    />
                   </div>
                   <button type="submit" className="bg-blue-600 text-white py-2 font-bold rounded cursor-pointer">Search</button>
                 </form>
@@ -176,8 +222,8 @@ export default function Home() {
           </div>}
         </div>
         <div className="mt-10 xl:mt-20">
-          <h2 className="font-bold text-3xl">Testimonials</h2>
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 py-5 md:py-10 gap-5">
+          <h2 className="font-bold text-2xl">What our client says</h2>
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 py-5 gap-5">
             <div className="border border-gray-100 rounded-md p-5 flex flex-col justify-start items-center text-left gap-3">
               <Image src={edwardNewGate} alt="background image z-10" className="w-40 h-40 object-cover rounded-full" />
               <p>⭐️⭐️⭐️⭐️⭐️</p>

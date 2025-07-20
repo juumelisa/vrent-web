@@ -6,8 +6,8 @@ import { fetchWithToken } from "../../../../lib/fetchWithToken";
 import Image from "next/image";
 import { useParams } from 'next/navigation';
 import Button from '@/components/Button';
-import { IoBookmarkOutline, IoChatboxOutline, IoLocationSharp } from 'react-icons/io5';
-import { MdComment, MdVerifiedUser } from 'react-icons/md';
+import { IoBookmarkOutline, IoLocationSharp } from 'react-icons/io5';
+import { MdComment } from 'react-icons/md';
 import { IoMdArrowBack, IoMdStar, IoMdStarHalf, IoMdStarOutline } from 'react-icons/io';
 
 import edwardNewGate from "../../../assets/images/edward-newgate.png"
@@ -20,8 +20,8 @@ export default function Detail() {
   const params = useParams()
   const id = params && params.id ? params.id : ''
   console.log(params)
-  // const [isLoadVehicle, setIsLoadVehicle] = useState(true)
-  // const [isError, setIsError] = useState(false)
+  const [isLoadVehicle, setIsLoadVehicle] = useState(true)
+  const [isError, setIsError] = useState(false)
   const [showVehicle, setShowVehicle] = useState(false)
   const [imageIndex, setImageIndex] = useState(0)
   const vehicleObj = {
@@ -52,11 +52,11 @@ export default function Detail() {
     if (rest.code === 200) {
       const result = rest.result[0]
       setVehicle(result)
-      // setIsLoadVehicle(false)
+      setIsLoadVehicle(false)
       setShowVehicle(true)
-    // } else {
-      // setIsLoadVehicle(false)
-      // setIsError(true)
+    } else {
+      setIsLoadVehicle(false)
+      setIsError(true)
     }
   }
   
@@ -76,31 +76,74 @@ export default function Detail() {
           <p>Back To List</p>
         </Link>
       </div>
+      {isLoadVehicle && <div>
+        <div className="w-full flex lg:gap-10">
+          <div className="w-1/2">
+            <div className="h-96 bg-gray-200 animate-pulse w-full" />
+            <div className="mt-5 flex gap-2">
+              <div className="w-24 h-24 bg-gray-200 animate-pulse" />
+              <div className="w-24 h-24 bg-gray-200 animate-pulse" />
+              <div className="w-24 h-24 bg-gray-200 animate-pulse" />
+              <div className="w-24 h-24 bg-gray-200 animate-pulse" />
+            </div>
+          </div>
+          <div className="w-1/2">
+            <div className="mb-2 bg-gray-200 animate-pulse w-20 h-6" />
+            <div className="mb-2 bg-gray-200 animate-pulse w-40 h-4" />
+            <div className="mb-2 bg-gray-200 animate-pulse w-80 h-12" />
+            <div className="mb-2 bg-gray-200 animate-pulse w-60 h-4" />
+            <div className="my-5 flex gap-3">
+              <div className="bg-gray-200 animate-pulse w-20 h-6" />
+              <div className="bg-gray-200 animate-pulse w-20 h-6" />
+            </div>
+            <div className="my-5">
+              <div className="bg-gray-200 animate-pulse w-20 h-4 mb-2" />
+              <div className="bg-gray-200 animate-pulse w-40 h-4 mb-2" />
+              <div className="bg-gray-200 animate-pulse w-40 h-4" />
+            </div>
+            <div className="my-5">
+              <div className="bg-gray-200 animate-pulse w-20 h-4 mb-2" />
+              <div className="bg-gray-200 animate-pulse w-full h-4 mb-2" />
+              <div className="bg-gray-200 animate-pulse w-full h-4 mb-2" />
+              <div className="bg-gray-200 animate-pulse w-full h-4 mb-2" />
+              <div className="bg-gray-200 animate-pulse w-full h-4 mb-2" />
+              <div className="bg-gray-200 animate-pulse w-40 h-4 mb-2" />
+              <div className="bg-gray-200 animate-pulse w-full h-4 mb-2" />
+              <div className="bg-gray-200 animate-pulse w-full h-4 mb-2" />
+              <div className="bg-gray-200 animate-pulse w-60 h-4 mb-2" />
+            </div>
+            <div>
+              <div className="animate-pulse bg-gray-200 w-full h-12 mt-5" />
+              <div className="animate-pulse bg-gray-200 w-full h-12 mt-2" />
+            </div>
+          </div>
+        </div>
+      </div>}
       {showVehicle && <div>
         <div className="w-full flex lg:gap-10">
-          <div className='w-2/5'>
+          <div className="w-1/2">
             <div className="h-96 relative w-full">
               <Image
                 src={vehicle.images[imageIndex]}
                 alt={`${vehicle.brand} ${vehicle.model} ${vehicle.city}`}
                 fill
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: "cover" }}
               />
             </div>
-            {vehicle.images.length && <div className='mt-5 flex gap-2'>
+            {vehicle.images.length && <div className="mt-5 flex gap-2">
               {vehicle.images.map((image, index) => (
-                <button onClick={() => setImageIndex(index)} key={index} className='border rounded w-24 h-24 relative'>
+                <button onClick={() => setImageIndex(index)} key={index} className="border rounded w-24 h-24 relative">
                   <Image
                     src={image}
                     alt={`${vehicle.brand} ${vehicle.model} ${index}`}
                     fill
-                    style={{ objectFit: 'cover' }}
+                    style={{ objectFit: "cover" }}
                   />
                 </button>
               ))}
             </div>}
           </div>
-          <div className='w-2/5'>
+          <div className='w-1/2'>
             <div className='flex mb-2'>
               <div className='bg-blue-50 rounded-full py-1 px-6'>
                 <p>Car</p>
@@ -135,43 +178,15 @@ export default function Detail() {
                 <p className='mt-1'><b>Proin:</b> tincidunt pretium elit euismod suscipit</p>
               </div>
             </div>
-          </div>
-          <div className='w-1/5'>
-            <div className='border border-gray-100 p-3 rounded bg-gray-50'>
-              <p>Host</p>
-              <div className='flex justify-start items-start gap-3 mt-5'>
-                <div className='relative w-16 h-16'>
-                  <Image
-                    src={"https://res.cloudinary.com/dme13qwgd/image/upload/v1752942287/VRent/1752942283348-image.jpg"}
-                    fill
-                    style={{objectFit: 'cover'}}
-                    alt='owner'
-                    className='rounded-full'
-                  />
-                </div>
-                <div>
-                  <div className='flex items-center gap-2'>
-                    <MdVerifiedUser className='text-blue-900' size={20}/>
-                    <p className='font-bold'>Mila</p>
-                  </div>
-                  <p className='italic text-sm'>Online 3 hours ago</p>
-                  <button className='flex items-center gap-2 text-blue-900 cursor-pointer hover:text-blue-400'>
-                    <IoChatboxOutline />
-                    <p>Chat</p>
-                  </button>
-                </div>
+            <div className='mt-5'>
+              <div>
+                <Button onClick={() => console.log('booked')}>Book Now</Button>
               </div>
-              <div className='mt-5'>
-                <div>
-                  <Button onClick={() => console.log('booked')}>Book Now</Button>
-                </div>
-                <button className='w-full border border-blue-900 rounded flex gap-1 justify-center items-center py-3 mt-3'>
-                  <IoBookmarkOutline size={18}/>
-                  <p>Bookmark</p>
-                </button>
-              </div>
+              <button className='w-full border border-blue-900 rounded flex gap-1 justify-center items-center py-3 mt-3'>
+                <IoBookmarkOutline size={18}/>
+                <p>Bookmark</p>
+              </button>
             </div>
-            
           </div>
         </div>
         <div>
