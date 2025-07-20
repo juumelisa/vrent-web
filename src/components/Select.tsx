@@ -30,6 +30,7 @@ export default function Select(
     setIsOpenOption(!isOpen)
   }
   const handleSelect = (e: React.MouseEvent<HTMLButtonElement>, data: string) => {
+    console.log('test')
     e.preventDefault()
     onChange(data)
     setIsOpenOption(false)
