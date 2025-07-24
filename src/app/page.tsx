@@ -11,37 +11,32 @@ import noData from "../assets/images/no-data.png"
 import { fetchWithToken } from "../../lib/fetchWithToken";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { IoLocationSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import Select from "@/components/Select";
 import Calendar from "@/components/Calendar";
 
+type CityProp = {
+  id: number,
+  name: string,
+  province: string,
+  image: string | null
+}
+
 export default function Home() {
   const router = useRouter()
-  const [isLoadVehicle, setIsLoadVehicle] = useState(true)
+  const [isLoad, setIsLoad] = useState(true)
   const [isError, setIsError] = useState(false)
-  const [showVehicle, setShowVehicle] = useState(false)
+  const [showCity, setShowCity] = useState(false)
   const [type, setType] = useState("")
   const [startDate, setStartDate] = useState<string | null>(null)
   const [endDate, setEndDate] = useState<string | null>(null)
-
+  const [PopularCityList, setPopularCityList] = useState<CityProp[]>([])
   const vehicleType: string[] = [
     "all",
     "car",
     "motorbike",
     "minivan"
   ]
-
-  const vehicleObj = {
-    id: 1,
-    brand: "",
-    model: "",
-    images: [],
-    city: "",
-    province: "",
-    rentPrice: 0
-  }
-  const [vehicleList, setVehicleList] = useState([vehicleObj])
 
   useEffect(() => {
     fetchVehicle()
@@ -50,32 +45,24 @@ export default function Home() {
   
   const fetchVehicle = async () => {
     const query: Record<string,string> = {
-      order: "createdAt",
+      order: "searchCount",
       sort: "desc",
       limit: "8",
       offset: "0"
     }
     const params = new URLSearchParams(query);
-    const data = await fetchWithToken(`/api/vehicle/list?${params}`);
+    const data = await fetchWithToken(`/api/city/list?${params}`);
     const rest = await data.json()
     if (rest.code === 200) {
       const result = rest.result
-      setVehicleList(result)
-      setIsLoadVehicle(false)
-      setShowVehicle(true)
+      setPopularCityList(result)
+      setIsLoad(false)
+      setShowCity(true)
     } else {
-      setIsLoadVehicle(false)
+      setIsLoad(false)
       setIsError(true)
     }
   }
-
-  const formatRupiah = (value: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0
-    }).format(value);
-  };
 
   const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -144,50 +131,18 @@ export default function Home() {
       <div className="w-full p-5 md:p-10 xl:p-20">
         <div>
           <div className="flex flex-col md:flex-row md:justify-between items-center">
-            <h2 className="font-bold text-3xl">Vehicles</h2>
-            {showVehicle && <Link href="/vehicle" className="text-blue-900">View more</Link>}
+            <h2 className="font-bold text-2xl">Popular Destination</h2>
+            {showCity && <Link href="/vehicle" className="text-blue-900">View more</Link>}
           </div>
-          {isLoadVehicle && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5">
-            <div className="w-full">
-              <div className="w-full h-60 animate-pulse bg-gray-200" />
-              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
-              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
-            </div>
-            <div className="w-full">
-              <div className="w-full h-60 animate-pulse bg-gray-200" />
-              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
-              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
-            </div>
-            <div className="w-full">
-              <div className="w-full h-60 animate-pulse bg-gray-200" />
-              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
-              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
-            </div>
-            <div className="w-full">
-              <div className="w-full h-60 animate-pulse bg-gray-200" />
-              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
-              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
-            </div>
-            <div className="w-full">
-              <div className="w-full h-60 animate-pulse bg-gray-200" />
-              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
-              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
-            </div>
-            <div className="w-full">
-              <div className="w-full h-60 animate-pulse bg-gray-200" />
-              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
-              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
-            </div>
-            <div className="w-full">
-              <div className="w-full h-60 animate-pulse bg-gray-200" />
-              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
-              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
-            </div>
-            <div className="w-full">
-              <div className="w-full h-60 animate-pulse bg-gray-200" />
-              <div className="w-full max-w-80 h-5 animate-pulse bg-gray-200 mt-2" />
-              <div className="w-20 h-5 animate-pulse bg-gray-200 mt-2" />
-            </div>
+          {isLoad && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5">
+            <div className="w-full h-72 animate-pulse bg-gray-200" />
+            <div className="w-full h-72 animate-pulse bg-gray-200" />
+            <div className="w-full h-72 animate-pulse bg-gray-200" />
+            <div className="w-full h-72 animate-pulse bg-gray-200" />
+            <div className="w-full h-72 animate-pulse bg-gray-200" />
+            <div className="w-full h-72 animate-pulse bg-gray-200" />
+            <div className="w-full h-72 animate-pulse bg-gray-200" />
+            <div className="w-full h-72 animate-pulse bg-gray-200" />
           </div>}
           {isError && <div className="w-full h-full flex flex-col justify-center items-center mt-20">
             <Image src={serverError} alt="server error" className="w-full max-w-96"/>
@@ -196,25 +151,30 @@ export default function Home() {
               <p className="text-blue-900">{`We'll fix it soon`}</p>
             </div>
           </div>}
-          {showVehicle && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5">
-            {vehicleList.map(vehicle => (
-              <Link href={`/vehicle/${vehicle.id}`} key={vehicle.id} className="w-full">
-                <div className="h-60 relative">
-                  {vehicle.images.length &&
+          {showCity && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5 rounded">
+            {PopularCityList.map(city => (
+              <Link href={`/vehicle?city=${city.name}`} key={city.id} className="w-full">
+                <div className="h-72 relative">
+                  {city.image &&
                   <Image
-                    src={vehicle.images[0]}
-                    alt={`${vehicle.brand} ${vehicle.model} ${vehicle.city}`}
+                    src={city.image}
+                    alt={`${city.name}`}
                     fill
                     style={{ objectFit: "cover" }}
+                    className="rounded-lg"
                   />}
-                  {!vehicle.images.length && <Image src={noData} alt="no image found" />}
-                </div>
-                <div className="mt-1">
-                  <p className="capitalize">{vehicle.brand} {vehicle.model}</p>
-                  <p className="font-bold text-lg">{formatRupiah(vehicle.rentPrice)}/day</p>
-                  <div className="flex items-center gap-1 text-blue-900">
-                    <IoLocationSharp size={18} />
-                    <p>{vehicle.city}, {vehicle.province}</p>
+                  {!city.image &&
+                  <Image
+                    src={noData}
+                    style={{ objectFit: "cover" }}
+                    fill
+                    alt="no image found"
+                    className="rounded-lg" 
+                  />}
+                  <div className="absolute top-0 left-0 w-full h-full bg-blue-900/70 rounded-lg">
+                    <div className="w-full h-full flex justify-center items-center">
+                      <p className="capitalize text-white text-4xl font-bold">{city.name}</p>
+                    </div>
                   </div>
                 </div>
               </Link>
