@@ -21,15 +21,15 @@ export default function Header() {
   const bgTransparent = transparentPath.includes(pathname)
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if(token) {
-      const stringChatHistory = localStorage.getItem('chatHistory') || "{}"
-      const oldChatHistory = JSON.parse(stringChatHistory)
-      setChatHistory(oldChatHistory)
-      // setIsChatAvailable(true)
-    } else {
-      fetchApiAgent()
-    }
+    // const token = localStorage.getItem('token')
+    // if(token) {
+    //   const stringChatHistory = localStorage.getItem('chatHistory') || "{}"
+    //   const oldChatHistory = JSON.parse(stringChatHistory)
+    //   setChatHistory(oldChatHistory)
+    //   // setIsChatAvailable(true)
+    // } else {
+    //   fetchApiAgent()
+    // }
     
     const handleScroll = () => setScrolled(window.scrollY > 0);
     window.addEventListener("scroll", handleScroll);
