@@ -130,11 +130,8 @@ export default function Home() {
       </div>
       <div className="w-full p-5 md:p-10 xl:p-20">
         <div>
-          <div className="flex flex-col md:flex-row md:justify-between items-center">
-            <h2 className="font-bold text-2xl">Popular Destination</h2>
-            {showCity && <Link href="/vehicle" className="text-blue-900">View more</Link>}
-          </div>
-          {isLoad && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5">
+          <h2 className="font-bold text-2xl">Popular Destination</h2>
+          {isLoad && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 gap-5">
             <div className="w-full h-72 animate-pulse bg-gray-200" />
             <div className="w-full h-72 animate-pulse bg-gray-200" />
             <div className="w-full h-72 animate-pulse bg-gray-200" />
@@ -151,7 +148,7 @@ export default function Home() {
               <p className="text-blue-900">{`We'll fix it soon`}</p>
             </div>
           </div>}
-          {showCity && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 md:py-10 gap-5 rounded">
+          {showCity && <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 gap-5 rounded">
             {PopularCityList.map(city => (
               <Link href={`/vehicle?city=${city.name}`} key={city.id} className="w-full">
                 <div className="h-72 relative">
@@ -171,9 +168,9 @@ export default function Home() {
                     alt="no image found"
                     className="rounded-lg" 
                   />}
-                  <div className="absolute top-0 left-0 w-full h-full bg-blue-900/70 rounded-lg">
+                  <div className="absolute top-0 left-0 w-full h-full bg-blue-900/60 rounded-lg">
                     <div className="w-full h-full flex justify-center items-center">
-                      <p className="capitalize text-white text-4xl font-bold">{city.name}</p>
+                      <p className="capitalize text-white text-4xl font-bold text-center">{city.name}</p>
                     </div>
                   </div>
                 </div>
