@@ -8,8 +8,8 @@ import noData from "../../assets/images/no-data.png";
 import Button from "@/components/Button";
 import { IoLocationSharp } from "react-icons/io5";
 import Link from "next/link";
-import Select from "@/components/Select";
-import { useRouter } from "next/navigation";
+// import Select from "@/components/Select";
+// import { useRouter } from "next/navigation";
 
 type vehicleObj = {
   id: string,
@@ -23,7 +23,7 @@ type vehicleObj = {
 
 export default function Vehicle() {
   const tempVehicleList: vehicleObj[] = []
-  const router = useRouter();
+  // const router = useRouter();
   const vehicleType: string[] = [
     "all",
     "car",
@@ -122,17 +122,17 @@ export default function Vehicle() {
     fetchVehicle(newQuery)
   }
 
-  const handleTypeChange = (d: string) => {
-    if (d !== query.type) {
-      const newQuery = {...query, type: d, offset: "0"}
-      const queryParams = newQuery ? newQuery : {}
-      const params = new URLSearchParams(queryParams);
-      router.push(`?${params.toString()}`);
-      setVehicleList([])
-      setQuery(newQuery)
-      fetchVehicle(newQuery)
-    }
-  }
+  // const handleTypeChange = (d: string) => {
+  //   if (d !== query.type) {
+  //     const newQuery = {...query, type: d, offset: "0"}
+  //     const queryParams = newQuery ? newQuery : {}
+  //     const params = new URLSearchParams(queryParams);
+  //     router.push(`?${params.toString()}`);
+  //     setVehicleList([])
+  //     setQuery(newQuery)
+  //     fetchVehicle(newQuery)
+  //   }
+  // }
 
   const resetFilter = () => {
     setQuery(queryTemp)
@@ -147,14 +147,14 @@ export default function Vehicle() {
           {!isLoadVehicle && <div className="bg-gray-50 p-3 mt-3 grid grid-cols-1 gap-5">
             <div>
               <p className="font-bold">Type</p>
-              <Select
+              {/* <Select
                 data={vehicleType}
                 selectedData={query.type}
                 customOptionClass={null}
                 customSelectClass={null}
                 placeholder="Vehicle type"
                 onChange={(d) => handleTypeChange(d)}
-              />
+              /> */}
             </div>
             <div>
               <p className="font-bold">Location</p>
