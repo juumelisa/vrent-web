@@ -18,7 +18,7 @@ import Calendar from "@/components/Calendar";
 type CityProp = {
   id: number,
   name: string,
-  province: string,
+  state: string,
   image: string | null
 }
 
@@ -30,6 +30,9 @@ export default function Home() {
   const [type, setType] = useState("")
   const [startDate, setStartDate] = useState<string | null>(null)
   const [endDate, setEndDate] = useState<string | null>(null)
+  const [city, setCity] = useState("")
+  const [cityList, setCityList] = useState<string[]>([])
+  const [isLoadCityOption, setIsLoadCityOption] = useState(true)
   const [PopularCityList, setPopularCityList] = useState<CityProp[]>([])
   const vehicleType: string[] = [
     "all",
@@ -39,11 +42,12 @@ export default function Home() {
   ]
 
   useEffect(() => {
-    fetchVehicle()
+    fetchCity("")
+    fetchPopularCity()
   }, []);
   
   
-  const fetchVehicle = async () => {
+  const fetchPopularCity = async () => {
     const query: Record<string,string> = {
       order: "searchCount",
       sort: "desc",
@@ -64,6 +68,31 @@ export default function Home() {
     }
   }
 
+  const fetchCity = async (search: string) => {
+    setCityList([])
+    setIsLoadCityOption(true)
+    const query: Record<string,string> = {
+      order: "name",
+      sort: "asc",
+      limit: "20",
+      offset: "0",
+      q: search
+    }
+    const params = new URLSearchParams(query);
+    const data = await fetchWithToken(`/api/city/list?${params}`);
+    const rest = await data.json()
+    if (rest.code === 200) {
+      const result = rest.result
+      const cityResult = result.map((el:CityProp) => {
+        return `${el.name}, ${el.state}`
+      })
+      setCityList(cityResult)
+      setIsLoadCityOption(false)
+    } else {
+      setIsLoadCityOption(false)
+    }
+  }
+
   const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     router.push(`vehicle?type=${type}`)
@@ -75,6 +104,10 @@ export default function Home() {
 
   const changeEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEndDate(e.target.value)
+  }
+  const handleSearchLocation = (search: string) => {
+    console.log(search)
+    fetchCity(search)
   }
   return (
     <div className="absolute bg-white text-black left-0 top-0">
@@ -90,12 +123,16 @@ export default function Home() {
               <div className="mt-10">
                 <form onSubmit={onSubmitForm} className="grid gap-3 md:gap-5 text-black">
                   <Select
-                    data={vehicleType}
-                    selectedData={type}
+                    data={cityList}
+                    selectedData={city}
                     placeholder="Location"
-                    onChange={(d) => setType(d)}
+                    onChange={(selected) => setCity(selected)}
                     customSelectClass="bg-blue-100/90 p-3 rounded"
                     customOptionClass="bg-blue-100 rounded"
+                    isOptionLoad={isLoadCityOption}
+                    includeSearch={true}
+                    searchPlaceholder={"Search location"}
+                    onSearchFunction={handleSearchLocation}
                   />
                   <Select
                     data={vehicleType}
@@ -104,6 +141,10 @@ export default function Home() {
                     onChange={(d) => setType(d)}
                     customSelectClass="bg-blue-100/90 p-3 rounded"
                     customOptionClass={null}
+                    isOptionLoad={false}
+                    includeSearch={false}
+                    searchPlaceholder={null}
+                    onSearchFunction={null}
                   />
                   <div className="flex flex-row gap-3">
                     <Calendar
@@ -157,6 +198,7 @@ export default function Home() {
                     src={city.image}
                     alt={`${city.name}`}
                     fill
+                    sizes="100"
                     style={{ objectFit: "cover" }}
                     className="rounded-lg"
                   />}
@@ -169,7 +211,7 @@ export default function Home() {
                     className="rounded-lg" 
                   />}
                   <div className="absolute top-0 left-0 w-full h-full bg-blue-900/60 rounded-lg">
-                    <div className="w-full h-full flex justify-center items-center">
+                    <div className="w-full h-full flex justify-center items-center p-5">
                       <p className="capitalize text-white text-4xl font-bold text-center">{city.name}</p>
                     </div>
                   </div>

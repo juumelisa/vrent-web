@@ -10,7 +10,11 @@ type SelectProp = {
   selectedData: string,
   customSelectClass: string | null,
   customOptionClass: string | null,
-  placeholder: string
+  placeholder: string,
+  isOptionLoad: boolean,
+  includeSearch: boolean | null,
+  searchPlaceholder: string | null,
+  onSearchFunction: null | ((data: string) => void)
 }
 
 export default function Select(
@@ -20,7 +24,11 @@ export default function Select(
     onChange,
     customSelectClass,
     customOptionClass,
-    placeholder
+    placeholder,
+    isOptionLoad,
+    includeSearch,
+    searchPlaceholder,
+    onSearchFunction
   }: SelectProp) {
   const [isOpenOption, setIsOpenOption] = useState(false)
 
@@ -28,17 +36,33 @@ export default function Select(
     e.preventDefault()
     const isOpen = isOpenOption
     setIsOpenOption(!isOpen)
+    if (onSearchFunction && isOpen) {
+      onSearchFunction("")
+    }
   }
   const handleSelect = (e: React.MouseEvent<HTMLButtonElement>, data: string) => {
     e.preventDefault()
     onChange(data)
     setIsOpenOption(false)
+    if (onSearchFunction) {
+      onSearchFunction("")
+    }
+  }
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const text = e.target.value
+    if (onSearchFunction && text) {
+      onSearchFunction(text)
+    }
   }
   if (!customSelectClass) {
     customSelectClass = "px-2 py-1 border border-gray-300 rounded"
   }
   if (!customOptionClass) {
     customOptionClass = "bg-white border border-gray-300 rounded"
+  }
+  if (!searchPlaceholder) {
+    searchPlaceholder = "Search here"
   }
   return (
     <div className="w-full relative">
@@ -48,7 +72,20 @@ export default function Select(
         <IoMdArrowDropdown />
       </button>
       {isOpenOption && <div className={`absolute z-30 w-full mt-1 ${customOptionClass}`}>
-        <div className="w-full flex flex-col">
+        <div className="w-full flex flex-col h-full max-h-60 overflow-y-auto">
+          {includeSearch && <div className="py-2 px-3">
+            <input
+              className="w-full p-2 rounded border border-gray-300 outline-0"
+              placeholder={searchPlaceholder}
+              onChange={handleSearch}
+            />
+          </div>}
+          {isOptionLoad && <div className="flex flex-col gap-3 px-3 py-2">
+            <div className="w-full bg-gray-400 animate-pulse h-6" />
+            <div className="w-full bg-gray-400 animate-pulse h-6" />
+            <div className="w-full bg-gray-400 animate-pulse h-6" />
+            <div className="w-full bg-gray-400 animate-pulse h-6" />
+          </div>}
           {data.map(d => (
             <button
               type="button"
