@@ -25,11 +25,11 @@ export default function Calendar({ onChange, selectedData, minDate, customSelect
   return (
   <div className={`w-full relative cursor-pointer ${customSelectClass}`}>
     <div className="max-w-full flex justify-between items-center">
-        {!selectedData &&<div className="text-gray-500 line-clamp-1">{placeholder}</div>}
+        {!selectedData &&<div className="text-[#807e7e] line-clamp-1">{placeholder}</div>}
         {selectedData && <div className="line-clamp-1 capitalize">{changeDateFormat(selectedData)}</div>}
       <IoMdArrowDropdown />
     </div>
-    <div className="absolute top-0 left-0 z-30 w-full h-full">
+    <div className="absolute top-0 left-0 w-full h-full">
       <input
         type="date"
         className="w-full h-full opacity-0"

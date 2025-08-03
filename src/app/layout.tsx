@@ -37,7 +37,7 @@ export default function RootLayout({
       <body
         className={`${openSans.variable} bg-white text-black`}
       >
-        <div className="relative w-full overflow-x-hidden">
+        <div className="relative w-full">
           <Header />
           <div className="relative bg-white text-black w-full p-5 md:p-10 xl:p-20 min-h-screen">
           {children}

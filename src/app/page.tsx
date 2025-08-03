@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Select, { GroupBase } from 'react-select';
 import Calendar from "@/components/Calendar";
+import { RiErrorWarningFill } from "react-icons/ri";
 
 type CityProp = {
   id: number,
@@ -50,6 +51,7 @@ export default function Home() {
 
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
+  const [isErrorForm, setIsErrorForm] = useState(false)
 
   useEffect(() => {
     fetchCity("")
@@ -108,11 +110,41 @@ export default function Home() {
 
   const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    router.push(`vehicle?type=${type}`)
+    if (city?.value && type?.value && startDate && endDate) {
+      setIsErrorForm(false)
+      router.push(`vehicle?type=${type}`)
+    } else {
+      setIsErrorForm(true)
+    }
   }
 
   const handleSearchLocation = (inputValue: string) => {
     fetchCity(inputValue)
+  }
+
+  const handleSelectStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStartDate(e.target.value)
+    if (city?.value && type?.value && endDate) {
+      setIsErrorForm(false)
+    }
+  }
+  const handleSelectEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEndDate(e.target.value)
+    if (city?.value && type?.value && startDate) {
+      setIsErrorForm(false)
+    }
+  }
+  const handleChangeLocation = (value: SelectProp | null) => {
+    setCity(value)
+    if (type?.value && startDate && endDate) {
+      setIsErrorForm(false)
+    }
+  }
+  const handleChangeType = (value: SelectProp | null) => {
+    setType(value)
+    if (city?.value && startDate && endDate) {
+      setIsErrorForm(false)
+    }
   }
   return (
     <div className="absolute bg-white text-black left-0 top-0">
@@ -126,11 +158,11 @@ export default function Home() {
               <p className="font-bold text-xl my-6">Vehicle Finder</p>
               <div className="border-t w-12" />
               <div className="mt-10">
-                <form onSubmit={onSubmitForm} className="w-full md:max-w-80 grid gap-2 md:gap-3 text-black">
+                <form onSubmit={onSubmitForm} className="w-full md:max-w-96 grid gap-2 md:gap-3 text-black">
                   <Select<SelectProp, false, GroupBase<SelectProp>>
                     instanceId="location-select"
                     value={city}
-                    onChange={value => setCity(value)}
+                    onChange={handleChangeLocation}
                     options={cityList}
                     placeholder="Select Location"
                     isSearchable
@@ -139,7 +171,7 @@ export default function Home() {
                   <Select<SelectProp, false, GroupBase<SelectProp>>
                     instanceId="type-select"
                     value={type}
-                    onChange={value => setType(value)}
+                    onChange={handleChangeType}
                     options={vehicleType}
                     placeholder="Select Type"
                     isSearchable={false}
@@ -147,20 +179,21 @@ export default function Home() {
                   <div className="flex flex-row gap-2 md:gap-3">
                     <Calendar
                       placeholder="Start from"
-                      customSelectClass="bg-white p-2 rounded inline-block"
+                      customSelectClass={`bg-white px-2 py-1.5 rounded ${isErrorForm && !startDate ? 'border border-red-600' : 'border border-gray-100'}`}
                       selectedData={startDate}
                       minDate={new Date().toISOString()}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStartDate(e.target.value)}
+                      onChange={handleSelectStartDate}
                     />
                     <Calendar
                       placeholder="Until"
-                      customSelectClass="bg-white p-2 rounded"
+                      customSelectClass={`bg-white px-2 py-1.5 rounded ${isErrorForm && !endDate ? 'border border-red-600' : 'border border-gray-100'}`}
                       selectedData={endDate}
                       minDate={null}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEndDate(e.target.value)}
+                      onChange={handleSelectEndDate}
                     />
                   </div>
                   <button type="submit" className="bg-blue-600 text-white py-2 font-bold rounded cursor-pointer">Search</button>
+                  {isErrorForm && <div className="text-red-200 italic flex items-center gap-1"><RiErrorWarningFill /><span>Please fill all the form</span></div>}
                 </form>
               </div>
             </div>
