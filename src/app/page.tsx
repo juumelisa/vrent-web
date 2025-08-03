@@ -192,8 +192,8 @@ export default function Home() {
                       onChange={handleSelectEndDate}
                     />
                   </div>
-                  <button type="submit" className="bg-blue-600 text-white py-2 font-bold rounded cursor-pointer">Search</button>
-                  {isErrorForm && <div className="text-red-200 italic flex items-center gap-1"><RiErrorWarningFill /><span>Please fill all the form</span></div>}
+                  <button type="submit" className="bg-blue-600 text-white py-2 font-bold rounded cursor-pointer outline-0">Search</button>
+                  {isErrorForm && <div className="text-red-200 italic flex items-start gap-1"><RiErrorWarningFill size={24} /><span>Some fields are missing. Complete all required fields to continue.</span></div>}
                 </form>
               </div>
             </div>
