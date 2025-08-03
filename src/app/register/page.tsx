@@ -17,17 +17,22 @@ export default function Home() {
   })
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const rest = await fetch("/api/register", {
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-    const result = await rest.json()
-    if (result.code === 200) {
-      await login()
+    if (data.name && data.email && data.password) {
+      const rest = await fetch("/api/register", {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+      const result = await rest.json()
+      if (result.code === 200) {
+        await login()
+      } else {
+        const message = result.message[0]
+        setIsError (true)
+        setErrorMessage(message)
+      }
     } else {
-      setIsError(true)
-      const message = result.message[0]
-      setErrorMessage(message)
+      setIsError (true)
+      setErrorMessage("Please fill out all required fields.")
     }
   }
 
@@ -47,6 +52,8 @@ export default function Home() {
         localStorage.setItem("token", token)
         window.location.href = "/"
       }
+    } else {
+      window.location.href = "/login?register=true"
     }
   }
   const onChangeData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +66,10 @@ export default function Home() {
         setData(newData)
       }
     }
+    if (data.name && data.email && data.password) {
+      setIsError(false)
+      setErrorMessage("")
+    }
   }
   return (
     <div className="w-full max-w-7xl flex mx-auto mt-20 justify-center">
@@ -69,9 +80,27 @@ export default function Home() {
         <div className="flex justify-center w-full mt-5 md:mt-10">
           <form onSubmit={onSubmitForm} className="w-full max-w-96 flex flex-col gap-3">
             <p className="text-red-600 italic">{errorMessage}</p>
-            <input type="text" placeholder="Name" id="name" onChange={onChangeData} className="border border-gray-300 p-2 rounded text-base outline-0"/>
-            <input type="email" placeholder="Email" id="email" onChange={onChangeData} className="border border-gray-300 p-2 rounded text-base outline-0"/>
-            <input type="password" placeholder="Password" id="password" onChange={onChangeData} className="border border-gray-300 p-2 rounded text-base outline-0"/>
+            <input
+              type="text"
+              placeholder="Name"
+              id="name"
+              onChange={onChangeData}
+              className={`border p-2 rounded text-base outline-0 ${isError && !data.name ? 'border-red-600' : 'border-gray-300'}`}
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              id="email"
+              onChange={onChangeData}
+              className={`border p-2 rounded text-base outline-0 ${isError && !data.email ? 'border-red-600' : 'border-gray-300'}`}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              id="password"
+              onChange={onChangeData}
+              className={`border p-2 rounded text-base outline-0 ${isError && !data.password ? 'border-red-600' : 'border-gray-300'}`}
+            />
             <button type="submit" className="bg-blue-900 text-white p-2 rounded cursor-pointer">Sign Up</button>
             <div className="flex gap-1">
               <p>{`Have an account?`}</p>
