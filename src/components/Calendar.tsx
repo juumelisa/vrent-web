@@ -23,20 +23,20 @@ export default function Calendar({ onChange, selectedData, minDate, customSelect
   }
 
   return (
-    <div className="w-full relative">
-      <div className={`w-full cursor-pointer flex justify-between items-center ${customSelectClass}`}>
-        {!selectedData && <p className="text-gray-500">{placeholder}</p>}
-        {selectedData && <p className="capitalize">{changeDateFormat(selectedData)}</p>}
-        <IoMdArrowDropdown />
-      </div>
-      <div  className="absolute top-0 left-0 z-30 w-full h-full">
-        <input
-          type="date"
-          className="w-full h-full opacity-0"
-          onChange={(e) => onChange(e)}
-          {...(minDate ? { min: changeDateFormat(minDate) } : {})}
-        />
-      </div>
+  <div className={`w-full relative cursor-pointer ${customSelectClass}`}>
+    <div className="max-w-full flex justify-between items-center">
+        {!selectedData &&<div className="text-gray-500 line-clamp-1">{placeholder}</div>}
+        {selectedData && <div className="line-clamp-1 capitalize">{changeDateFormat(selectedData)}</div>}
+      <IoMdArrowDropdown />
     </div>
+    <div className="absolute top-0 left-0 z-30 w-full h-full">
+      <input
+        type="date"
+        className="w-full h-full opacity-0"
+        onChange={(e) => onChange(e)}
+        {...(minDate ? { min: changeDateFormat(minDate) } : {})}
+      />
+    </div>
+  </div>
   );
 }

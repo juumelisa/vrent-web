@@ -9,10 +9,10 @@ import jonas from "../assets/images/jonas.jpg"
 import serverError from "../assets/images/server-error.png"
 import noData from "../assets/images/no-data.png"
 import { fetchWithToken } from "../../lib/fetchWithToken";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Select from "@/components/Select";
+import Select, { GroupBase } from 'react-select';
 import Calendar from "@/components/Calendar";
 
 type CityProp = {
@@ -22,24 +22,34 @@ type CityProp = {
   image: string | null
 }
 
+type SelectProp = {
+  value: string,
+  label: string
+}
+
 export default function Home() {
   const router = useRouter()
   const [isLoad, setIsLoad] = useState(true)
   const [isError, setIsError] = useState(false)
   const [showCity, setShowCity] = useState(false)
-  const [type, setType] = useState("")
-  const [startDate, setStartDate] = useState<string | null>(null)
-  const [endDate, setEndDate] = useState<string | null>(null)
-  const [city, setCity] = useState("")
-  const [cityList, setCityList] = useState<string[]>([])
-  const [isLoadCityOption, setIsLoadCityOption] = useState(true)
+  const [type, setType] = useState<SelectProp | null>()
+  const [city, setCity] = useState<SelectProp | null>()
+  const [cityList, setCityList] = useState<SelectProp[]>([
+    {
+      label: "",
+      value: ""
+    }
+  ])
   const [PopularCityList, setPopularCityList] = useState<CityProp[]>([])
-  const vehicleType: string[] = [
-    "all",
-    "car",
-    "motorbike",
-    "minivan"
+  const vehicleType: SelectProp[] = [
+    {label: "All", value:"all"},
+    {label: "Car", value: "car"},
+    {label: "Motorbike", value: "motorbike"},
+    {label: "Minivan", value: "minivan"}
   ]
+
+  const [startDate, setStartDate] = useState("")
+  const [endDate, setEndDate] = useState("")
 
   useEffect(() => {
     fetchCity("")
@@ -70,11 +80,11 @@ export default function Home() {
 
   const fetchCity = async (search: string) => {
     setCityList([])
-    setIsLoadCityOption(true)
+    // setIsLoadCityOption(true)
     const query: Record<string,string> = {
       order: "name",
       sort: "asc",
-      limit: "20",
+      limit: "3",
       offset: "0",
       q: search
     }
@@ -84,12 +94,15 @@ export default function Home() {
     if (rest.code === 200) {
       const result = rest.result
       const cityResult = result.map((el:CityProp) => {
-        return `${el.name}, ${el.state}`
+        return {
+          label: `${el.name}, ${el.state}`,
+          value: `${el.id}`
+        }
       })
       setCityList(cityResult)
-      setIsLoadCityOption(false)
+      // setIsLoadCityOption(false)
     } else {
-      setIsLoadCityOption(false)
+      // setIsLoadCityOption(false)
     }
   }
 
@@ -98,16 +111,8 @@ export default function Home() {
     router.push(`vehicle?type=${type}`)
   }
 
-  const changeStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStartDate(e.target.value)
-  }
-
-  const changeEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEndDate(e.target.value)
-  }
-  const handleSearchLocation = (search: string) => {
-    console.log(search)
-    fetchCity(search)
+  const handleSearchLocation = (inputValue: string) => {
+    fetchCity(inputValue)
   }
   return (
     <div className="absolute bg-white text-black left-0 top-0">
@@ -121,45 +126,38 @@ export default function Home() {
               <p className="font-bold text-xl my-6">Vehicle Finder</p>
               <div className="border-t w-12" />
               <div className="mt-10">
-                <form onSubmit={onSubmitForm} className="grid gap-3 md:gap-5 text-black">
-                  <Select
-                    data={cityList}
-                    selectedData={city}
-                    placeholder="Location"
-                    onChange={(selected) => setCity(selected)}
-                    customSelectClass="bg-blue-100/90 p-3 rounded"
-                    customOptionClass="bg-blue-100 rounded"
-                    isOptionLoad={isLoadCityOption}
-                    includeSearch={true}
-                    searchPlaceholder={"Search location"}
-                    onSearchFunction={handleSearchLocation}
+                <form onSubmit={onSubmitForm} className="w-full md:max-w-80 grid gap-2 md:gap-3 text-black">
+                  <Select<SelectProp, false, GroupBase<SelectProp>>
+                    instanceId="location-select"
+                    value={city}
+                    onChange={value => setCity(value)}
+                    options={cityList}
+                    placeholder="Select Location"
+                    isSearchable
+                    onInputChange={handleSearchLocation}
                   />
-                  <Select
-                    data={vehicleType}
-                    selectedData={type}
-                    placeholder="Vehicle type"
-                    onChange={(d) => setType(d)}
-                    customSelectClass="bg-blue-100/90 p-3 rounded"
-                    customOptionClass={null}
-                    isOptionLoad={false}
-                    includeSearch={false}
-                    searchPlaceholder={null}
-                    onSearchFunction={null}
+                  <Select<SelectProp, false, GroupBase<SelectProp>>
+                    instanceId="type-select"
+                    value={type}
+                    onChange={value => setType(value)}
+                    options={vehicleType}
+                    placeholder="Select Type"
+                    isSearchable={false}
                   />
-                  <div className="flex flex-row gap-3">
+                  <div className="flex flex-row gap-2 md:gap-3">
                     <Calendar
                       placeholder="Start from"
-                      customSelectClass="bg-blue-100/90 p-3 rounded"
+                      customSelectClass="bg-white p-2 rounded inline-block"
                       selectedData={startDate}
                       minDate={new Date().toISOString()}
-                      onChange={changeStartDate}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStartDate(e.target.value)}
                     />
                     <Calendar
                       placeholder="Until"
-                      customSelectClass="bg-blue-100/90 p-3 rounded"
+                      customSelectClass="bg-white p-2 rounded"
                       selectedData={endDate}
                       minDate={null}
-                      onChange={changeEndDate}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEndDate(e.target.value)}
                     />
                   </div>
                   <button type="submit" className="bg-blue-600 text-white py-2 font-bold rounded cursor-pointer">Search</button>

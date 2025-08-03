@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 type SelectProp = {
@@ -30,6 +30,7 @@ export default function Select(
     searchPlaceholder,
     onSearchFunction
   }: SelectProp) {
+  const ref = useRef<HTMLDivElement>(null)
   const [isOpenOption, setIsOpenOption] = useState(false)
 
   const handleOption = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -64,8 +65,17 @@ export default function Select(
   if (!searchPlaceholder) {
     searchPlaceholder = "Search here"
   }
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setIsOpenOption(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   return (
-    <div className="w-full relative">
+    <div className="w-full relative" ref={ref}>
       <button onClick={handleOption} className={`w-full cursor-pointer flex justify-between items-center ${customSelectClass}`}>
         {!selectedData && <p className="text-gray-500">{placeholder}</p>}
         {selectedData && <p className="capitalize">{selectedData}</p>}
