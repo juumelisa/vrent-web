@@ -32,7 +32,7 @@ export default function Header() {
       </Link>
       <nav>
         <ul className="flex gap-6">
-          <li><Link href="/about">About</Link></li>
+          <li><Link href="/about">About Us</Link></li>
           {isLogin && <li><Link href="/profile">Sudah login</Link></li>}
           {!isLogin && <li><Link href="/login">Login or Sign Up</Link></li>}
         </ul>

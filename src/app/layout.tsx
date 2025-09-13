@@ -4,6 +4,7 @@ import { Open_Sans } from 'next/font/google';
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Chat from "@/components/Chat";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({
       >
         <div className="relative w-full">
           <Header />
+          <Chat />
           <div className="relative bg-white text-black w-full p-5 md:p-10 xl:p-20 min-h-screen">
           {children}
           </div>
