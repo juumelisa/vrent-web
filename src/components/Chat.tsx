@@ -20,6 +20,7 @@ export default function Chat() {
     const newState = !open;
     setOpen(newState)
   }
+
   const sendMessage = async () => {
     const userMessage = message.trim()
     if (userMessage.length) {
@@ -32,6 +33,7 @@ export default function Chat() {
         }
       ]
       setMessages(newMessages)
+      setResponse(" ")
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -81,7 +83,7 @@ export default function Chat() {
     <div
       className="fixed bottom-20 right-10 z-50"
     >
-      {open && <div className="flex flex-col w-full max-w-xl h-[550px] bg-white text-black mb-5 overflow-hidden">
+      {open && <div className="flex flex-col w-lg h-[550px] bg-white text-black mb-5 overflow-hidden">
         <div className="bg-blue-400 p-5">
           <p className="text-white">AI Assistant</p>
         </div>
@@ -97,19 +99,24 @@ export default function Chat() {
             </div>
           })}
           {response && <div className="max-w-4/5 bg-gray-100 p-2 rounded-t rounded-br whitespace-pre-wrap">
-            {response}
+            {(response == " ") && <div className="flex gap-1">
+              <div className="w-2 h-2 animate-ping rounded-full bg-sky-900"></div>
+              <div className="w-2 h-2 animate-ping rounded-full bg-sky-900"></div>
+              <div className="w-2 h-2 animate-ping rounded-full bg-sky-900"></div>
+            </div>}
+            {(response !== " ") &&<div>{response}</div>}
           </div>}
         </div>
         <div className="w-full h-14 bg-blue-100 p-3 text-sm">
-          <div className="w-full flex">
+          <form onSubmit={(e) => {e.preventDefault(); sendMessage()}} className="w-full flex gap-1">
             <input
               type="text"
               placeholder="Message"
-              className="w-full outline-0 border border-blue-900 px-3 py-1p rounded"
+              className="w-full outline-0 border border-blue-900 px-3 py-1 rounded"
               value={message}
               onChange={(e) => setMessage(e.target.value)} />
-            <button onClick={sendMessage} className="cursor-pointer">Send</button>
-          </div>
+            <button type="submit" className="cursor-pointer">Send</button>
+          </form>
         </div>
       </div>}
       <button

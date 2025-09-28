@@ -12,8 +12,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const rawToken: string | string[] | undefined = req.headers['token'];
   const token = Array.isArray(rawToken) ? rawToken[0] : rawToken ?? '';
   const headers: Record<string, string> = {
-    api_key: process.env.API_KEY ?? '',
     'Content-Type': 'application/json',
+    "x-api-key": process.env.API_KEY ?? '',
     token
   };
   try {

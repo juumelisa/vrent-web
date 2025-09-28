@@ -1,20 +1,20 @@
 "use client";
 import Image from "next/image";
 import Footer from "@/components/Footer";
-import backgroundImage from "../assets/images/background-image.png"
-import edwardNewGate from "../assets/images/edward-newgate.png"
-import rose from "../assets/images/rose.jpg"
-import michael from "../assets/images/michael.jpg"
-import jonas from "../assets/images/jonas.jpg"
-import serverError from "../assets/images/server-error.png"
-import noData from "../assets/images/no-data.png"
-import { fetchWithToken } from "../../lib/fetchWithToken";
+import backgroundImage from "../../assets/images/background-image.png"
+import edwardNewGate from "../../assets/images/edward-newgate.png"
+import rose from "../../assets/images/rose.jpg"
+import michael from "../../assets/images/michael.jpg"
+import jonas from "../../assets/images/jonas.jpg"
+import serverError from "../../assets/images/server-error.png"
+import noData from "../../assets/images/no-data.png"
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Select, { GroupBase } from 'react-select';
 import Calendar from "@/components/Calendar";
 import { RiErrorWarningFill } from "react-icons/ri";
+import { fetchWithToken } from "../../../lib/fetchWithToken";
 
 type CityProp = {
   id: number,

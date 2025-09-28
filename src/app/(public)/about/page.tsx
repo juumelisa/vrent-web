@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import backgroundAboutUs from "../../assets/images/background-about-us.png"
+import backgroundAboutUs from "../../../assets/images/background-about-us.png"
 
 export default function Home() {
   return (

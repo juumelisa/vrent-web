@@ -5,23 +5,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { messages } = req.body;
 
-  const chats = [
-    {
-      role: "system",
-      content: "you are a helpful assistant of vehicle rental website. you only help user for vehicle rent related things. if user ask unrelated querion, please refuse."
-    },
-    ...messages
-  ]
-  const ollamaRes = await fetch("http://localhost:11434/api/chat", {
+  const url = process.env.API_URL + 'chat'
+
+  const ollamaRes = await fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": process.env.API_KEY
+    },
     body: JSON.stringify({
-      model: "llama3",
-      messages: chats,
-      stream: true,
+      messages
     }),
   });
-
 
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");

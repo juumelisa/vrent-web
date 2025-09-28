@@ -1,24 +1,24 @@
 "use client";
 import Image from "next/image";
-import { fetchWithToken } from "../../../lib/fetchWithToken";
 import { useEffect, useState } from "react";
 
-import serverError from "../../assets/images/server-error.png";
-import noData from "../../assets/images/no-data.png";
+import serverError from "../../../assets/images/server-error.png";
+import noData from "../../../assets/images/no-data.png";
 import Button from "@/components/Button";
 import { IoLocationSharp } from "react-icons/io5";
 import Link from "next/link";
+import { fetchWithToken } from "../../../../lib/fetchWithToken";
 // import Select from "@/components/Select";
 // import { useRouter } from "next/navigation";
 
 type vehicleObj = {
   id: string,
   brand: string,
-  model: string,
+  name: string,
   images: string[],
   city: string,
-  province: string,
-  rentPrice: 0
+  state: string,
+  price: 0
 }
 
 export default function Vehicle() {
@@ -35,7 +35,8 @@ export default function Vehicle() {
     sort: "desc",
     limit: "20",
     offset: "0",
-    type: "all"
+    type: "all",
+    city: ""
   }
   const [isLoadVehicle, setIsLoadVehicle] = useState(true)
   const [isError, setIsError] = useState(false)
@@ -195,19 +196,18 @@ export default function Vehicle() {
               <Link href={`/vehicle/${vehicle.id}`} key={vehicle.id} className="w-full">
                 <div className="h-40 relative">
                   <Image
-                    src={vehicle.images[0]}
-                    alt={`${vehicle.brand} ${vehicle.model} ${vehicle.city}`}
+                    src={vehicle.images[0] || noData}
+                    alt={`${vehicle.brand} ${vehicle.name} ${vehicle.city}`}
                     fill
                     style={{ objectFit: "cover" }}
                   />
-                  {!vehicle.images.length && <Image src={noData} alt="no image found" />}
                 </div>
                 <div className="mt-1">
-                  <p className="capitalize">{vehicle.brand} {vehicle.model}</p>
-                  <p className="font-bold text-lg">{formatRupiah(vehicle.rentPrice)}/day</p>
+                  <p className="capitalize">{vehicle.brand} {vehicle.name}</p>
+                  <p className="font-bold text-lg">{formatRupiah(vehicle.price)}/day</p>
                   <div className="flex items-center gap-1 text-blue-900">
                     <IoLocationSharp size={18} />
-                    <p>{vehicle.city}, {vehicle.province}</p>
+                    <p>{vehicle.city}, {vehicle.state}</p>
                   </div>
                 </div>
               </Link>
