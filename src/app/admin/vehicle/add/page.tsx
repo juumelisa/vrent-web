@@ -25,6 +25,7 @@ interface Brand {
 
 
 type Form = {
+  model: string,
   city?: Option,
   brand?: Option,
   type?: string,
@@ -36,6 +37,7 @@ export default function App() {
   const [cityList, setCityList] = useState<Option[]>([]);
   const [brandList, setBrandList] = useState<Option[]>([]);
   const [form, setForm] = useState<Form>({
+    model: "",
     seat: "",
     price: "",
     unit: []
@@ -43,6 +45,7 @@ export default function App() {
   const vehicleType = ["car", "motorcycle"];
   const [imageList, setImageList] = useState<string[]>([])
   const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [tempUnit, setTempUnit] = useState<string>("")
 
   useEffect(() => {
     fetchCity()
@@ -131,8 +134,29 @@ export default function App() {
       }
     })
   }
-  const submit = () => {
-    console.log(imageUrls)
+  const updateUnit = () => {
+    changeForm("unit", [...form.unit, tempUnit])
+    setTempUnit("")
+  }
+  const submit = async () => {
+    // e.preventDefault()
+    const body = {
+      brandId: form.brand?.key,
+      name: form.model,
+      locationId: form.city?.key,
+      seat: parseInt(form.seat),
+      price: form.price,
+      type: form.type,
+      unit: form.unit,
+      images: imageUrls
+    }
+
+    const res = await fetchWithToken("/api/vehicle/add", {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+    const result = await res.json()
+    console.log(result)
   }
   return (
     <div className="p-6">
@@ -142,6 +166,8 @@ export default function App() {
           <label>
             <span className="block mb-1">Model</span>
             <input
+              value={form.model}
+              onChange={(e) => changeForm("model", e.target.value)}
               placeholder="Vehicle Model"
               className="w-full outline-0 border border-gray-200 dark:border-gray-700 placeholder-gray-400 dark:placeholder-gray-500 rounded px-3 py-2" />
           </label>
@@ -246,12 +272,16 @@ export default function App() {
                 <td className="text-center">{form.unit.length + 1}</td>
                 <td>
                   <input
+                    value={tempUnit}
+                    onChange={(e) => setTempUnit(e.target.value)}
                     placeholder="Unit Number"
                     className="w-full outline-0 border border-gray-200 dark:border-gray-700 placeholder-gray-400 
                   dark:placeholder-gray-500 rounded px-3 py-2 my-2 disabled:bg-gray-100 dark:disabled:bg-gray-800" />
                 </td>
                 <td className="w-full h-full flex justify-center items-center py-4">
-                  <button className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-gray-700">
+                  <button
+                    onClick={updateUnit}
+                    className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-gray-700">
                     <IoMdAdd />
                   </button>
                 </td>
