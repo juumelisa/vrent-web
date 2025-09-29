@@ -28,7 +28,7 @@ export default function Sidebar() {
     }
   ]
   return (
-    <div className={`${ openSidebar ? 'w-60' : 'w-0' } h-full`}>
+    <div className={`${ openSidebar ? 'w-60' : 'w-0' } h-full z-40 bg-white dark:bg-[#171717]`}>
       <div className={`h-16 absolute ${ openSidebar ? 'left-60' : 'left-0' } transition-all duration-300  top-0 flex justify-center items-center px-5`}>
         <button
           onClick={ () => setOpenSidebar(!openSidebar)}

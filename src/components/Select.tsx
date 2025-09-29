@@ -13,6 +13,7 @@ type SelectProps = {
   label?: string;
   search?: boolean;
   placeholder?: string;
+  searchPlaceholder?: string;
   onChange: (value: string | null, key: string | null) => void;
   onSearch?: (search: string) => void;
 };
@@ -23,6 +24,7 @@ export default function Select({
   placeholder = "Select...",
   label,
   search,
+  searchPlaceholder,
   onChange,
   onSearch = () => {}
 }: SelectProps) {
@@ -69,8 +71,8 @@ export default function Select({
           <input
             onClick={() => setOpen(true)}
             onChange={(e) => searchFunction(e.target.value)}
-            placeholder="Search here"
-            className="w-full border border-gray-200 dark:border-gray-700 rounded px-3 py-2 outline-0" />
+            placeholder={searchPlaceholder || "Search here"}
+            className="w-full border border-gray-200 dark:border-gray-700 placeholder-gray-400 dark:placeholder-gray-500 rounded px-3 py-2 outline-0" />
         }
         {(value && getValue(value)) && 
           <button

@@ -7,7 +7,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className="w-full h-screen">
         <ThemeProvider>
-          <div className="w-full h-full bg-gray-50 dark:bg-[#202020] dark:text-gray-200">{children}</div>
+          <div className="w-full h-full bg-white dark:bg-[#171717] dark:text-gray-200">{children}</div>
         </ThemeProvider>
       </body>
     </html>
