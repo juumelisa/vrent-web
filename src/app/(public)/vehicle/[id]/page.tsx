@@ -1,7 +1,7 @@
 "use client";
 import * as React from 'react'
 import { useEffect, useState } from "react";
-import { fetchWithToken } from "../../../../../lib/fetchWithToken";
+import { fetchWithToken } from "../../../lib/fetchWithToken";
 
 import Image from "next/image";
 import { useParams } from 'next/navigation';

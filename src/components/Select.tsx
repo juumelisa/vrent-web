@@ -1,116 +1,122 @@
-"use client";
+// Select.tsx
+import React, { useState, useRef, useEffect } from "react";
+import { IoMdArrowDropdown, IoMdArrowDropup, IoMdCloseCircle } from "react-icons/io";
 
-import clsx from "clsx";
-import { useEffect, useRef, useState } from "react";
-import { IoMdArrowDropdown } from "react-icons/io";
+type Option = {
+  key: string;
+  value: string;
+};
 
-type SelectProp = {
-  onChange: (data: string) => void,
-  data: string[],
-  selectedData: string,
-  customSelectClass: string | null,
-  customOptionClass: string | null,
-  placeholder: string,
-  isOptionLoad: boolean,
-  includeSearch: boolean | null,
-  searchPlaceholder: string | null,
-  onSearchFunction: null | ((data: string) => void)
-}
+type SelectProps = {
+  options: Option[] | string[];
+  value?: Option | string;
+  label?: string;
+  search?: boolean;
+  placeholder?: string;
+  onChange: (value: string | null, key: string | null) => void;
+  onSearch?: (search: string) => void;
+};
 
-export default function Select(
-  {
-    data,
-    selectedData,
-    onChange,
-    customSelectClass,
-    customOptionClass,
-    placeholder,
-    isOptionLoad,
-    includeSearch,
-    searchPlaceholder,
-    onSearchFunction
-  }: SelectProp) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [isOpenOption, setIsOpenOption] = useState(false)
+export default function Select({
+  options,
+  value,
+  placeholder = "Select...",
+  label,
+  search,
+  onChange,
+  onSearch = () => {}
+}: SelectProps) {
+  const [open, setOpen] = useState(false);
+  const [onLoad, setOnLoad] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const handleOption = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    const isOpen = isOpenOption
-    setIsOpenOption(!isOpen)
-    if (onSearchFunction && isOpen) {
-      onSearchFunction("")
-    }
-  }
-  const handleSelect = (e: React.MouseEvent<HTMLButtonElement>, data: string) => {
-    e.preventDefault()
-    onChange(data)
-    setIsOpenOption(false)
-    if (onSearchFunction) {
-      onSearchFunction("")
-    }
-  }
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    const text = e.target.value
-    if (onSearchFunction && text) {
-      onSearchFunction(text)
-    }
-  }
-  if (!customSelectClass) {
-    customSelectClass = "px-2 py-1 border border-gray-300 rounded"
-  }
-  if (!customOptionClass) {
-    customOptionClass = "bg-white border border-gray-300 rounded"
-  }
-  if (!searchPlaceholder) {
-    searchPlaceholder = "Search here"
-  }
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
-        setIsOpenOption(false);
+        setOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+
+  const getKey = (option: Option | string) => {
+    if (typeof option === 'string') {
+      return option
+    } else {
+      return option.key
+    }
+  }
+  const getValue = (option: Option | string) => {
+    if (typeof option === 'string') {
+      return option
+    } else {
+      return option.value
+    }
+  }
+  const searchFunction = async (value: string) => {
+    setOnLoad(true)
+    await onSearch(value)
+    setOnLoad(false)
+  }
   return (
-    <div className="w-full relative" ref={ref}>
-      <button onClick={handleOption} className={`w-full cursor-pointer flex justify-between items-center ${customSelectClass}`}>
-        {!selectedData && <p className="text-gray-500">{placeholder}</p>}
-        {selectedData && <p className="capitalize">{selectedData}</p>}
-        <IoMdArrowDropdown />
-      </button>
-      {isOpenOption && <div className={`absolute z-30 w-full mt-1 ${customOptionClass}`}>
-        <div className="w-full flex flex-col h-full max-h-60 overflow-y-auto">
-          {includeSearch && <div className="py-2 px-3">
-            <input
-              className="w-full p-2 rounded border border-gray-300 outline-0"
-              placeholder={searchPlaceholder}
-              onChange={handleSearch}
-            />
-          </div>}
-          {isOptionLoad && <div className="flex flex-col gap-3 px-3 py-2">
-            <div className="w-full bg-gray-400 animate-pulse h-6" />
-            <div className="w-full bg-gray-400 animate-pulse h-6" />
-            <div className="w-full bg-gray-400 animate-pulse h-6" />
-            <div className="w-full bg-gray-400 animate-pulse h-6" />
-          </div>}
-          {data.map(d => (
-            <button
-              type="button"
-              onClick={(e) => handleSelect(e, d)}
-              key={d}
-              className={clsx(
-                "w-full cursor-pointer text-left px-3 py-2 capitalize",
-                selectedData === d ? "bg-blue-900/10" : ""
-              )}
-            >
-              {d}
-            </button>
-          ))}
-        </div>
+    <div ref={ref} className="relative w-full">
+      {label && <span className="block mb-1 capitalize font-semibold">{label}</span>}
+      {search && <div>
+        {(!value || !getValue(value)) && 
+          <input
+            onClick={() => setOpen(true)}
+            onChange={(e) => searchFunction(e.target.value)}
+            placeholder="Search here"
+            className="w-full border border-gray-200 dark:border-gray-700 rounded px-3 py-2 outline-0" />
+        }
+        {(value && getValue(value)) && 
+          <button
+            onClick={() => {setOpen(true); onChange(null, null)}}
+            className="w-full border border-gray-200 dark:border-gray-700 rounded px-3 py-2 flex justify-between items-center capitalize"
+          >
+            <span>{getValue(value)}</span>
+            <IoMdCloseCircle />
+          </button>
+        }
       </div>}
+      {!search && <button
+        onClick={() => setOpen((prev) => !prev)}
+        className="w-full border border-gray-200 dark:border-gray-700 rounded px-3 py-2 flex justify-between items-center capitalize"
+      >
+        <span>{value ? getValue(value) :placeholder}</span>
+        {!open && <IoMdArrowDropdown />}
+        {open && <IoMdArrowDropup />}
+      </button>}
+      {open && (
+        <ul className="absolute mt-1 w-full h-auto max-h-40 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded bg-white dark:bg-[#202020] shadow-lg z-10">
+          {onLoad && <li className="px-3">
+            <div className="h-8 w-full mt-2 bg-gray-200 animate-pulse"></div>
+            <div className="h-8 w-full mt-2 bg-gray-200 animate-pulse"></div>
+            <div className="h-8 w-full my-2 bg-gray-200 animate-pulse"></div>
+          </li>}
+          {!onLoad && options.map((opt) => (
+            <li
+              key={getKey(opt)}
+            >
+              <button
+                onClick={() => {
+                  onChange(getValue(opt), getKey(opt));
+                  setOpen(false);
+                }}
+                disabled={value && getKey(opt) === getKey(value) ? true : false}
+                className={`w-full text-left px-3 py-2 cursor-pointer capitalize hover:bg-blue-50 dark:hover:bg-gray-500 disabled:cursor-default
+                  ${ value && getKey(opt) === getKey(value) ? 
+                   "bg-blue-100 disabled:hover:bg-blue-100 dark:bg-gray-700 dark:disabled:hover:bg-gray-700" : ""
+                }`}>
+                {getValue(opt)}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import Select, { GroupBase } from 'react-select';
 import Calendar from "@/components/Calendar";
 import { RiErrorWarningFill } from "react-icons/ri";
-import { fetchWithToken } from "../../../lib/fetchWithToken";
+import { fetchWithToken } from "../lib/fetchWithToken";
 
 type CityProp = {
   id: number,

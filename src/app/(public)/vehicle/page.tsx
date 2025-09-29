@@ -7,7 +7,7 @@ import noData from "../../../assets/images/no-data.png";
 import Button from "@/components/Button";
 import { IoLocationSharp } from "react-icons/io5";
 import Link from "next/link";
-import { fetchWithToken } from "../../../../lib/fetchWithToken";
+import { fetchWithToken } from "../../lib/fetchWithToken";
 // import Select from "@/components/Select";
 // import { useRouter } from "next/navigation";
 
