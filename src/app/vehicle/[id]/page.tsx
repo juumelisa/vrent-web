@@ -128,7 +128,7 @@ export default function VehicleDetailPage() {
     <div className="flex flex-col flex-1 items-center bg-zinc-50 dark:bg-black">
       <main className="w-full max-w-4xl flex-1 py-16 px-6">
         <Link
-          href="/"
+          href="/vehicle"
           className="inline-block mb-6 text-blue-900 dark:text-blue-400 hover:underline"
         >
           &larr; Back to list

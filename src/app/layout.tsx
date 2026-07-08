@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Link from "next/link";
 import "./globals.css";
+import Header from "@/app/components/Header";
 import { logout } from "@/app/lib/actions";
 import { getSessionToken } from "@/app/lib/session";
 
@@ -33,43 +33,7 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <header className="w-full flex items-center justify-between px-6 py-4 border-b border-zinc-200 dark:border-zinc-800">
-          <Link href="/" className="font-semibold text-black dark:text-zinc-50">
-            VRent
-          </Link>
-          <nav className="flex items-center gap-4 text-sm">
-            {token ? (
-              <>
-                <Link
-                  href="/reservations"
-                  className="text-blue-900 dark:text-blue-400 hover:underline"
-                >
-                  My reservations
-                </Link>
-                <form action={logout}>
-                  <button
-                    type="submit"
-                    className="text-blue-900 dark:text-blue-400 hover:underline"
-                  >
-                    Log out
-                  </button>
-                </form>
-              </>
-            ) : (
-              <>
-                <Link href="/login" className="text-blue-900 dark:text-blue-400 hover:underline">
-                  Log in
-                </Link>
-                <Link
-                  href="/register"
-                  className="text-blue-900 dark:text-blue-400 hover:underline"
-                >
-                  Sign up
-                </Link>
-              </>
-            )}
-          </nav>
-        </header>
+        <Header isLoggedIn={!!token} logout={logout} />
         {children}
       </body>
     </html>
