@@ -37,7 +37,7 @@ export default function RegisterPage() {
 
   return (
     <div className="flex flex-col flex-1 items-center bg-zinc-50 dark:bg-black">
-      <main className="w-full max-w-sm flex-1 py-16 px-6">
+      <main className="w-full max-w-sm flex-1 p-6">
         <h1 className="text-2xl font-semibold text-black dark:text-zinc-50 mb-6">
           Create an account
         </h1>
