@@ -13,25 +13,25 @@ export default function Footer() {
         <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
           <Link
             href="/vehicle"
-            className="text-blue-900 dark:text-blue-400 hover:underline"
+            className="text-amber-900 dark:text-amber-400 hover:underline"
           >
             Vehicles
           </Link>
           <Link
             href="/about"
-            className="text-blue-900 dark:text-blue-400 hover:underline"
+            className="text-amber-900 dark:text-amber-400 hover:underline"
           >
             About us
           </Link>
           <Link
             href="/faq"
-            className="text-blue-900 dark:text-blue-400 hover:underline"
+            className="text-amber-900 dark:text-amber-400 hover:underline"
           >
             FAQ
           </Link>
           <Link
             href="/reservations"
-            className="text-blue-900 dark:text-blue-400 hover:underline"
+            className="text-amber-900 dark:text-amber-400 hover:underline"
           >
             My reservations
           </Link>

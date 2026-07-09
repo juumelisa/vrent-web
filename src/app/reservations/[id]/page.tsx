@@ -91,7 +91,7 @@ export default function ReservationDetailPage() {
       <main className="w-full max-w-2xl flex-1 p-6">
         <Link
           href="/reservations"
-          className="inline-block mb-6 text-blue-900 dark:text-blue-400 hover:underline"
+          className="inline-block mb-6 text-amber-900 dark:text-amber-400 hover:underline"
         >
           &larr; Back to my reservations
         </Link>
@@ -116,7 +116,7 @@ export default function ReservationDetailPage() {
         {!isLoading && !isNotFound && isError && (
           <div className="w-full flex flex-col items-center justify-center py-20">
             <p className="text-xl text-red-600">Oops... something went wrong</p>
-            <p className="text-blue-900 dark:text-blue-400">{`We'll fix it soon`}</p>
+            <p className="text-amber-900 dark:text-amber-400">{`We'll fix it soon`}</p>
           </div>
         )}
 
@@ -135,7 +135,7 @@ export default function ReservationDetailPage() {
                 )}
               </div>
               <div>
-                <p className="capitalize text-blue-900 dark:text-blue-400">{reservation.type}</p>
+                <p className="capitalize text-amber-900 dark:text-amber-400">{reservation.type}</p>
                 <h1 className="text-2xl font-bold capitalize">
                   {reservation.brand} {reservation.model}
                 </h1>

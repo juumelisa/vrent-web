@@ -97,7 +97,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 rounded bg-blue-900 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-800"
+            className="w-full py-3 rounded bg-amber-900 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-amber-800"
           >
             {isSubmitting ? "Creating account…" : "Sign up"}
           </button>
@@ -105,7 +105,7 @@ export default function RegisterPage() {
 
         <p className="mt-4 text-sm text-zinc-500">
           {`Already have an account? `}
-          <Link href="/login" className="text-blue-900 dark:text-blue-400 hover:underline">
+          <Link href="/login" className="text-amber-900 dark:text-amber-400 hover:underline">
             Log in
           </Link>
         </p>

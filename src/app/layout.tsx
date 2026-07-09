@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import ChatWidget from "@/app/components/ChatWidget";
 import { logout } from "@/app/lib/actions";
 import { getSessionToken } from "@/app/lib/session";
 
@@ -40,6 +41,7 @@ export default async function RootLayout({
         <Header isLoggedIn={!!token} logout={logout} />
         {children}
         <Footer />
+        <ChatWidget isLoggedIn={!!token} />
       </body>
     </html>
   );

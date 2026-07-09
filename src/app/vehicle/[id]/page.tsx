@@ -129,7 +129,7 @@ export default function VehicleDetailPage() {
       <main className="w-full max-w-4xl flex-1 p-6">
         <Link
           href="/vehicle"
-          className="inline-block mb-6 text-blue-900 dark:text-blue-400 hover:underline"
+          className="inline-block mb-6 text-amber-900 dark:text-amber-400 hover:underline"
         >
           &larr; Back to list
         </Link>
@@ -155,7 +155,7 @@ export default function VehicleDetailPage() {
         {!isLoading && !isNotFound && isError && (
           <div className="w-full flex flex-col items-center justify-center py-20">
             <p className="text-xl text-red-600">Oops... something went wrong</p>
-            <p className="text-blue-900 dark:text-blue-400">{`We'll fix it soon`}</p>
+            <p className="text-amber-900 dark:text-amber-400">{`We'll fix it soon`}</p>
           </div>
         )}
 
@@ -174,7 +174,7 @@ export default function VehicleDetailPage() {
             </div>
 
             <div className="w-full md:w-1/2 text-black dark:text-zinc-50">
-              <p className="capitalize text-blue-900 dark:text-blue-400">{vehicle.type}</p>
+              <p className="capitalize text-amber-900 dark:text-amber-400">{vehicle.type}</p>
               <h1 className="text-2xl font-bold capitalize">
                 {vehicle.brand} {vehicle.model}
               </h1>
@@ -202,14 +202,14 @@ export default function VehicleDetailPage() {
                     <p className="text-sm">Total: {formatRupiah(reservation.totalPrice)}</p>
                     <Link
                       href="/reservations"
-                      className="inline-block mt-2 text-sm text-blue-900 dark:text-blue-800 hover:underline"
+                      className="inline-block mt-2 text-sm text-amber-900 dark:text-amber-800 hover:underline"
                     >
                       View my reservations &rarr;
                     </Link>
                   </div>
                 ) : needsLogin ? (
                   <p className="text-sm">
-                    <Link href="/login" className="text-blue-900 dark:text-blue-400 hover:underline">
+                    <Link href="/login" className="text-amber-900 dark:text-amber-400 hover:underline">
                       Log in
                     </Link>{" "}
                     to reserve this vehicle.
@@ -261,7 +261,7 @@ export default function VehicleDetailPage() {
                     <button
                       type="submit"
                       disabled={availableUnits === 0 || isReserving}
-                      className="w-full py-3 rounded bg-blue-900 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-800"
+                      className="w-full py-3 rounded bg-amber-900 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-amber-800"
                     >
                       {availableUnits === 0
                         ? "Sold out"

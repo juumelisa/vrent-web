@@ -252,7 +252,7 @@ function VehicleListContent() {
             <button
               type="button"
               onClick={clearCityFilter}
-              className="text-blue-900 dark:text-blue-400 hover:underline"
+              className="text-amber-900 dark:text-amber-400 hover:underline"
             >
               Clear
             </button>
@@ -314,7 +314,7 @@ function VehicleListContent() {
         {!isLoading && isError && (
           <div className="w-full flex flex-col items-center justify-center py-20">
             <p className="text-xl text-red-600">Oops... something went wrong</p>
-            <p className="text-blue-900 dark:text-blue-400">{`We'll fix it soon`}</p>
+            <p className="text-amber-900 dark:text-amber-400">{`We'll fix it soon`}</p>
           </div>
         )}
 
@@ -346,7 +346,7 @@ function VehicleListContent() {
                       {vehicle.brand} {vehicle.model}
                     </p>
                     <p className="font-bold text-lg">{formatRupiah(vehicle.pricePerDay)}/day</p>
-                    <p className="text-blue-900 dark:text-blue-400 capitalize">
+                    <p className="text-amber-900 dark:text-amber-400 capitalize">
                       {vehicle.type} &middot; {vehicle.seats} seats &middot; {vehicle.transmission}
                     </p>
                     {location && (

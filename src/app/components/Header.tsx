@@ -25,7 +25,7 @@ export default function Header({
   const transparent = isLanding && !isScrolled;
   const linkClass = transparent
     ? "text-white hover:underline"
-    : "text-blue-900 dark:text-blue-400 hover:underline";
+    : "text-amber-900 dark:text-amber-400 hover:underline";
 
   return (
     <>

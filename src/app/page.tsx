@@ -168,7 +168,7 @@ export default async function Home() {
               </h2>
               <Link
                 href="/vehicle"
-                className="text-sm text-blue-900 dark:text-blue-400 hover:underline"
+                className="text-sm text-amber-900 dark:text-amber-400 hover:underline"
               >
                 See more &rarr;
               </Link>

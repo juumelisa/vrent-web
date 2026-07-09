@@ -75,7 +75,7 @@ export default function ReservationsPage() {
 
         {!isLoading && needsLogin && (
           <p className="text-sm">
-            <Link href="/login" className="text-blue-900 dark:text-blue-400 hover:underline">
+            <Link href="/login" className="text-amber-900 dark:text-amber-400 hover:underline">
               Log in
             </Link>{" "}
             to see your reservations.
@@ -85,14 +85,14 @@ export default function ReservationsPage() {
         {!isLoading && !needsLogin && isError && (
           <div className="w-full flex flex-col items-center justify-center py-20">
             <p className="text-xl text-red-600">Oops... something went wrong</p>
-            <p className="text-blue-900 dark:text-blue-400">{`We'll fix it soon`}</p>
+            <p className="text-amber-900 dark:text-amber-400">{`We'll fix it soon`}</p>
           </div>
         )}
 
         {!isLoading && !needsLogin && !isError && reservations.length === 0 && (
           <div className="w-full flex flex-col items-center justify-center py-20">
             <p className="text-lg">You have no reservations yet</p>
-            <Link href="/" className="mt-2 text-blue-900 dark:text-blue-400 hover:underline">
+            <Link href="/" className="mt-2 text-amber-900 dark:text-amber-400 hover:underline">
               Browse vehicles
             </Link>
           </div>
