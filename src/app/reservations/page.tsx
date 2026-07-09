@@ -14,7 +14,7 @@ type Reservation = {
   startDate: string;
   endDate: string;
   totalPrice: number;
-  status: "confirmed" | "cancelled";
+  status: "pending_payment" | "confirmed" | "cancelled";
 };
 
 const formatRupiah = (value: number) =>
@@ -23,6 +23,18 @@ const formatRupiah = (value: number) =>
     currency: "IDR",
     minimumFractionDigits: 0,
   }).format(value);
+
+const STATUS_LABEL: Record<Reservation["status"], string> = {
+  pending_payment: "Payment pending",
+  confirmed: "Confirmed",
+  cancelled: "Cancelled",
+};
+
+const STATUS_CLASS: Record<Reservation["status"], string> = {
+  pending_payment: "text-amber-700 dark:text-amber-500",
+  confirmed: "text-green-700 dark:text-green-500",
+  cancelled: "text-red-600",
+};
 
 export default function ReservationsPage() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
@@ -127,13 +139,14 @@ export default function ReservationsPage() {
                 </div>
                 <div className="text-right">
                   <p className="font-bold">{formatRupiah(reservation.totalPrice)}</p>
-                  <p
-                    className={`text-sm capitalize ${
-                      reservation.status === "cancelled" ? "text-red-600" : "text-green-700 dark:text-green-500"
-                    }`}
-                  >
-                    {reservation.status}
+                  <p className={`text-sm font-medium ${STATUS_CLASS[reservation.status]}`}>
+                    {STATUS_LABEL[reservation.status]}
                   </p>
+                  {reservation.status === "pending_payment" && (
+                    <span className="inline-block mt-1 text-xs text-amber-900 dark:text-amber-400 hover:underline">
+                      Pay now &rarr;
+                    </span>
+                  )}
                 </div>
               </Link>
             ))}

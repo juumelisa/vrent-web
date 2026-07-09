@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, type FormEvent } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 type VehicleUnit = {
   id: string;
@@ -23,14 +23,6 @@ type VehicleDetail = {
   units: VehicleUnit[];
 };
 
-type Reservation = {
-  id: string;
-  startDate: string;
-  endDate: string;
-  totalPrice: number;
-  policeNumber: string;
-};
-
 const formatRupiah = (value: number) =>
   new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -43,6 +35,7 @@ const todayISO = () => new Date().toISOString().slice(0, 10);
 export default function VehicleDetailPage() {
   const params = useParams<{ id: string }>();
   const id = params?.id ?? "";
+  const router = useRouter();
 
   const [vehicle, setVehicle] = useState<VehicleDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -54,7 +47,6 @@ export default function VehicleDetailPage() {
   const [isReserving, setIsReserving] = useState(false);
   const [reserveError, setReserveError] = useState("");
   const [needsLogin, setNeedsLogin] = useState(false);
-  const [reservation, setReservation] = useState<Reservation | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -110,7 +102,7 @@ export default function VehicleDetailPage() {
         setReserveError(data.message ?? "Could not create your reservation");
         return;
       }
-      setReservation(data);
+      router.push(`/reservations/${data.id}/pay`);
     } catch {
       setReserveError("Something went wrong. Please try again.");
     } finally {
@@ -192,22 +184,7 @@ export default function VehicleDetailPage() {
               </div>
 
               <div className="mt-6">
-                {reservation ? (
-                  <div className="rounded bg-green-100 text-green-800 p-4">
-                    <p className="font-medium">Reservation confirmed!</p>
-                    <p className="text-sm mt-1">
-                      {reservation.startDate} &rarr; {reservation.endDate} &middot;{" "}
-                      {reservation.policeNumber}
-                    </p>
-                    <p className="text-sm">Total: {formatRupiah(reservation.totalPrice)}</p>
-                    <Link
-                      href="/reservations"
-                      className="inline-block mt-2 text-sm text-amber-900 dark:text-amber-800 hover:underline"
-                    >
-                      View my reservations &rarr;
-                    </Link>
-                  </div>
-                ) : needsLogin ? (
+                {needsLogin ? (
                   <p className="text-sm">
                     <Link href="/login" className="text-amber-900 dark:text-amber-400 hover:underline">
                       Log in

@@ -15,7 +15,7 @@ type Reservation = {
   startDate: string;
   endDate: string;
   totalPrice: number;
-  status: "confirmed" | "cancelled";
+  status: "pending_payment" | "confirmed" | "cancelled";
 };
 
 const formatRupiah = (value: number) =>
@@ -24,6 +24,18 @@ const formatRupiah = (value: number) =>
     currency: "IDR",
     minimumFractionDigits: 0,
   }).format(value);
+
+const STATUS_LABEL: Record<Reservation["status"], string> = {
+  pending_payment: "Payment pending",
+  confirmed: "Confirmed",
+  cancelled: "Cancelled",
+};
+
+const STATUS_CLASS: Record<Reservation["status"], string> = {
+  pending_payment: "text-amber-700 dark:text-amber-500",
+  confirmed: "text-green-700 dark:text-green-500",
+  cancelled: "text-red-600",
+};
 
 export default function ReservationDetailPage() {
   const params = useParams<{ id: string }>();
@@ -54,7 +66,19 @@ export default function ReservationDetailPage() {
           if (!cancelled) setIsError(true);
           return;
         }
-        const data = await res.json();
+        let data = await res.json();
+
+        // Self-heal if the Midtrans webhook never reached this server (e.g. local
+        // dev) by pulling the transaction status directly on first load.
+        if (data.status === "pending_payment") {
+          try {
+            const syncRes = await fetch(`/api/reservations/${id}/sync-payment`, { method: "POST" });
+            if (syncRes.ok) data = await syncRes.json();
+          } catch {
+            // Best-effort — fall back to the status already fetched above.
+          }
+        }
+
         if (!cancelled) setReservation(data);
       } catch {
         if (!cancelled) setIsError(true);
@@ -151,26 +175,33 @@ export default function ReservationDetailPage() {
               <p className="text-zinc-500">Total price</p>
               <p className="font-bold">{formatRupiah(reservation.totalPrice)}</p>
               <p className="text-zinc-500">Status</p>
-              <p
-                className={`capitalize font-medium ${
-                  reservation.status === "cancelled" ? "text-red-600" : "text-green-700 dark:text-green-500"
-                }`}
-              >
-                {reservation.status}
+              <p className={`font-medium ${STATUS_CLASS[reservation.status]}`}>
+                {STATUS_LABEL[reservation.status]}
               </p>
             </div>
 
             {cancelError && <p className="text-red-600 text-sm mt-4">{cancelError}</p>}
 
-            {reservation.status === "confirmed" && (
-              <button
-                onClick={handleCancel}
-                disabled={isCancelling}
-                className="mt-6 py-3 px-6 rounded border border-red-600 text-red-600 font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-red-50 dark:hover:bg-red-950"
-              >
-                {isCancelling ? "Cancelling…" : "Cancel reservation"}
-              </button>
-            )}
+            <div className="mt-6 flex gap-3">
+              {reservation.status === "pending_payment" && (
+                <Link
+                  href={`/reservations/${id}/pay`}
+                  className="py-3 px-6 rounded bg-amber-900 text-white font-medium hover:bg-amber-800"
+                >
+                  Pay now
+                </Link>
+              )}
+
+              {(reservation.status === "confirmed" || reservation.status === "pending_payment") && (
+                <button
+                  onClick={handleCancel}
+                  disabled={isCancelling}
+                  className="py-3 px-6 rounded border border-red-600 text-red-600 font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-red-50 dark:hover:bg-red-950"
+                >
+                  {isCancelling ? "Cancelling…" : "Cancel reservation"}
+                </button>
+              )}
+            </div>
           </div>
         )}
       </main>

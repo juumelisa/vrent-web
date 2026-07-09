@@ -6,6 +6,7 @@ type Message = {
   role: "user" | "assistant";
   content: string;
   requiresLogin?: boolean;
+  paymentUrl?: string;
 };
 
 const SESSION_STORAGE_KEY = "vrent-chat-session-id";
@@ -57,7 +58,12 @@ export default function ChatWidget({ isLoggedIn }: { isLoggedIn: boolean }) {
       sessionStorage.setItem(SESSION_STORAGE_KEY, data.session_id);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.reply, requiresLogin: !!data.requires_login },
+        {
+          role: "assistant",
+          content: data.reply,
+          requiresLogin: !!data.requires_login,
+          paymentUrl: data.payment_url ?? undefined,
+        },
       ]);
     } catch {
       setError("Something went wrong. Please try again.");
@@ -108,6 +114,15 @@ export default function ChatWidget({ isLoggedIn }: { isLoggedIn: boolean }) {
                       className="mt-2 inline-block font-medium text-amber-900 underline dark:text-amber-500"
                     >
                       Log in to continue
+                    </Link>
+                  )}
+                  {message.paymentUrl && (
+                    <Link
+                      href={message.paymentUrl}
+                      onClick={() => setIsOpen(false)}
+                      className="mt-2 inline-block font-medium text-amber-900 underline dark:text-amber-500"
+                    >
+                      Complete payment &rarr;
                     </Link>
                   )}
                 </div>

@@ -151,7 +151,7 @@ export default async function Home() {
                     sizes="(min-width: 640px) 25vw, 50vw"
                     style={{ objectFit: "cover" }}
                   />
-                  <div className="absolute inset-0 bg-amber-900/30" />
+                  <div className="absolute inset-0 bg-blue-900/25" />
                   <p className="absolute inset-0 flex items-center justify-center font-bold text-white text-3xl drop-shadow">
                     {city.name}
                   </p>
